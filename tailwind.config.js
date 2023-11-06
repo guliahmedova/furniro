@@ -5,7 +5,12 @@ export default {
     fontFamily: {
       'Poppins': ["Poppins", "Sans-serif"]
     },
-    extend: {},
+    extend: {
+      backgroundImage: {
+        "hero-image": "url('src/assets/images/secondaryHero.svg')",
+        "primary-hero-image": "url('src/assets/images/primaryHero.svg')"
+      }
+    },
   },
   plugins: [],
 }

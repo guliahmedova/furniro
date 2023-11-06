@@ -6,7 +6,7 @@ import heart from '../../assets/images/cardHeart.svg';
 
 const ProductCard = () => {
   return (
-    <div className="h-full group cursor-pointer">
+    <Link to="/productDetail/1" className="h-full group cursor-pointer">
       <div className="relative overflow-hidden h-full">
         <Link to="/">
           <img src={prs1} alt="" className='h-auto w-full object-cover' />
@@ -41,7 +41,7 @@ const ProductCard = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 

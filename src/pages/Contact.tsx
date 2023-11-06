@@ -1,6 +1,15 @@
+import SecondaryHero from "../components/common/SecondaryHero"
+import logo from '../assets/images/logo.svg';
+import FeaturesBar from "../components/common/FeaturesBar";
+import ContactForm from "../components/contact/ContactForm";
+
 const Contact = () => {
   return (
-    <div>Contact</div>
+    <>
+      <SecondaryHero title="Contact" logo={logo}/>
+      <ContactForm/>
+      <FeaturesBar/>
+    </>
   )
 }
 

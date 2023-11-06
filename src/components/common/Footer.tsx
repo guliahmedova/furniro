@@ -7,7 +7,7 @@ const Footer = () => {
 
         <div className="grid grid-cols-3 gap-16">
           <div>
-            <span className="font-bold text-[24px]">Funiro.</span>
+            <span className="font-bold text-[24px]">Furniro.</span>
             <div className="mt-[50px] font-medium text-[#9F9F9F]">
               <p>400 University Drive Suite 200 Coral Gables,</p>
               <p>FL 33134 USA</p>

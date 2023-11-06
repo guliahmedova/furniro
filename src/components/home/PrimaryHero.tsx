@@ -1,7 +1,7 @@
 
 const PrimaryHero = () => {
   return (
-    <section className='bg-[url(/primaryHero.svg)] h-screen w-full bg-fixed bg-center bg-no-repeat bg-cover font-Poppins'>
+    <section className='bg-primary-hero-image h-screen w-full bg-fixed bg-center bg-no-repeat bg-cover font-Poppins'>
       <div className="h-screen w-full flex justify-end items-center px-[58px]">
         <div className="w-5/12 bg-[#FFF3E3] border-r-8 shadow-sm pt-[62px] mt-[153px] pb-[37px] px-9">
           <span className="text-[1rem] font-medium tracking-[3px]">New Arrival</span>

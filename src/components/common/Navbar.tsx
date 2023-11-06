@@ -8,7 +8,7 @@ import shopCart from '../../assets/images/shoppingCart.svg';
 
 const Navbar = () => {
   return (
-    <header className="w-full bg-white shadow-sm fixed z-50 top-0 left-0 right-0">
+    <header className="w-full bg-white shadow-sm">
       <nav className="flex justify-between items-center flex-wrap mx-auto w-full max-w-screen-xl py-[20px]">
 
         <div className="flex items-center gap-1 cursor-pointer">

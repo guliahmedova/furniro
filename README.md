@@ -1,15 +1,16 @@
 PROBLEMLER 🛑
 - ProductCard - da "Add to card" buttonun opacity problemi ✅
+- formlarda olan select arrowlarinin postionlari sizelari ve s.
 
 ------------------------------------------------------------------------------
 PAGS 🟦
-- Home
-- Shop
+- Home + 
+- Shop +
 - Product Detail
 - Product Comparison
-- Cart
-- Checkout
-- Contact
+- Cart +
+- Checkout +
+- Contact + 
 - Blog
 
 ------------------------------------------------------------------------------
@@ -20,7 +21,9 @@ ELAVELER 💥
 - context
 - Navbar fixed - asagi scroll edende gorunsun yuxari scroll edende yoxa cixsin
 - redux t
+- Filter inputs options
+- form validation
 
 ------------------------------------------------------------------------------
 SUALLAR ❓
-- FuniroFurniture-de imageleri position etmeyin basqa yolu var ?
+- FuniroFurniture-de imageleri position etmeyin basqa yolu var ? ✅
