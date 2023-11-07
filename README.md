@@ -6,24 +6,28 @@ PROBLEMLER 🛑
 PAGS 🟦
 - Home + 
 - Shop +
-- Product Detail
+- Product Detail +
 - Product Comparison
 - Cart +
 - Checkout +
 - Contact + 
-- Blog
+- Blog +
 
 ------------------------------------------------------------------------------
 ELAVELER 💥
 - Product Detail page de image zoom in ve zoom out elave etmek
 - lazy loading
 - performance
-- context
+- context api for cart modal
 - Navbar fixed - asagi scroll edende gorunsun yuxari scroll edende yoxa cixsin
 - redux t
-- Filter inputs options
+- Filter inputs select options
 - form validation
+- product cart - share button, compare button, like button
+- favorites page
+- search page
 
 ------------------------------------------------------------------------------
 SUALLAR ❓
 - FuniroFurniture-de imageleri position etmeyin basqa yolu var ? ✅
+- ProductCard -> ProductDetail page kecid. 
