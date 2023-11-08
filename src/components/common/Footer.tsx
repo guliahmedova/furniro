@@ -18,16 +18,16 @@ const Footer = () => {
             <div className="">
               <span className="text-[#9F9F9F] font-medium text-[1rem] leading-[24px]">Links</span>
               <Link to="/" className="block text-[#000000] font-medium mb-[46px] mt-[55px]">Home</Link>
-              <Link to="/" className="block text-[#000000] font-medium mb-[46px]">Shop</Link>
-              <Link to="/" className="block text-[#000000] font-medium mb-[46px]">About</Link>
-              <Link to="/" className="block text-[#000000] font-medium">Contact</Link>
+              <Link to="/shop" className="block text-[#000000] font-medium mb-[46px]">Shop</Link>
+              <Link to="/about" className="block text-[#000000] font-medium mb-[46px]">About</Link>
+              <Link to="/contact" className="block text-[#000000] font-medium">Contact</Link>
             </div>
 
             <div className="">
               <span className="text-[#9F9F9F] font-medium text-[1rem] leading-[24px]">Help</span>
-              <Link to="/" className="block text-[#000000] font-medium mb-[46px] mt-[55px]">Payment Options</Link>
-              <Link to="/" className="block text-[#000000] font-medium mb-[46px]">Returns</Link>
-              <Link to="/" className="block text-[#000000] font-medium">Payment Options</Link>
+              <Link to="/paymentOptions" className="block text-[#000000] font-medium mb-[46px] mt-[55px]">Payment Options</Link>
+              <Link to="/returns" className="block text-[#000000] font-medium mb-[46px]">Returns</Link>
+              <Link to="/privacyPolicies" className="block text-[#000000] font-medium">Privacy Policies</Link>
             </div>
           </div>
 

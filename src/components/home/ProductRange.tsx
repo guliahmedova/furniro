@@ -14,7 +14,7 @@ const ProductRange = () => {
             {
               productRanges.map(item => (
                 <div key={item.id}>
-                  <img src={item.img} alt="" className="w-full rounded-lg" />
+                  <img src={item.img} alt="" className="w-full rounded-lg"  loading="lazy"/>
                   <span className="mt-[30px] capitalize text-[#333333] font-semibold text-2xl leading-9 text-center w-full block">{item.title}</span>
                 </div>
               ))

@@ -1,14 +1,18 @@
-import SecondaryHero from "../components/common/SecondaryHero";
+// import SecondaryHero from "../components/common/SecondaryHero";
+import React from 'react';
 import logo from '../assets/images/logo.svg';
 import FeaturesBar from "../components/common/FeaturesBar";
 import BlogSection from "../components/blog/BlogSection";
+const LazySecondaryHero = React.lazy(() => import('../components/common/SecondaryHero'));
 
 const Blog = () => {
   return (
     <>
-      <SecondaryHero title="Blog"  logo={logo} />
-      <BlogSection/>
-      <FeaturesBar/>
+      <React.Suspense fallback="Loading...">
+        <LazySecondaryHero title="Blog" logo={logo} />
+      </React.Suspense>
+      <BlogSection />
+      <FeaturesBar />
     </>
   )
 }

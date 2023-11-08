@@ -1,4 +1,5 @@
 export interface ISecondaryHeroTypes {
     title: string,
-    logo?: string
+    logo?: string,
+    isSearch?: boolean
 };

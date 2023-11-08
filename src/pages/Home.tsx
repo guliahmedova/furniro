@@ -1,17 +1,20 @@
-import FuniroFurniture from "../components/home/FuniroFurniture"
-import PrimaryHero from "../components/home/PrimaryHero"
-import ProductRange from "../components/home/ProductRange"
-import ProductsContainer from "../components/home/ProductsContainer"
-import RoomsSlider from "../components/home/RoomsSlider"
+import React from "react";
+import ProductRange from "../components/home/ProductRange";
+import ProductsContainer from "../components/home/ProductsContainer";
+import RoomsSlider from "../components/home/RoomsSlider";
+import FuniroFurniture from "../components/home/FuniroFurniture";
+const LazyPrimaryHero = React.lazy(() => import('../components/home/PrimaryHero'));
 
 const Home = () => {
   return (
     <>
-      <PrimaryHero />
-      <ProductRange />
+      <React.Suspense fallback="Loading...">
+        <LazyPrimaryHero />
+      </React.Suspense>
+      {/* <ProductRange />
       <ProductsContainer />
-      <RoomsSlider/>
-      <FuniroFurniture/>
+      <RoomsSlider />
+      <FuniroFurniture /> */}
     </>
   )
 }

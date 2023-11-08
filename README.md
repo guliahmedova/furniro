@@ -1,33 +1,36 @@
 PROBLEMLER 🛑
-- ProductCard - da "Add to card" buttonun opacity problemi ✅
+- ProductCard error +
+- Navbar sticky vs fixed 
 - formlarda olan select arrowlarinin postionlari sizelari ve s.
 
 ------------------------------------------------------------------------------
 PAGS 🟦
 - Home + 
 - Shop +
-- Product Detail +
-- Product Comparison
 - Cart +
+- Blog +
 - Checkout +
 - Contact + 
-- Blog +
+- Search page +
+- Not found page +
+- Favorites page +
+- Product Detail +
+- Product Comparison
 
 ------------------------------------------------------------------------------
-ELAVELER 💥
-- Product Detail page de image zoom in ve zoom out elave etmek
-- lazy loading
-- performance
-- context api for cart modal
-- Navbar fixed - asagi scroll edende gorunsun yuxari scroll edende yoxa cixsin
+ESSENTIALS 💥
 - redux t
-- Filter inputs select options
+- repsonsive
+- performance
+- lazy loading +
 - form validation
+- context api for cart modal
+- Filter inputs select options
 - product cart - share button, compare button, like button
-- favorites page
-- search page
+- Product Detail page de image zoom in ve zoom out elave etmek
+- Navbar fixed - asagi scroll edende gorunsun yuxari scroll edende yoxa cixsin
 
 ------------------------------------------------------------------------------
 SUALLAR ❓
-- FuniroFurniture-de imageleri position etmeyin basqa yolu var ? ✅
 - ProductCard -> ProductDetail page kecid. 
+- FuniroFurniture-de imageleri position etmeyin basqa yolu var ? +

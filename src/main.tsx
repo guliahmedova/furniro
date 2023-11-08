@@ -10,6 +10,9 @@ import Contact from './pages/Contact.tsx';
 import ProductDetail from './pages/ProductDetail.tsx';
 import Cart from './pages/Cart.tsx';
 import Checkout from './pages/Checkout.tsx';
+import Search from './pages/Search.tsx';
+import Favorites from './pages/Favorites.tsx';
+import NotFound from './pages/NotFound.tsx';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<App />}>
@@ -21,6 +24,9 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='contact' element={<Contact />} />
     <Route path='cart' element={<Cart />} />
     <Route path='checkout' element={<Checkout />} />
+    <Route path='search' element={<Search />} />
+    <Route path='favorites' element={<Favorites />} />
+    <Route path='*' element={<NotFound />} />
   </Route>
 ))
 
