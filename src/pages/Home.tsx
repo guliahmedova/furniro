@@ -11,10 +11,10 @@ const Home = () => {
       <React.Suspense fallback="Loading...">
         <LazyPrimaryHero />
       </React.Suspense>
-      {/* <ProductRange />
+      <ProductRange />
       <ProductsContainer />
       <RoomsSlider />
-      <FuniroFurniture /> */}
+      <FuniroFurniture />
     </>
   )
 }

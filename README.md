@@ -1,6 +1,7 @@
 PROBLEMLER 🛑
 - ProductCard error +
 - Navbar sticky vs fixed 
+- Navbar responsive problem
 - formlarda olan select arrowlarinin postionlari sizelari ve s.
 
 ------------------------------------------------------------------------------

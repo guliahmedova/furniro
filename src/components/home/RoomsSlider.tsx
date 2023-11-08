@@ -20,14 +20,14 @@ const RoomsSlider = () => {
 
     return (
         <section className="bg-[#FCF8F3] mb-[67px]">
-            <div className="pl-[100px] py-[44px] flex items-center gap-11">
+            <div className="lg:pl-[100px] py-[44px] flex lg:items-center lg:flex-row gap-11 flex-col pl-3">
                 <div className="w-auto">
-                    <h1 className="text-[#3A3A3A] font-bold text-[40px] leading-[48px] mb-2">50+ Beautiful rooms inspiration</h1>
-                    <p className="text-[#616161] font-medium text-[1rem] leading-6 max-w-[368px]">Our designer already made a lot of beautiful prototipe of rooms that inspire you</p>
+                    <h1 className="text-[#3A3A3A] font-bold lg:text-[40px] lg:leading-[48px] mb-2 sm:text-2xl text-lg">50+ Beautiful rooms inspiration</h1>
+                    <p className="text-[#616161] font-medium lg:text-[1rem] leading-6 max-w-[368px] text-sm">Our designer already made a lot of beautiful prototipe of rooms that inspire you</p>
                     <button className="bg-[#B88E2F] mt-[25px] py-3 min-w-[176px] text-[#FFFFFF] font-semibold text-[1rem] leading-6">Explore More</button>
                 </div>
 
-                <div className="w-9/12 overflow-hidden relative">
+                <div className="lg:w-9/12 overflow-hidden relative">
                     <div className='flex gap-6 overflow-hidden'>
                         {
                             cardCarousel.slice(currentSlide, currentSlide + 3).map(item => (
@@ -55,7 +55,7 @@ const RoomsSlider = () => {
                         }
                     </div>
 
-                    <div className='flex items-center w-fit absolute z-10 left-[428px] top-[510px]'>
+                    <div className='flex items-center w-fit absolute z-10 lg:left-[428px] lg:top-[510px] md:top-[500px] md:left-[420px] sm:top-[500px] sm:left-[420px] top-[500px]'>
                         {
                             cardCarousel.map((card, index) => (
                                 index === currentSlide ? (<img key={card.id} src={circleDot} alt="" className='w-[27px] h-[27px]' onClick={() => setCurrentSlide(index)} />) : (<img key={card.id} src={dot} alt="" className='w-[27px] h-[27px]' onClick={() => setCurrentSlide(index)} />)
@@ -65,13 +65,13 @@ const RoomsSlider = () => {
 
                     {
                         currentSlide !== 0 && (
-                            <button className='w-[48px] h-[48px] bg-slate-50 shadow-lg rounded-full flex items-center scale-[-1] justify-center absolute z-10 top-72 left-6' onClick={prevSlide}>
+                            <button className='w-[48px] h-[48px] bg-slate-50 shadow-lg rounded-full flex items-center scale-[-1] justify-center absolute z-10 top-72 lg:left-6 left-3' onClick={prevSlide}>
                                 <img src={sliderBtn} alt="" />
                             </button>
                         )
                     }
 
-                    <button className='w-[48px] h-[48px] bg-slate-50 shadow-lg rounded-full flex items-center justify-center absolute z-10 top-72 right-14' onClick={nextSlide}>
+                    <button className='w-[48px] h-[48px] bg-slate-50 shadow-lg rounded-full flex items-center justify-center absolute z-10 top-72 lg:right-14 right-3' onClick={nextSlide}>
                         <img src={sliderBtn} alt="" />
                     </button>
 

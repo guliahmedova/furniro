@@ -3,8 +3,8 @@ const ProductsContainer = () => {
     return (
         <section className="bg-white">
             <div className="max-w-[1236px] mx-auto mt-[56px] mb-[69px]">
-                <h1 className="font-bold text-[#3A3A3A] mb-[32px] text-center text-[30px] leading-10">Our Products</h1>
-                <div className="grid grid-cols-4 gap-8">
+                <h1 className="font-bold text-[#3A3A3A] mb-[32px] text-center lg:text-[30px] lg:leading-10 sm:text-2xl text-lg">Our Products</h1>
+                <div className="grid lg:grid-cols-4 gap-8 lg:px-0 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 px-3">
                     <ProductCard />
                     <ProductCard />
                     <ProductCard />

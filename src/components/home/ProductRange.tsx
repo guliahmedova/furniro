@@ -6,11 +6,11 @@ const ProductRange = () => {
       <div className="max-w-[1236px] mx-auto my-[57px]">
 
         <div className="text-center">
-          <h1 className="text-[#333333] text-[32px] font-bold leading-10">Browse The Range</h1>
-          <p className="text-[#666666] font-normal text-xl leading-7">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <h1 className="text-[#333333] lg:text-[32px] font-bold lg:leading-10 sm:text-2xl text-lg">Browse The Range</h1>
+          <p className="text-[#666666] font-normal lg:text-xl lg:leading-7 sm:text-md text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
         </div>
 
-        <div className="grid grid-cols-3 mt-16 gap-5">
+        <div className="grid lg:grid-cols-3 mt-16 gap-5 lg:px-0 sm:grid-cols-2 px-3 grid-cols-1">
             {
               productRanges.map(item => (
                 <div key={item.id}>

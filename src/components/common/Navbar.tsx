@@ -10,7 +10,6 @@ import closemenu from '../../assets/images/closemenu.svg';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  console.log("ismneuopen: ", isMenuOpen);
 
   return (
     <header className="w-full bg-white md:shadow-sm h-[100px]">
@@ -25,14 +24,14 @@ const Navbar = () => {
         </div>
 
         <div className={`flex items-center md:bg-transparent md:flex-row md:py-0 md:gap-[75px] md:pl-0 font-medium text-black text-[1rem] flex-col gap-8 pl-5 ease-in-out duration-700 md:h-auto py-3 md:translate-x-0 ${!isMenuOpen ? 'translate-x-[-700px] h-screen' : 'translate-x-0 h-screen bg-white'}`}>
-          <NavLink to='/'>Home</NavLink>
-          <NavLink to='/shop'>Shop</NavLink>
-          <NavLink to='/blog'>Blog</NavLink>
-          <NavLink to='/contact'>Contact</NavLink>
-          <NavLink className='md:hidden' to="/account">Account</NavLink>
-          <NavLink className='md:hidden' to="/search">Search</NavLink>
-          <NavLink className='md:hidden' to="/favorites">Favorites</NavLink>
-          <NavLink className='md:hidden' to="/cart">Cart</NavLink>
+          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/'>Home</NavLink>
+          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/shop'>Shop</NavLink>
+          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/blog'>Blog</NavLink>
+          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/contact'>Contact</NavLink>
+          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} className='md:hidden' to="/account">Account</NavLink>
+          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} className='md:hidden' to="/search">Search</NavLink>
+          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} className='md:hidden' to="/favorites">Favorites</NavLink>
+          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} className='md:hidden' to="/cart">Cart</NavLink>
         </div>
 
         <div className="md:flex md:items-center md:mt-0 md:gap-11 cursor-pointer hidden">
