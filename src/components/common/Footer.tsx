@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="bg-white border-t-2 w-full h-full">
-      <div className="lg:w-[1240px] mx-auto pt-[48px] pb-[38px] lg:px-0 px-3">
+      <div className="lg:w-[1240px] mx-auto pt-[48px] lg:px-0 px-3">
 
         <div className="grid lg:grid-cols-3 lg:gap-16 md:grid-cols-2 sm:grid-cols-1 grid-cols-1">
           <div>
@@ -31,16 +31,16 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="lg:mt-0 mt-10 lg:mx-0 mx-auto">
+          <div className="lg:mt-0 mt-10 lg:mx-0 mx-auto w-fit">
             <span className="text-[#9F9F9F] font-medium text-base leading-[24px]">Newsletter</span>
-            <form className="flex items-center gap-[11px] lg:mt-[53px] mt-3 text-[14px] leading-[21px]">
+            <form className="flex items-center lg:gap-[11px] lg:mt-[53px] mt-3 text-[14px] lg:leading-[21px]">
               <input type="email" placeholder="Enter Your Email Address" className="font-normal border-b border-[#000000] outline-0" />
               <button className="text-[#000000] uppercase border-b border-[#000000] font-medium">SUBSCRIBE</button>
             </form>
           </div>
         </div>
 
-        <div className="mt-[48px] text-[#000000] font-normal lg:text-base text-sm lg:leading-[24px] border-t pt-[35px] border-[#D9D9D9] text-center lg:text-left">2023 furino. All rights reverved</div>
+        <div className="mt-[48px] text-[#000000] font-normal pb-9 lg:text-base text-sm lg:leading-[24px] border-t pt-[35px] border-[#D9D9D9] text-center lg:text-left">2023 furino. All rights reverved</div>
       </div>
     </footer>
   )

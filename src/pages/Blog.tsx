@@ -1,4 +1,3 @@
-// import SecondaryHero from "../components/common/SecondaryHero";
 import React from 'react';
 import logo from '../assets/images/logo.svg';
 import FeaturesBar from "../components/common/FeaturesBar";

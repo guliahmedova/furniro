@@ -11,7 +11,6 @@ const RoomsSlider = () => {
 
     const prevSlide = () => {
         setCurrentSlide((prev) => (prev === 0 ? cardCarousel.length - 1 : prev - 1));
-        console.log(currentSlide);
     };
 
     const nextSlide = () => {
@@ -20,7 +19,7 @@ const RoomsSlider = () => {
 
     return (
         <section className="bg-[#FCF8F3] mb-[67px]">
-            <div className="lg:pl-[100px] py-[44px] flex lg:items-center lg:flex-row gap-11 flex-col pl-3">
+            <div className="lg:pl-[100px] py-[44px] lg:pr-0 flex lg:items-center lg:flex-row gap-11 flex-col px-3">
                 <div className="w-auto">
                     <h1 className="text-[#3A3A3A] font-bold lg:text-[40px] lg:leading-[48px] mb-2 sm:text-2xl text-lg">50+ Beautiful rooms inspiration</h1>
                     <p className="text-[#616161] font-medium lg:text-[1rem] leading-6 max-w-[368px] text-sm">Our designer already made a lot of beautiful prototipe of rooms that inspire you</p>
@@ -55,7 +54,7 @@ const RoomsSlider = () => {
                         }
                     </div>
 
-                    <div className='flex items-center w-fit absolute z-10 lg:left-[428px] lg:top-[510px] md:top-[500px] md:left-[420px] sm:top-[500px] sm:left-[420px] top-[500px]'>
+                    <div className='lg:flex items-center w-fit absolute z-10 lg:left-[428px] lg:top-[510px] md:top-[500px] md:left-[420px] sm:top-[500px] sm:left-[420px] top-[500px] hidden'>
                         {
                             cardCarousel.map((card, index) => (
                                 index === currentSlide ? (<img key={card.id} src={circleDot} alt="" className='w-[27px] h-[27px]' onClick={() => setCurrentSlide(index)} />) : (<img key={card.id} src={dot} alt="" className='w-[27px] h-[27px]' onClick={() => setCurrentSlide(index)} />)

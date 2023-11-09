@@ -4,16 +4,16 @@ import emptyCircle from '../../assets/images/emptyCircle.svg';
 const CheckoutForm = () => {
     return (
         <section className="mt-[63px] mb-[123px]">
-            <div className="max-w-[1242px] mx-auto flex">
-                <div className="w-6/12">
-                    <h1 className="font-semibold text-[#000000] text-4xl mb-9 leading-10">Billing details</h1>
+            <div className="lg:max-w-[1242px] mx-auto flex lg:flex-row flex-col lg:px-0 px-3">
+                <div className="lg:w-6/12 lg:mb-0 mb-12">
+                    <h1 className="font-semibold text-[#000000] text-4xl mb-9 leading-10 lg:text-left text-center">Billing details</h1>
                     <form>
-                        <div className="flex gap-8 mb-9">
-                            <div className="w-6/12">
+                        <div className="flex gap-8 mb-9 lg:flex-row flex-col">
+                            <div className="lg:w-6/12">
                                 <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="firstName">First Name</label>
                                 <input className="border-2 border-[#9F9F9F] rounded-[10px] px-[1rem] w-full h-[75px]" type="text" id="firstName" />
                             </div>
-                            <div className="w-6/12">
+                            <div className="lg:w-6/12">
                                 <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="lastName">Last Name</label>
                                 <input type="text" className="border-2 border-[#9F9F9F] w-full px-[1rem] rounded-[10px] h-[75px]" id="lastName" />
                             </div>
@@ -72,10 +72,10 @@ const CheckoutForm = () => {
                         </div>
                     </form>
                 </div>
-                <div className="w-6/12 p-20">
+                <div className="lg:w-6/12 lg:p-20">
                     <div className="flex items-center justify-between mb-[14px]">
-                        <span className="text-[#000000] font-medium text-2xl leading-9">Product</span>
-                        <span className="text-[#000000] font-medium text-2xl leading-9">Subtotal</span>
+                        <span className="text-[#000000] font-medium lg:text-2xl lg:leading-9 text-xl">Product</span>
+                        <span className="text-[#000000] font-medium lg:text-2xl lg:leading-9 text-xl">Subtotal</span>
                     </div>
                     <div className="flex justify-between mb-[22px]">
                         <div className="flex gap-3 items-center">
@@ -89,7 +89,7 @@ const CheckoutForm = () => {
                     </div>
                     <div className="flex justify-between pb-[33px] border-b-2 border-[#D9D9D9]">
                         <span className="font-normal text-[1rem]">Total</span>
-                        <span className="text-[#B88E2F] font-bold text-2xl">Rs. 250,000.00</span>
+                        <span className="text-[#B88E2F] font-bold lg:text-2xl">Rs. 250,000.00</span>
                     </div>
                     <div className="mt-[22px]">
                         <div className='flex items-center gap-4'>
