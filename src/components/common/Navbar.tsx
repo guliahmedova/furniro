@@ -35,14 +35,10 @@ const Navbar = () => {
         </Link>
 
         <div className="lg:flex hidden items-center gap-4 font-medium lg:gap-[75px] text-base">
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/'>Home</NavLink>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/shop'>Shop</NavLink>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/blog'>Blog</NavLink>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/contact'>Contact</NavLink>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} className='md:hidden' to="/account">Account</NavLink>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} className='md:hidden' to="/search">Search</NavLink>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} className='md:hidden' to="/favorites">Favorites</NavLink>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} className='md:hidden' to="/cart">Cart</NavLink>
+          <NavLink to='/'>Home</NavLink>
+          <NavLink to='/shop'>Shop</NavLink>
+          <NavLink to='/blog'>Blog</NavLink>
+          <NavLink to='/contact'>Contact</NavLink>
         </div>
 
         <div className="lg:flex hidden items-center lg:gap-11">

@@ -19,11 +19,20 @@ const Filter = () => {
                 <div className='flex items-center lg:flex-row flex-col gap-[30px] lg:mt-0 mt-6'>
                     <div className='flex items-center gap-[17px]'>
                         <span className='lg:text-[20px] font-normal text-lg'>Show</span>
-                        <input type="text" placeholder='16' className='w-[55px] h-[55px] text-center placeholder:text-[#9F9F9F] font-normal text-[20px] outline-0' />
+                        <select name="product-counts" id="productCounts" className='w-[55px] h-[55px] appearance-none text-center border-0 text-[#9F9F9F] text-xl'>
+                            <option value="16" selected>16</option>
+                            <option value="32">32</option>
+                            <option value="48">48</option>
+                            <option value="64">64</option>
+                        </select>
                     </div>
                     <div className='flex items-center gap-[17px]'>
                         <span className='lg:text-[20px] font-normal text-lg'>Short by</span>
-                        <input type="text" placeholder='Default' className='w-[188px] h-[55px] pl-[30px] placeholder:text-[#9F9F9F] font-normal text-[20px] outline-0' />
+                        <select name="product-counts" id="shortBy" className='w-[188px] h-[55px] px-7 appearance-none border-0 text-[#9F9F9F] text-xl'>
+                            <option value="Default" selected>Default</option>
+                            <option value="Example 1">Example 1</option>
+                            <option value="Example 2">Example 2</option>
+                        </select>
                     </div>
                 </div>
             </div>

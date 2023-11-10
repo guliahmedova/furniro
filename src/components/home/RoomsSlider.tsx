@@ -1,9 +1,9 @@
-import sliderBtn from '../../assets/images/sliderBtn.svg';
-import circleDot from '../../assets/images/dot-circle.svg';
+import { useState} from 'react';
 import dot from '../../assets/images/dot.svg';
 import line from '../../assets/images/line.svg';
 import arrow from '../../assets/images/arrow.svg';
-import { useState } from 'react';
+import sliderBtn from '../../assets/images/sliderBtn.svg';
+import circleDot from '../../assets/images/dot-circle.svg';
 import { cardCarousel } from '../../assets/const/cardCarousel';
 
 const RoomsSlider = () => {
@@ -27,10 +27,10 @@ const RoomsSlider = () => {
                 </div>
 
                 <div className="lg:w-9/12 overflow-hidden relative">
-                    <div className='flex gap-6 overflow-hidden'>
+                    <div className=' flex gap-6 overflow-hidden scroll-smooth'>
                         {
                             cardCarousel.slice(currentSlide, currentSlide + 3).map(item => (
-                                <div className={`${item.id === currentSlide + 1 ? "w-[404px] h-[582px]" : "w-[372px] h-[486px]"} flex-shrink-0 relative`} key={item.id}>
+                                <div className={`${item.id === currentSlide + 1 ? "w-[404px] h-[582px]" : "w-[372px] h-[486px] "} flex-shrink-0 relative `} key={item.id}>
                                     <img src={item.img} className='h-full w-full object-cover' alt="" />
                                     {
                                         item.id === currentSlide + 1 && (
@@ -75,7 +75,6 @@ const RoomsSlider = () => {
                     </button>
 
                 </div>
-
             </div>
         </section>
     )

@@ -13,6 +13,7 @@ import Checkout from './pages/Checkout.tsx';
 import Search from './pages/Search.tsx';
 import Favorites from './pages/Favorites.tsx';
 import NotFound from './pages/NotFound.tsx';
+import ProductComparison from './pages/ProductComparison.tsx';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<App />}>
@@ -27,6 +28,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='search' element={<Search />} />
     <Route path='favorites' element={<Favorites />} />
     <Route path='*' element={<NotFound />} />
+    <Route path='productComparison' element={<ProductComparison />} />
   </Route>
 ))
 

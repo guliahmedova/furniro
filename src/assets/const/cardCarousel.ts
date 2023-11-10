@@ -13,7 +13,7 @@ export const cardCarousel = [
         subTitle: "Inner Peace"
     },
     {
-        id:2, 
+        id: 2,
         img: r2,
         level: "02",
         title: 'Kitchen',

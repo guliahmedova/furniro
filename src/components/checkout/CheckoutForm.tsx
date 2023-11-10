@@ -11,64 +11,74 @@ const CheckoutForm = () => {
                         <div className="flex gap-8 mb-9 lg:flex-row flex-col">
                             <div className="lg:w-6/12">
                                 <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="firstName">First Name</label>
-                                <input className="border-2 border-[#9F9F9F] rounded-[10px] px-[1rem] w-full h-[75px]" type="text" id="firstName" />
+                                <input className="border-2 border-[#9F9F9F] rounded-[10px] px-7 w-full h-[75px]" type="text" id="firstName" />
                             </div>
                             <div className="lg:w-6/12">
                                 <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="lastName">Last Name</label>
-                                <input type="text" className="border-2 border-[#9F9F9F] w-full px-[1rem] rounded-[10px] h-[75px]" id="lastName" />
+                                <input type="text" className="border-2 border-[#9F9F9F] w-full px-7 rounded-[10px] h-[75px]" id="lastName" />
                             </div>
                         </div>
 
                         <div className="mb-9">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="companyName">Company Name (Optional)</label>
-                            <input type="text" className="border-2 border-[#9F9F9F] px-4 w-full rounded-[10px] h-[75px]" id="companyName" />
+                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="companyName" />
                         </div>
 
-                        <div className="mb-9">
+                        <div className="mb-9 relative">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="countryRegion">Country / Region</label>
-                            <select name="country-region" id="countryRegion" className="border-2 border-[#9F9F9F] px-4 w-full rounded-[10px] h-[75px]">
-                                <option value="Example1" disabled selected className="text-[#9F9F9F] text-[1rem] font-normal">Sri Lanka</option>
+                            <select name="country-region" id="countryRegion" className="border-2 appearance-none border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]">
+                                <option value="Example1" defaultChecked className="text-[#9F9F9F] text-[1rem] font-normal">Sri Lanka</option>
                                 <option value="Example2">Example 2</option>
                                 <option value="Example3">Example 3</option>
                             </select>
+                            <div className="absolute inset-y-0 right-4 top-12 flex items-center px-3 pointer-events-none">
+                                <svg className="w-6 h-6 text-black" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
                         </div>
 
                         <div className="mb-9">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="streetAddress">Street address</label>
-                            <input type="text" className="border-2 border-[#9F9F9F] px-4 w-full rounded-[10px] h-[75px]" id="streetAddress" />
+                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="streetAddress" />
                         </div>
 
                         <div className="mb-9">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="townCity">Town / City</label>
-                            <input type="text" className="border-2 border-[#9F9F9F] px-4 w-full rounded-[10px] h-[75px]" id="townCity" />
+                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="townCity" />
                         </div>
 
-                        <div className="mb-9">
+                        <div className="mb-9 relative">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="Province">Province</label>
-                            <select name="Province" id="Province" className="border-2 border-[#9F9F9F] px-4 w-full rounded-[10px] h-[75px]">
-                                <option value="Example1" disabled selected>Western Province</option>
+                            <select name="Province" id="Province" className="border-2 appearance-none border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]">
+                                <option value="Example1" defaultChecked >Western Province</option>
                                 <option value="Example2">Example 2</option>
                                 <option value="Example3">Example 3</option>
                             </select>
+                            <div className="absolute inset-y-0 right-4 top-12 flex items-center px-3 pointer-events-none">
+                                <svg className="w-6 h-6 text-black" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
                         </div>
 
                         <div className="mb-9">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="ZIP-code">ZIP code</label>
-                            <input type="text" className="border-2 border-[#9F9F9F] px-4 w-full rounded-[10px] h-[75px]" id="ZIP-code" />
+                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="ZIP-code" />
                         </div>
 
                         <div className="mb-9">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="Phone">Phone</label>
-                            <input type="text" className="border-2 border-[#9F9F9F] px-4 w-full rounded-[10px] h-[75px]" id="Phone" />
+                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="Phone" />
                         </div>
 
                         <div className="mb-9">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="emailAddress">Email address</label>
-                            <input type="text" className="border-2 border-[#9F9F9F] px-4 w-full rounded-[10px] h-[75px]" id="emailAddress" />
+                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="emailAddress" />
                         </div>
 
                         <div>
-                            <input type="text" className="border-2 border-[#9F9F9F] px-4 w-full rounded-[10px] h-[75px]" placeholder="Additional information" />
+                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" placeholder="Additional information" />
                         </div>
                     </form>
                 </div>
