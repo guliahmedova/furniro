@@ -22,12 +22,9 @@ PAGS 🟦
 ------------------------------------------------------------------------------
 ESSENTIALS 💥
 - redux t
-- repsonsive +
 - performance
-- lazy loading +
-- clean CONSOLE.LOGS
-- menu + ve cart component acilanda scrollun dayandirilmasi
 - Product Detail page de image zoom in ve zoom out elave etmek
+- animation 
 
 ------------------------------------------------------------------------------
 SUALLAR ❓

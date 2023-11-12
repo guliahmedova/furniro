@@ -22,8 +22,8 @@ const RoomsSlider = () => {
             <div className="lg:pl-[100px] py-[44px] lg:pr-0 flex lg:items-center lg:flex-row gap-11 flex-col px-3">
                 <div className="w-auto">
                     <h1 className="text-[#3A3A3A] font-bold lg:text-[40px] lg:leading-[48px] mb-2 sm:text-2xl text-lg">50+ Beautiful rooms inspiration</h1>
-                    <p className="text-[#616161] font-medium lg:text-[1rem] leading-6 max-w-[368px] text-sm">Our designer already made a lot of beautiful prototipe of rooms that inspire you</p>
-                    <button className="bg-[#B88E2F] mt-[25px] py-3 min-w-[176px] text-[#FFFFFF] font-semibold text-[1rem] leading-6">Explore More</button>
+                    <p className="text-[#616161] font-medium lg:leading-6 max-w-[368px] text-sm">Our designer already made a lot of beautiful prototipe of rooms that inspire you</p>
+                    <button className="bg-[#B88E2F] mt-[25px] py-3 min-w-[176px] text-[#FFFFFF] font-semibold leading-6">Explore More</button>
                 </div>
 
                 <div className="lg:w-9/12 overflow-hidden relative">
@@ -37,9 +37,9 @@ const RoomsSlider = () => {
                                             <div className='absolute z-20 left-6 bottom-6 select-none flex items-end'>
                                                 <div className='bg-white py-[32px] px-8 w-[217px] opacity-90'>
                                                     <div className='flex gap-2 items-center'>
-                                                        <span className='text-[1rem] left-6 font-medium'>{item.level}</span>
+                                                        <span className='left-6 font-medium'>{item.level}</span>
                                                         <img src={line} alt="" />
-                                                        <span className='text-[1rem] left-6 font-medium'>{item.title}</span>
+                                                        <span className='left-6 font-medium'>{item.title}</span>
                                                     </div>
                                                     <h1 className='mt-[8px] font-semibold text-[28px]'>{item.subTitle}</h1>
                                                 </div>

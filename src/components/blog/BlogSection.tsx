@@ -31,8 +31,8 @@ const BlogSection = () => {
                                 </div>
                                 <div className='mb-[30px]'>
                                     <h1 className='text-black font-medium lg:text-3xl text-lg leading-10 mb-3'>{item.title}</h1>
-                                    <p className='text-[#9F9F9F] font-normal lg:text-[15px] lg:max-w-[817px] lg:tracking-wider mb-7'>{item.desc}</p>
-                                    <span className='text-black font-normal border-b-2 border-black pb-3'>Read more</span>
+                                    <p className='text-[#9F9F9F] lg:text-[15px] lg:max-w-[817px] lg:tracking-wider mb-7'>{item.desc}</p>
+                                    <span className='text-black border-b-2 border-black pb-3'>Read more</span>
                                 </div>
                             </div>
                         ))
@@ -49,8 +49,8 @@ const BlogSection = () => {
                         <div>
                             {blogCategories.map(item => (
                                 <div key={item.id} className='flex justify-between mb-10'>
-                                    <span className='text-[#9F9F9F] font-normal text-[1rem]'>{item.title}</span>
-                                    <span className='text-[#9F9F9F] font-normal text-[1rem]'>{item.count}</span>
+                                    <span className='text-[#9F9F9F]'>{item.title}</span>
+                                    <span className='text-[#9F9F9F]'>{item.count}</span>
                                 </div>
                             ))}
                         </div>
@@ -62,8 +62,8 @@ const BlogSection = () => {
                                 <div key={item.id} className='flex gap-3 items-center'>
                                     <img src={item.img} alt="" />
                                     <div className='flex flex-col'>
-                                        <span className='text-black font-medium text-[1rem] leading-5'>{item.title}</span>
-                                        <span className='text-[#9F9F9F] font-normal text-xs mt-1'>{item.date}</span>
+                                        <span className='text-black font-medium leading-5'>{item.title}</span>
+                                        <span className='text-[#9F9F9F] text-xs mt-1'>{item.date}</span>
                                     </div>
                                 </div>
                             ))}

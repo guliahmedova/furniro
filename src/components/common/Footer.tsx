@@ -16,7 +16,7 @@ const Footer = () => {
 
           <div className="lg:flex lg:justify-between grid grid-cols-2 lg:mt-0 mt-10">
             <div className="flex flex-col">
-              <span className="text-[#9F9F9F] font-medium text-[1rem] lg:leading-[24px] text-lg">Links</span>
+              <span className="text-[#9F9F9F] font-medium lg:leading-[24px] text-lg">Links</span>
               <Link to="/" className="lg:block text-[#000000] font-medium mb-[46px] mt-[55px] text-sm lg:text-[1rem]">Home</Link>
               <Link to="/shop" className="lg:block text-[#000000] font-medium mb-[46px] text-sm lg:text-[1rem]">Shop</Link>
               <Link to="/about" className="lg:block text-[#000000] font-medium mb-[46px] text-sm lg:text-[1rem]">About</Link>
@@ -24,7 +24,7 @@ const Footer = () => {
             </div>
 
             <div className="flex flex-col">
-              <span className="text-[#9F9F9F] font-medium text-[1rem] leading-[24px] text-lg">Help</span>
+              <span className="text-[#9F9F9F] font-medium leading-[24px] text-lg">Help</span>
               <Link to="/paymentOptions" className="lg:block text-[#000000] font-medium mb-[46px] mt-[55px] text-sm lg:text-[1rem]">Payment Options</Link>
               <Link to="/returns" className="lg:block text-[#000000] font-medium mb-[46px] text-sm lg:text-[1rem]">Returns</Link>
               <Link to="/privacyPolicies" className="lg:block text-[#000000] font-medium text-sm lg:text-[1rem]">Privacy Policies</Link>
@@ -40,7 +40,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-[48px] text-[#000000] font-normal pb-9 lg:text-base text-sm lg:leading-[24px] border-t pt-[35px] border-[#D9D9D9] text-center lg:text-left">2023 furino. All rights reverved</div>
+        <div className="mt-[48px] text-[#000000] pb-9 lg:text-base text-sm lg:leading-[24px] border-t pt-[35px] border-[#D9D9D9] text-center lg:text-left">2023 furino. All rights reverved</div>
       </div>
     </footer>
   )
