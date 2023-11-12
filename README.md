@@ -4,6 +4,7 @@ PROBLEMLER 🛑
 - slider detail page and home page
 - deploy - images visibility problem
 - slick slider package delete 
+
 ------------------------------------------------------------------------------
 PAGS 🟦
 - Home + +
@@ -24,9 +25,7 @@ ESSENTIALS 💥
 - repsonsive +
 - performance
 - lazy loading +
-- form validation 
 - clean CONSOLE.LOGS
-- context api for cart modal 👈🏼
 - menu + ve cart component acilanda scrollun dayandirilmasi
 - Product Detail page de image zoom in ve zoom out elave etmek
 

@@ -1,23 +1,26 @@
 import { useState, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
+import { useModal } from "../../contexts/ModalContext";
 import logo from '../../assets/images/logo.svg';
 import heart from '../../assets/images/heart.svg';
 import search from '../../assets/images/search.svg';
 import account from '../../assets/images/account.svg';
 import openmenu from '../../assets/images/openmenu.svg';
-import shopCart from '../../assets/images/shoppingCart.svg';
 import closemenu from '../../assets/images/closemenu.svg';
+import shopCart from '../../assets/images/shoppingCart.svg';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(()=> {
+  const { openModal } = useModal();
+
+  useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
-    }else if (!isMenuOpen) {
+    } else if (!isMenuOpen) {
       document.body.style.overflow = 'unset';
     }
-  }, [isMenuOpen])
+  }, [isMenuOpen]);
 
 
   return (
@@ -51,9 +54,9 @@ const Navbar = () => {
           <Link to="/favorites">
             <img src={heart} alt="" />
           </Link>
-          <Link to="/cart">
+          <div onClick={openModal} className="cursor-pointer">
             <img src={shopCart} alt="" />
-          </Link>
+          </div>
         </div>
 
         {/* MOBILE NAVBAR */}

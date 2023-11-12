@@ -1,32 +1,57 @@
+import { useFormik } from 'formik';
 import circle from '../../assets/images/blackCircle.svg';
 import emptyCircle from '../../assets/images/emptyCircle.svg';
+import { validate } from './formValidate';
 
 const CheckoutForm = () => {
+    const { values, errors, handleChange, handleSubmit } = useFormik({
+        initialValues: {
+            firstName: '',
+            lastName: '',
+            companyName: '',
+            country: '',
+            streetAddress: '',
+            town: '',
+            province: '',
+            zipCode: '',
+            phone: '',
+            emailAddress: '',
+            note: ''
+        },
+        validate,
+        onSubmit: (values) => {
+            console.log(values);
+        },
+    });
+
     return (
         <section className="mt-[63px] mb-[123px]">
             <div className="lg:max-w-[1242px] mx-auto flex lg:flex-row flex-col lg:px-0 px-3">
                 <div className="lg:w-6/12 lg:mb-0 mb-12">
                     <h1 className="font-semibold text-[#000000] text-4xl mb-9 leading-10 lg:text-left text-center">Billing details</h1>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="flex gap-8 mb-9 lg:flex-row flex-col">
                             <div className="lg:w-6/12">
                                 <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="firstName">First Name</label>
-                                <input className="border-2 border-[#9F9F9F] rounded-[10px] px-7 w-full h-[75px]" type="text" id="firstName" />
+                                <input className="border-2 border-[#9F9F9F] rounded-[10px] px-7 w-full h-[75px]" name='firstName' value={values.firstName} onChange={handleChange} type="text" id="firstName" />
+                                {errors.firstName ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.firstName}</div> : null}
                             </div>
                             <div className="lg:w-6/12">
                                 <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="lastName">Last Name</label>
-                                <input type="text" className="border-2 border-[#9F9F9F] w-full px-7 rounded-[10px] h-[75px]" id="lastName" />
+                                <input type="text" className="border-2 border-[#9F9F9F] w-full px-7 rounded-[10px] h-[75px]" name='lastName' value={values.lastName} onChange={handleChange} id="lastName" />
+                                {errors.lastName ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.lastName}</div> : null}
                             </div>
                         </div>
 
                         <div className="mb-9">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="companyName">Company Name (Optional)</label>
-                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="companyName" />
+                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" name='companyName' value={values.companyName} onChange={handleChange} id="companyName" />
+                            {errors.companyName ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.companyName}</div> : null}
                         </div>
 
                         <div className="mb-9 relative">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="countryRegion">Country / Region</label>
-                            <select name="country-region" id="countryRegion" className="border-2 appearance-none border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]">
+                            <select name="country" value={values.country} onChange={handleChange} id="countryRegion" className="border-2 appearance-none border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]">
                                 <option value="Example1" defaultChecked className="text-[#9F9F9F] text-[1rem] font-normal">Sri Lanka</option>
                                 <option value="Example2">Example 2</option>
                                 <option value="Example3">Example 3</option>
@@ -36,21 +61,24 @@ const CheckoutForm = () => {
                                     <path d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </div>
+                            {errors.country ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.country}</div> : null}
                         </div>
 
                         <div className="mb-9">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="streetAddress">Street address</label>
-                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="streetAddress" />
+                            <input type="text" name='streetAddress' value={values.streetAddress} onChange={handleChange} className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="streetAddress" />
+                            {errors.streetAddress ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.streetAddress}</div> : null}
                         </div>
 
                         <div className="mb-9">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="townCity">Town / City</label>
-                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="townCity" />
+                            <input type="text" name='town' value={values.town} onChange={handleChange} className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="townCity" />
+                            {errors.town ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.town}</div> : null}
                         </div>
 
                         <div className="mb-9 relative">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="Province">Province</label>
-                            <select name="Province" id="Province" className="border-2 appearance-none border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]">
+                            <select name="province" value={values.province} onChange={handleChange} id="Province" className="border-2 appearance-none border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]">
                                 <option value="Example1" defaultChecked >Western Province</option>
                                 <option value="Example2">Example 2</option>
                                 <option value="Example3">Example 3</option>
@@ -60,25 +88,30 @@ const CheckoutForm = () => {
                                     <path d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </div>
+                            {errors.province ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.province}</div> : null}
                         </div>
 
                         <div className="mb-9">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="ZIP-code">ZIP code</label>
-                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="ZIP-code" />
+                            <input type="text" name='zipCode' value={values.zipCode} onChange={handleChange} className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="ZIP-code" />
+                            {errors.zipCode ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.zipCode}</div> : null}
                         </div>
 
                         <div className="mb-9">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="Phone">Phone</label>
-                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="Phone" />
+                            <input type="number" name='phone' value={values.phone} onChange={handleChange} className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="Phone" />
+                            {errors.phone ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.phone}</div> : null}
                         </div>
 
                         <div className="mb-9">
                             <label className="font-medium text-[#000000] text-[1rem] leading-6 mb-[22px] block" htmlFor="emailAddress">Email address</label>
-                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="emailAddress" />
+                            <input type="email" name='emailAddress' value={values.emailAddress} onChange={handleChange} className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="emailAddress" />
+                            {errors.emailAddress ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.emailAddress}</div> : null}
                         </div>
 
                         <div>
-                            <input type="text" className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" placeholder="Additional information" />
+                            <input type="text" name='note' value={values.note} onChange={handleChange} className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" placeholder="Additional information" />
+                            {errors.note ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.note}</div> : null}
                         </div>
                     </form>
                 </div>
@@ -124,6 +157,6 @@ const CheckoutForm = () => {
             </div>
         </section>
     )
-}
+};
 
 export default CheckoutForm;

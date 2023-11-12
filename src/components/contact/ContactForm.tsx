@@ -1,8 +1,23 @@
-import address from '../../assets/images/address.svg';
+import { useFormik } from 'formik';
 import phone from '../../assets/images/phone.svg';
+import address from '../../assets/images/address.svg';
 import workingTime from '../../assets/images/workingTime.svg';
+import { validate } from './contactFormValidate';
 
 const ContactForm = () => {
+    const {handleChange, values, handleSubmit, errors} = useFormik({
+        initialValues: {
+            yourName: '',
+            email: '',
+            subject: '',
+            message: ''
+        },
+        validate,
+        onSubmit: values => {
+            alert(JSON.stringify(values, null, 2));
+        },
+    });
+    
     return (
         <section>
             <div className="lg:w-[1058px] mx-auto mt-[98px] mb-[63px] lg:px-0 px-3">
@@ -38,26 +53,30 @@ const ContactForm = () => {
                         </div>
                     </div>
 
-                    <div className='lg:w-6/12 lg:mt-0 mt-6 lg:border-r-0 border-t lg:pt-0 pt-6 border-gray-400'>
-                        <form>
+                    <div className='lg:w-6/12 lg:mt-0 mt-6 lg:border-r-0 lg:border-0 border-t lg:pt-0 pt-6 border-gray-400'>
+                        <form onSubmit={handleSubmit}>
                             <div className="mb-[36px] w-full">
-                                <label htmlFor="name" className="block mb-[22px] text-[1rem] font-medium text-black">Your name</label>
-                                <input type="text" id="name" className="border-2 w-full text-[1rem] rounded-md outline-0 py-[25px] px-[31px] border-[#9F9F9F]" placeholder="Abc" required />
+                                <label htmlFor="yourName" className="block mb-[22px] text-[1rem] font-medium text-black">Your name</label>
+                                <input type="text" name='yourName' value={values.yourName} onChange={handleChange} id="yourName" className="border-2 w-full text-[1rem] rounded-md outline-0 py-[25px] px-[31px] border-[#9F9F9F]" placeholder="Abc" required />
+                                {errors.yourName ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.yourName}</div> : null}
                             </div>
 
                             <div className="mb-[36px] w-full">
                                 <label htmlFor="email" className="block mb-[22px] text-[1rem] font-medium text-black">Email address</label>
-                                <input type="text" id="email" className="border-2 w-full text-[1rem] rounded-md outline-0 py-[25px] px-[31px] border-[#9F9F9F]" placeholder="Abc@def.com" required />
+                                <input type="text" name='email' value={values.email} onChange={handleChange} id="email" className="border-2 w-full text-[1rem] rounded-md outline-0 py-[25px] px-[31px] border-[#9F9F9F]" placeholder="Abc@def.com" required />
+                                {errors.email ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.email}</div> : null}
                             </div>
 
                             <div className="mb-[36px] w-full">
                                 <label htmlFor="subject" className="block mb-[22px] text-[1rem] font-medium text-black">Subject</label>
-                                <input type="text" id="subject" className="border-2 w-full text-[1rem] rounded-md outline-0 py-[25px] px-[31px] border-[#9F9F9F]" placeholder="This is an optional" required />
+                                <input type="text" name='subject' value={values.subject} onChange={handleChange} id="subject" className="border-2 w-full text-[1rem] rounded-md outline-0 py-[25px] px-[31px] border-[#9F9F9F]" placeholder="This is an optional" required />
+                                {errors.subject ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.subject}</div> : null}
                             </div>
 
                             <div className="mb-[36px] w-full">
                                 <label htmlFor="message" className="block mb-[22px] text-[1rem] font-medium text-black">Message</label>
-                                <textarea id="message" className="border-2 w-full text-[1rem] rounded-md outline-0 py-[25px] px-[31px] border-[#9F9F9F] resize-none" placeholder="Hi! i’d like to ask about" required></textarea>
+                                <textarea id="message" name='message' value={values.message} onChange={handleChange} className="border-2 w-full text-[1rem] rounded-md outline-0 py-[25px] px-[31px] border-[#9F9F9F] resize-none" placeholder="Hi! i’d like to ask about" required></textarea>
+                                {errors.message ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.message}</div> : null}
                             </div>
 
                             <button className='bg-[#B88E2F] w-[237px] py-[13.75px] rounded-md text-white text-[1rem] font-normal leading-[24px] hover:bg-yellow-600 lg:mx-0 mx-auto block'>Submit</button>

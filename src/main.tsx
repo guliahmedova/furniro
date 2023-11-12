@@ -14,6 +14,7 @@ import Search from './pages/Search.tsx';
 import Favorites from './pages/Favorites.tsx';
 import NotFound from './pages/NotFound.tsx';
 import ProductComparison from './pages/ProductComparison.tsx';
+import { ModalProvider } from './contexts/ModalContext.tsx';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<App />}>
@@ -34,6 +35,8 @@ const router = createBrowserRouter(createRoutesFromElements(
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ModalProvider>
+      <RouterProvider router={router} />
+    </ModalProvider>
   </React.StrictMode>,
 )
