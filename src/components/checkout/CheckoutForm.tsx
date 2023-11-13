@@ -1,6 +1,5 @@
 import { useFormik } from 'formik';
 import circle from '../../assets/images/blackCircle.svg';
-import emptyCircle from '../../assets/images/emptyCircle.svg';
 import { validate } from './formValidate';
 
 const CheckoutForm = () => {
@@ -140,14 +139,16 @@ const CheckoutForm = () => {
                             <span className="font-normal text-black">Direct Bank Transfer</span>
                         </div>
                         <p className='text-[#9F9F9F] font-light mt-3 mb-6'>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
-                        <div className='mb-[22px]'>
-                            <span className='flex items-center gap-4'>
-                                <img src={emptyCircle} alt="" /> <span className='text-[#9F9F9F] font-medium'>Direct Bank Transfer</span>
-                            </span>
-                            <span className='flex items-center gap-4'>
-                                <img src={emptyCircle} alt="" /> <span className='text-[#9F9F9F] font-medium'>Cash On Delivery</span>
-                            </span>
-                        </div>
+                        <form className='mb-[22px] flex flex-col gap-3'>
+                            <div className='flex items-center gap-4'>
+                                <input type="radio" id='rad1' value="" name="default-radio" className='w-[14px] h-[14px] accent-black' />
+                                <label htmlFor='rad1' className='text-[#9F9F9F] font-medium'>Direct Bank Transfer</label>
+                            </div>
+                            <div className='flex items-center gap-4'>
+                                <input type="radio" id='rad2' value="" name="default-radio" className='w-[14px] h-[14px] accent-black' />
+                                <label htmlFor='rad2' className='text-[#9F9F9F] font-medium'>Cash On Delivery</label>
+                            </div>
+                        </form>
                         <p className='font-light'>
                             Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our <span className='text-black font-semibold'>privacy policy.</span>
                         </p>

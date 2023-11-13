@@ -8,7 +8,7 @@ import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(Swal);
 
 const ContactForm = () => {
-    const { handleChange, values, handleSubmit, errors } = useFormik({
+    const { handleChange, values, handleSubmit, errors, resetForm } = useFormik({
         initialValues: {
             yourName: '',
             email: '',
@@ -16,7 +16,7 @@ const ContactForm = () => {
             message: ''
         },
         validate,
-        onSubmit: values => {
+        onSubmit: (values) => {
             MySwal.fire({
                 title: <p>{`Your work has been saved ${JSON.stringify(values.yourName, null, 2)}`}</p>,
                 position: "top-end",
@@ -26,7 +26,11 @@ const ContactForm = () => {
                 didOpen: () => {
                     MySwal.showLoading()
                 },
-            })
+            }).then((confirm) => {
+                if (confirm) {
+                    resetForm();
+                }
+            });
         },
     });
 
@@ -91,7 +95,7 @@ const ContactForm = () => {
                                 {errors.message ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.message}</div> : null}
                             </div>
 
-                            <button className='bg-[#B88E2F] w-[237px] py-[13.75px] rounded-md text-white font-normal leading-[24px] hover:bg-yellow-600 lg:mx-0 mx-auto block'>Submit</button>
+                            <button type='submit' className='bg-[#B88E2F] w-[237px] py-[13.75px] rounded-md text-white font-normal leading-[24px] hover:bg-yellow-600 lg:mx-0 mx-auto block'>Submit</button>
                         </form>
                     </div>
 

@@ -49,38 +49,6 @@ const Modal = () => {
                             </div>
                             <button><img src={deleteIcon} alt="" /></button>
                         </div>
-                        <div className="flex justify-between items-center">
-                            <div className="bg-[#EFE6D1] w-[105px] h-[105px] rounded-xl"> <img className="w-full h-full" src={md1} alt="" /></div>
-                            <div className="flex flex-col">
-                                <span className="text-black text-base leading-6 font-medium mb-2">Asgaard sofa</span>
-                                <div className="flex items-center gap-4"><span className="text-black text-base">1</span><span className="text-base">X</span><span className="text-[#B88E2F] font-medium text-base">Rs. 250,000.00</span></div>
-                            </div>
-                            <button><img src={deleteIcon} alt="" /></button>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <div className="bg-[#EFE6D1] w-[105px] h-[105px] rounded-xl"> <img className="w-full h-full" src={md2} alt="" /></div>
-                            <div className="flex flex-col">
-                                <span className="text-black text-base leading-6 font-medium mb-2">Asgaard sofa</span>
-                                <div className="flex items-center gap-4"><span className="text-black text-base">1</span><span className="text-base">X</span><span className="text-[#B88E2F] font-medium text-base">Rs. 250,000.00</span></div>
-                            </div>
-                            <button><img src={deleteIcon} alt="" /></button>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <div className="bg-[#EFE6D1] w-[105px] h-[105px] rounded-xl"> <img className="w-full h-full" src={md1} alt="" /></div>
-                            <div className="flex flex-col">
-                                <span className="text-black text-base leading-6 font-medium mb-2">Asgaard sofa</span>
-                                <div className="flex items-center gap-4"><span className="text-black text-base">1</span><span className="text-base">X</span><span className="text-[#B88E2F] font-medium text-base">Rs. 250,000.00</span></div>
-                            </div>
-                            <button><img src={deleteIcon} alt="" /></button>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <div className="bg-[#EFE6D1] w-[105px] h-[105px] rounded-xl"> <img className="w-full h-full" src={md2} alt="" /></div>
-                            <div className="flex flex-col">
-                                <span className="text-black text-base leading-6 font-medium mb-2">Asgaard sofa</span>
-                                <div className="flex items-center gap-4"><span className="text-black text-base">1</span><span className="text-base">X</span><span className="text-[#B88E2F] font-medium text-base">Rs. 250,000.00</span></div>
-                            </div>
-                            <button><img src={deleteIcon} alt="" /></button>
-                        </div>
                     </div>
                     <div className="mt-20 flex justify-between mb-6 lg:px-8 px-3"><span className="text-black text-base leading-6 select-none">Subtotal</span><span className="text-[#B88E2F] font-semibold text-base">Rs. 520,000.00</span></div>
                     <hr className="w-full bg-[#D9D9D9] mb-6" />

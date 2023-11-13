@@ -67,7 +67,7 @@ const Navbar = () => {
           <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to="/account">Account</NavLink>
           <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to="/search">Search</NavLink>
           <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to="/favorites">Favorites</NavLink>
-          <div onClick={openModal}>Cart</div>
+          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to="/cart">Cart</NavLink>
         </div>
 
       </nav>

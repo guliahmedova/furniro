@@ -5,24 +5,24 @@ const CartTotals = () => {
     return (
         <section>
             <div className="max-w-[1240px] mx-auto pt-[72px] pb-[85px] flex gap-8 lg:flex-row flex-col lg:px-0 px-3">
-                <div className='lg:block flex lg:justify-normal justify-between'>
-                    <div className="bg-[#F9F1E7] flex lg:flex-row flex-col lg:justify-normal px-3 justify-between gap-6 lg:gap-28 lg:px-28 py-4 rounded-sm">
+                <div className='lg:block flex lg:flex-row flex-col'>
+                    <div className="bg-[#F9F1E7] flex px-3 justify-between gap-6 lg:gap-28 lg:px-28 py-4 rounded-sm">
                         <span className="font-medium lg:leading-6">Product</span>
                         <span className="font-medium lg:leading-6">Price</span>
                         <span className="font-medium lg:leading-6">Quantity</span>
                         <span className="font-medium lg:leading-6">Subtotal</span>
                     </div>
 
-                    <div className='flex items-center lg:gap-[68px] gap-6 lg:pt-[55px] lg:flex-row lg:justify-normal flex-col justify-between'>
-                        <div className='flex lg:gap-[34px] items-center lg:flex-row flex-col'>
+                    <div className='flex items-center lg:gap-[68px] gap-6 lg:pt-[55px] lg:mt-0 mt-6 lg:overflow-auto overflow-x-scroll'>
+                        <div className='flex lg:gap-[34px] items-center lg:py-0 py-3 gap-3'>
                             <div className='lg:w-[108px] lg:h-[105px] w-12 h-12 bg-[#F9F1E7] rounded-lg flex justify-center items-center'>
                                 <img src={d} alt="" />
                             </div>
-                            <span className='text-[#9F9F9F] leading-6'>Asgaard sofa</span>
+                            <span className='text-[#9F9F9F] lg:leading-6 lg:text-base text-sm'>Asgaard sofa</span>
                         </div>
-                        <span className='text-[#9F9F9F] lg:leading-6'>Rs. 250,000.00</span>
+                        <span className='text-[#9F9F9F] lg:leading-6 lg:text-base text-sm'>Rs. 250,000.00</span>
                         <div className='text-[#000000] border-2 rounded-lg py-1 px-3 border-[#9F9F9F]'>1</div>
-                        <span className='text-[#000000] lg:leading-6'>Rs. 250,000.00</span>
+                        <span className='text-[#000000] lg:leading-6 lg:text-base text-sm'>Rs. 250,000.00</span>
                         <button><img src={deleteIcon} alt="" /></button>
                     </div>
 
