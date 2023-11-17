@@ -26,12 +26,12 @@ const Navbar = () => {
     <header className="bg-white md:shadow-sm">
       <nav className="flex items-center font-medium justify-around">
 
-        <div className="md:w-auto w-full py-7 md:px-0 px-3 z-10 flex justify-between items-center">
+        <div className="lg:w-auto w-full py-7 lg:px-0 px-3 z-50 flex justify-between items-center">
           <Link to="/" className="flex items-center w-fit gap-1">
             <img src={logo} alt="" />
             <span className="font-bold md:text-[34px] text-2xl">Furniro</span>
           </Link>
-          <div className="w-6 cursor-pointer md:hidden z-10" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <div className="w-6 cursor-pointer lg:hidden z-10" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             <img src={isMenuOpen ? closemenu : openmenu} alt="" />
           </div>
         </div>
@@ -59,7 +59,7 @@ const Navbar = () => {
         </div>
 
         {/* MOBILE NAVBAR */}
-        <div className={`md:hidden bg-white text-2xl absolute w-full h-full bottom-0 py-32 pl-3 flex flex-col gap-10 duration-500 ${isMenuOpen ? 'left-0' : 'left-[-100%]'}`}>
+        <div className={`md:hidden bg-white text-2xl absolute z-20 w-full h-full bottom-0 py-32 pl-3 flex flex-col gap-10 duration-500 ${isMenuOpen ? 'left-0' : 'left-[-100%]'}`}>
           <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/'>Home</NavLink>
           <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/shop'>Shop</NavLink>
           <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/blog'>Blog</NavLink>

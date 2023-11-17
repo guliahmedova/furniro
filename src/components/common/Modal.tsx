@@ -25,7 +25,7 @@ const Modal = () => {
 
     return (
         modal && (
-            <div onClick={handleBackgroundClick} className="modal-background | absolute h-full w-full bg-[#3A3A3A]/70 flex justify-end bottom-0 hover:bottom-0 z-40 opacity-100 transition-all ease-in-out duration-300">
+            <div onClick={handleBackgroundClick} className={`modal-background | fixed h-full w-full bg-[#3A3A3A]/70 flex justify-end bottom-0 hover:bottom-0 z-40 opacity-100 transition-all ease-in-out duration-500 ${modal ? 'right-0' : 'right-[-100%]'}`}>
                 <div className="bg-white top-0 h-fit py-7 w-auto">
                     <div className="flex justify-between gap-40 lg:px-8 px-3">
                         <h2 className="text-black font-bold lg:text-2xl text-sm">Shopping Cart</h2>

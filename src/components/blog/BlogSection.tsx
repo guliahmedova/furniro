@@ -39,7 +39,7 @@ const BlogSection = () => {
                     }
                 </div>
 
-                <div>
+                <div className='sticky top-5 self-start'>
                     <form className='border-2 border-[#9F9F9F] relative rounded-[10px] lg:h-14 mb-11 lg:max-w-[311px] mx-auto'>
                         <input type="text" className='w-full h-full rounded-[10px] outline-0 border-0 p-3' />
                         <button className='absolute lg:top-[17px] top-[10px] right-3 w-5 h-5 z-10 bg-white'><img src={search} alt="" /></button>

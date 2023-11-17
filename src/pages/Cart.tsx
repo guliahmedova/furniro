@@ -10,7 +10,7 @@ const Cart = () => {
       <Suspense fallback="Loading">
         <SecondaryHero title="Cart" logo={logo} />
       </Suspense>
-      <CartTotals />
+      <CartTotals />  
       <FeaturesBar />
     </>
   )

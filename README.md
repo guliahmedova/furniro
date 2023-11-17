@@ -1,9 +1,11 @@
 PROBLEMLER 🛑
 - footer responsive
-- detail page responsive 
 - slider detail page and home page
 - deploy - images visibility problem
 - slick slider package delete 
+
+- slider
+- whole page responsive
 
 ------------------------------------------------------------------------------
 PAGS 🟦

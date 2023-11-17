@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useFormik } from 'formik';
-import circle from '../../assets/images/blackCircle.svg';
 import { validate } from './formValidate';
+import blackCircle from '../../assets/images/blackCircle.svg';
+import emptyCircle from '../../assets/images/emptyCircle.svg';
 
 const CheckoutForm = () => {
     const { values, errors, handleChange, handleSubmit } = useFormik({
@@ -22,6 +24,9 @@ const CheckoutForm = () => {
             console.log(values);
         },
     });
+
+    const [accordion, setAccordion] = useState(false);
+    console.log(accordion);
 
     return (
         <section className="mt-[63px] mb-[123px]">
@@ -134,24 +139,30 @@ const CheckoutForm = () => {
                         <span className="text-[#B88E2F] font-bold lg:text-2xl">Rs. 250,000.00</span>
                     </div>
                     <div className="mt-[22px]">
-                        <div className='flex items-center gap-4'>
-                            <img src={circle} alt="" />
-                            <span className="font-normal text-black">Direct Bank Transfer</span>
+                        <div className='flex items-center gap-4 cursor-pointer' onClick={() => setAccordion(!accordion)}>
+                            <img src={accordion ? blackCircle : emptyCircle} className='w-[14px] h-[14px]' />
+                            <label htmlFor='rad3' className='font-medium cursor-pointer'>Direct Bank Transfer</label>
                         </div>
-                        <p className='text-[#9F9F9F] font-light mt-3 mb-6'>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
-                        <form className='mb-[22px] flex flex-col gap-3'>
-                            <div className='flex items-center gap-4'>
-                                <input type="radio" id='rad1' value="" name="default-radio" className='w-[14px] h-[14px] accent-black' />
-                                <label htmlFor='rad1' className='text-[#9F9F9F] font-medium'>Direct Bank Transfer</label>
-                            </div>
-                            <div className='flex items-center gap-4'>
-                                <input type="radio" id='rad2' value="" name="default-radio" className='w-[14px] h-[14px] accent-black' />
-                                <label htmlFor='rad2' className='text-[#9F9F9F] font-medium'>Cash On Delivery</label>
-                            </div>
-                        </form>
-                        <p className='font-light'>
-                            Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our <span className='text-black font-semibold'>privacy policy.</span>
-                        </p>
+                        {
+                            accordion && (
+                                <>
+                                    <p className='text-[#9F9F9F] font-light mt-3 mb-6'>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
+                                    <form className='mb-[22px] flex flex-col gap-3 transition-all ease-in-out duration-500'>
+                                        <div className='flex items-center gap-4'>
+                                            <input type="radio" id='rad1' value="" name="default-radio" className='w-[14px] h-[14px] accent-black' />
+                                            <label htmlFor='rad1' className='text-[#9F9F9F] font-medium'>Direct Bank Transfer</label>
+                                        </div>
+                                        <div className='flex items-center gap-4'>
+                                            <input type="radio" id='rad2' value="" name="default-radio" className='w-[14px] h-[14px] accent-black' />
+                                            <label htmlFor='rad2' className='text-[#9F9F9F] font-medium'>Cash On Delivery</label>
+                                        </div>
+                                    </form>
+                                    <p className='font-light'>
+                                        Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our <span className='text-black font-semibold'>privacy policy.</span>
+                                    </p>
+                                </>
+                            )
+                        }
                     </div>
                     <button className='text-black text-xl mt-12 border-2 border-black rounded-[15px] py-[17px] w-[318px] mx-auto block'>Place order</button>
                 </div>

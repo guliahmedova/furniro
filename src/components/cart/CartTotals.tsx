@@ -14,16 +14,16 @@ const CartTotals = () => {
                     </div>
 
                     <div className='flex items-center lg:gap-[68px] gap-6 lg:pt-[55px] lg:mt-0 mt-6 lg:overflow-auto overflow-x-scroll'>
-                        <div className='flex lg:gap-[34px] items-center lg:py-0 py-3 gap-3'>
+                        <div className='flex lg:gap-[34px] items-center lg:py-0 py-3 gap-3 w-fit h-fit'>
                             <div className='lg:w-[108px] lg:h-[105px] w-12 h-12 bg-[#F9F1E7] rounded-lg flex justify-center items-center'>
-                                <img src={d} alt="" />
+                                <img src={d} alt="" className='w-24 h-24'/>
                             </div>
                             <span className='text-[#9F9F9F] lg:leading-6 lg:text-base text-sm'>Asgaard sofa</span>
                         </div>
                         <span className='text-[#9F9F9F] lg:leading-6 lg:text-base text-sm'>Rs. 250,000.00</span>
                         <div className='text-[#000000] border-2 rounded-lg py-1 px-3 border-[#9F9F9F]'>1</div>
                         <span className='text-[#000000] lg:leading-6 lg:text-base text-sm'>Rs. 250,000.00</span>
-                        <button><img src={deleteIcon} alt="" /></button>
+                        <button className='flex-shrink-0'><img src={deleteIcon} alt="" /></button>
                     </div>
 
                 </div>

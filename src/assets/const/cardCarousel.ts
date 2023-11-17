@@ -2,7 +2,6 @@ import r1 from '../images/r1.svg';
 import r2 from '../images/pr1.svg';
 import r3 from '../images/pr2.svg';
 import r4 from '../images/pr3.svg';
-// import { nanoid } from '@reduxjs/toolkit';
 
 export const cardCarousel = [
     {
@@ -33,4 +32,4 @@ export const cardCarousel = [
         title: 'Kid Room',
         subTitle: "Funny"
     }
-]
+];
