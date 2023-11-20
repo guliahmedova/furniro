@@ -1,8 +1,14 @@
+import gtidIcon from '../../assets/images/grid.svg';
 import filterIcon from '../../assets/images/filter.svg';
 import viewIcon from '../../assets/images/viewList.svg';
-import gtidIcon from '../../assets/images/grid.svg';
+import { FC } from 'react';
 
-const Filter = () => {
+interface FilterProps {
+    changeGridClass: (gridType: string) => void;
+    gridClass: string
+};
+
+const Filter: FC<FilterProps> = ({ changeGridClass , gridClass}) => {
     return (
         <section className='bg-[#F9F1E7]'>
             <div className='flex lg:justify-between lg:flex-row max-w-[1236px] mx-auto py-[30px] flex-col'>
@@ -11,8 +17,8 @@ const Filter = () => {
                         <img src={filterIcon} alt="" />
                         <span>Filter</span>
                     </div>
-                    <img src={gtidIcon} alt="" />
-                    <img src={viewIcon} alt="" />
+                    <img src={gtidIcon} alt="" onClick={() => changeGridClass('grid')} className={`${gridClass === 'grid' ? 'cursor-default' : 'cursor-pointer'}`} />
+                    <img src={viewIcon} alt="" onClick={() => changeGridClass('view')} className={`${gridClass === 'view' ? 'cursor-default' : 'cursor-pointer'}`} />
                     <span className='select-none lg:border-l-2 border-[#9F9F9F] lg:pl-[24px] lg:text-base text-sm'>Showing 1–16 of 32 results</span>
                 </div>
 

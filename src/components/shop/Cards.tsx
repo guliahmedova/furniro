@@ -6,8 +6,13 @@ import { useEffect } from "react";
 import { getProducts } from '../../redux/features/productSlice';
 import { ProductTypes } from "../../models/productTypes";
 import { RootState } from "../../redux/app/store";
+import { FC } from "react";
 
-const Cards = () => {
+interface CardsProps {
+    gridClass: string
+};
+
+const Cards:FC<CardsProps> = ({gridClass}) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -29,11 +34,12 @@ const Cards = () => {
                         <span className="sr-only">Loading...</span>
                     </div>
                 </div>) : (
-                    <div className="grid lg:grid-cols-4 gap-8 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
+                    <div className={`${gridClass === 'grid' ? 'grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1' : 'flex flex-col'} gap-8`}>
                         {products.map((product: ProductTypes) => (
                             <ProductCard
                                 key={product.id}
                                 product={product}
+                                gridClass ={gridClass}
                             />
                         ))}
                     </div>

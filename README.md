@@ -1,7 +1,3 @@
-PROBLEMLER 🛑
-- deploy - images visibility problem
-- productDetail responsive problem 
-
 ------------------------------------------------------------------------------
 PAGS 🟦
 - Home + +
@@ -18,12 +14,12 @@ PAGS 🟦
 
 ------------------------------------------------------------------------------
 ESSENTIALS 💥
-- redux t
 - performance
 - axios
 - add wishlist - remove wishlist 
-- productslice 
+- deploy - images visibility problem
+- productDetail responsive problem 
+- 
 
 ------------------------------------------------------------------------------
 SUALLAR ❓
-- ProductCard -> ProductDetail page kecid. 

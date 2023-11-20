@@ -11,14 +11,15 @@ import { useAppDispatch } from '../../redux/app/store';
 
 interface ProductCardProps {
   product: ProductTypes;
+  gridClass: string
 };
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, gridClass }) => {
   const dispatch = useAppDispatch();
   const [favBtnActive, setFavBtnActive] = useState(false);
 
   return (
-    <Link to={`/productDetail/${product?.id}`} className="h-full group cursor-pointer">
+    <Link to={`/productDetail/${product?.id}`} className={`${gridClass === 'view' ? 'h-[50vh]' : 'h-full'} group cursor-pointer`}>
       <div className="relative overflow-hidden h-full">
         <img src={prs1} alt="" className='h-auto w-full object-cover' />
         <div className='absolute top-[24px] right-6'>
