@@ -1,11 +1,6 @@
 PROBLEMLER 🛑
-- footer responsive
-- slider detail page and home page
 - deploy - images visibility problem
-- slick slider package delete 
-
-- slider
-- whole page responsive
+- productDetail responsive problem 
 
 ------------------------------------------------------------------------------
 PAGS 🟦
@@ -25,8 +20,9 @@ PAGS 🟦
 ESSENTIALS 💥
 - redux t
 - performance
-- Product Detail page de image zoom in ve zoom out elave etmek
-- animation 
+- axios
+- add wishlist - remove wishlist 
+- productslice 
 
 ------------------------------------------------------------------------------
 SUALLAR ❓

@@ -17,6 +17,8 @@ import ProductComparison from './pages/ProductComparison.tsx';
 import { ModalProvider } from './contexts/ModalContext.tsx';
 import Login from './pages/Login.tsx';
 import Register from './pages/Register.tsx';
+import { store } from './redux/app/store.ts';
+import { Provider } from 'react-redux';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route>
@@ -25,7 +27,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path='shop' element={<Shop />} />
       <Route path='blog' element={<Blog />} />
       <Route path='contact' element={<Contact />} />
-      <Route path='productDetail/:id' element={<ProductDetail />} />
+      <Route path='productDetail/:productId' element={<ProductDetail />} />
       <Route path='contact' element={<Contact />} />
       <Route path='cart' element={<Cart />} />
       <Route path='checkout' element={<Checkout />} />
@@ -41,8 +43,10 @@ const router = createBrowserRouter(createRoutesFromElements(
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ModalProvider>
-      <RouterProvider router={router} />
-    </ModalProvider>
+    <Provider store={store}>
+      <ModalProvider>
+        <RouterProvider router={router} />
+      </ModalProvider>
+    </Provider>
   </React.StrictMode>,
-)
+);

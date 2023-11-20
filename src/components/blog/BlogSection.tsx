@@ -10,7 +10,7 @@ import Pagination from '../common/Pagination';
 const BlogSection = () => {
     return (
         <section className='mt-[106px] mb-[58px]'>
-            <div className='max-w-[1240px] mx-auto flex gap-[30px] lg:flex-row flex-col lg:px-0 px-3'>
+            <div className='max-w-[1240px] mx-auto flex gap-[30px] lg:flex-row flex-col-reverse lg:px-0 px-3'>
                 <div className='flex flex-col gap-[54px]'>
                     {
                         blogs.map(item => (
@@ -39,7 +39,7 @@ const BlogSection = () => {
                     }
                 </div>
 
-                <div className='sticky top-5 self-start'>
+                <div className='lg:sticky lg:top-5 self-start'>
                     <form className='border-2 border-[#9F9F9F] relative rounded-[10px] lg:h-14 mb-11 lg:max-w-[311px] mx-auto'>
                         <input type="text" className='w-full h-full rounded-[10px] outline-0 border-0 p-3' />
                         <button className='absolute lg:top-[17px] top-[10px] right-3 w-5 h-5 z-10 bg-white'><img src={search} alt="" /></button>

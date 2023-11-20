@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom"
+import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom"
 import mainD from '../../assets/images/mainD.svg';
 import arrow from '../../assets/images//heroArrow.svg';
 import { slides } from "../../assets/const/slides";
@@ -9,15 +9,52 @@ import facebook from '../../assets/images/facebook.svg';
 import linkedin from '../../assets/images/linkedin.svg';
 import twitter from '../../assets/images/twitter.svg';
 const stars = [star, star, star, star, halfStar];
+import { ProductTypes } from "../../models/productTypes";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../redux/app/store";
+import { getProducts } from '../../redux/features/productSlice';
 
 const Details = () => {
   const [sliderImg, setSliderImg] = useState(mainD);
+  const [size, setSize] = useState('L');
+  const [color, setColor] = useState('bg-[#816DFA]');
+  const [productCount, setProductCount] = useState(0);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
+
+
+  const { productId } = useParams();
+  const products: ProductTypes[] = useSelector((state: RootState) => state.product.entities);
+  const detailProduct = products.find(prod => prod.id === productId);
+  console.log(detailProduct?.colors)
 
   const handleSlideImageChange = (id: string) => {
     const slider = slides.find(item => item.id === id)?.img;
     if (slider !== undefined) {
       setSliderImg(slider);
     }
+  };
+
+  const handleSizeActiveClass = (size: string) => {
+    setSize(size);
+  };
+
+  const handleColor = (color: string) => {
+    setColor(color);
+  };
+
+  const increaseProductCount = () => {
+    setProductCount(prevState => prevState + 1);
+  };
+
+  const decreaseProductCount = () => {
+    if (productCount > 0) {
+      setProductCount(prevState => prevState - 1);
+    };
   };
 
   return (
@@ -31,7 +68,7 @@ const Details = () => {
           <Link to="/shop" className="text-[#9F9F9F]">Shop</Link>
           <img src={arrow} alt="" />
         </div>
-        <span className="text-[#000000] select-none lg:border-l-2 border-[#9F9F9F] lg:pl-[24px]">Asgaard sofa</span>
+        <span className="text-[#000000] select-none lg:border-l-2 border-[#9F9F9F] lg:pl-[24px]">{detailProduct?.title}</span>
       </div>
 
       <div className="lg:max-w-[1334px] mx-auto mt-8 mb-14 lg:px-0 px-3">
@@ -40,15 +77,15 @@ const Details = () => {
           <div className="flex gap-8 lg:flex-row flex-col-reverse">
             <div className="flex lg:flex-col flex-row lg;gap-8 gap-3">
               {slides.map(item => (
-                <div key={item.id} className="bg-[#F9F1E7] rounded-lg lg:w-[76px] lg:h-20 flex items-center justify-center cursor-pointer" onClick={() => handleSlideImageChange(item.id)}><img src={item.img} alt="" /></div>
+                <div key={item.id} className={`bg-${color}-600 rounded-lg lg:w-[76px] lg:h-20 flex items-center justify-center cursor-pointer`} onClick={() => handleSlideImageChange(item.id)}><img src={item.img} alt="" /></div>
               ))}
             </div>
-            <div className="bg-[#F9F1E7] rounded-lg lg:w-[423px] lg:h-[500px]"><img className="w-full h-full object-contain" src={sliderImg} alt="" /></div>
+            <div className={`bg-${color}-600 rounded-lg lg:w-[423px] lg:h-[500px]`}><img className="w-full h-full object-contain" src={sliderImg} alt="" /></div>
           </div>
 
           <div>
-            <h1 className="text-black lg:text-[42px] lg:leading-[63px] text-2xl tracking-wide">Asgaard sofa</h1>
-            <span className="text-[#9F9F9F] lg:text-2xl font-medium text-lg lg:mt-0 mt-3 block">Rs. 250,000.00</span>
+            <h1 className="text-black lg:text-[42px] lg:leading-[63px] text-2xl tracking-wide">{detailProduct?.title}</h1>
+            <span className="text-[#9F9F9F] lg:text-2xl font-medium text-lg lg:mt-0 mt-3 block">Rs. {detailProduct?.price}</span>
             <div className="flex gap-[18px] mt-4 mb-5">
               <div className="flex items-center gap-[6px]">
                 {stars.map((item, index) => (
@@ -57,30 +94,30 @@ const Details = () => {
               </div>
               <span className="text-[#9F9F9F] text-[13px] border-l-2 border-[#9F9F9F] block pl-[22px]">5 Customer Review</span>
             </div>
-            <p className="lg:text-[13px] lg:max-w-[424px] text-black mb-[22px]">Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.</p>
+            <p className="lg:text-[13px] lg:max-w-[390px] font-medium text-black mb-[22px]">Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.</p>
             <div className="mb-[18px]">
               <h4 className="text-[#9F9F9F] text-[14px] mb-3">Size</h4>
               <div className="flex items-center gap-4">
-                <span className="w-[30px] h-[30px] flex-shrink-0 rounded-md bg-[#B88E2F] flex items-center justify-center text-white text-[13px]">L</span>
-                <span className="w-[30px] h-[30px] flex-shrink-0 rounded-md bg-[#F9F1E7] flex items-center justify-center text-black text-[13px]">XL</span>
-                <span className="w-[30px] h-[30px] flex-shrink-0 rounded-md bg-[#F9F1E7] flex items-center justify-center text-black text-[13px]">XS</span>
+                {detailProduct?.sizes.map((item) => (
+                  <span key={item} onClick={() => handleSizeActiveClass(item)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-md ${size === item ? 'bg-[#B88E2F] text-white cursor-default' : 'bg-[#F9F1E7] cursor-pointer'} flex items-center justify-center  text-[13px]`}>{item}</span>
+                ))}
               </div>
             </div>
 
             <div className="mb-8">
               <h4 className="text-[#9F9F9F] text-[14px] mb-3">Color</h4>
               <div className="flex gap-4 items-center">
-                <button className="w-[30px] h-[30px] flex-shrink-0 rounded-full bg-[#816DFA]"></button>
-                <button className="w-[30px] h-[30px] flex-shrink-0 rounded-full bg-[#000]"></button>
-                <button className="w-[30px] h-[30px] flex-shrink-0 rounded-full bg-[#B88E2F]"></button>
+                {detailProduct?.colors.map((item) => (
+                  <button key={item} onClick={() => handleColor(item)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-full border-2 ${item === color ? 'border-[#B88E2F]' : ''} bg-${item}-600`}></button>
+                ))}
               </div>
             </div>
 
             <div className="flex lg:flex-row flex-col gap-4 mb-[60px]">
               <div className="flex items-center justify-between lg:px-3 border-2 border-[#9F9F9F] rounded-lg lg:min-w-[123px] h-16">
-                <button className="text-black">-</button>
-                <span className="text-black">1</span>
-                <button className="text-black">+</button>
+                <button className="font-medium text-xl" onClick={decreaseProductCount}>-</button>
+                <span className="font-medium">{productCount}</span>
+                <button className="font-medium text-xl" onClick={increaseProductCount}>+</button>
               </div>
               <button className="lg:w-[215px] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl capitalize">Add to cart</button>
               <button className="lg:w-[215px] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl">+ Compare</button>

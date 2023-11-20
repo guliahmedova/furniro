@@ -8,9 +8,11 @@ import account from '../../assets/images/account.svg';
 import openmenu from '../../assets/images/openmenu.svg';
 import closemenu from '../../assets/images/closemenu.svg';
 import shopCart from '../../assets/images/shoppingCart.svg';
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const { openModal } = useModal();
 
@@ -21,6 +23,10 @@ const Navbar = () => {
       document.body.style.overflow = 'unset';
     }
   }, [isMenuOpen]);
+
+  useEffect(()=> {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
 
   return (
     <header className="bg-white md:shadow-sm">
