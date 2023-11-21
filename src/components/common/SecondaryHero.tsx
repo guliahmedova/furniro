@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import heroArrow from '../../assets/images//heroArrow.svg';
 import { ISecondaryHeroTypes } from '../../models/secondaryHeroTypes';
-import React from 'react';
+import { FC } from 'react';
 
-const SecondaryHero: React.FC<ISecondaryHeroTypes> = ({ title, logo, isSearch }) => {
+const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch }) => {
   return (
     <section className='lg:h-[316px] flex justify-center md:mg-top items-center bg-hero-image w-full bg-no-repeat bg-fix bg-center bg-cover'>
       <div className='text-center w-full lg:py-0 py-6'>
@@ -26,4 +26,4 @@ const SecondaryHero: React.FC<ISecondaryHeroTypes> = ({ title, logo, isSearch })
   )
 }
 
-export default SecondaryHero
+export default SecondaryHero;

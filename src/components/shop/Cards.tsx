@@ -9,7 +9,7 @@ import { RootState } from "../../redux/app/store";
 import { FC } from "react";
 
 interface CardsProps {
-    gridClass: string
+    gridClass?: string
 };
 
 const Cards:FC<CardsProps> = ({gridClass}) => {

@@ -18,6 +18,8 @@ import { ModalProvider } from './contexts/ModalContext.tsx';
 import Login from './pages/Login.tsx';
 import Register from './pages/Register.tsx';
 import { store } from './redux/app/store.ts';
+import { persistor } from './redux/app/store.ts';
+import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -44,9 +46,11 @@ const router = createBrowserRouter(createRoutesFromElements(
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <ModalProvider>
-        <RouterProvider router={router} />
-      </ModalProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <ModalProvider>
+          <RouterProvider router={router} />
+        </ModalProvider>
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
 );

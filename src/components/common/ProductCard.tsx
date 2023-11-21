@@ -5,26 +5,38 @@ import share from '../../assets/images/share.svg';
 import compare from '../../assets/images/compare.svg';
 import heart from '../../assets/images/whiteheart.svg';
 import goldheart from '../../assets/images/goldheart.svg';
-import { addToWishlist } from '../../redux/features/wishlistSlice';
-import React, { useState } from 'react';
-import { useAppDispatch } from '../../redux/app/store';
+import { addToWishlist, removeFromWishlist } from '../../redux/features/wishlistSlice';
+import { FC } from 'react';
+import { RootState, useAppDispatch } from '../../redux/app/store';
+import { useSelector } from 'react-redux';
 
 interface ProductCardProps {
   product: ProductTypes;
-  gridClass: string
+  gridClass?: string
 };
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, gridClass }) => {
+const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
   const dispatch = useAppDispatch();
-  const [favBtnActive, setFavBtnActive] = useState(false);
+
+  const isLike = useSelector((state: RootState) => (
+    state.wishlist.product.some((favItem) => favItem?.id === product?.id)
+  ));
+
+  const handleFavBtnClick = () => {
+    if (isLike) {
+      dispatch(removeFromWishlist(product));
+    } else {
+      dispatch(addToWishlist(product));
+    }
+  }
 
   return (
     <Link to={`/productDetail/${product?.id}`} className={`${gridClass === 'view' ? 'h-[50vh]' : 'h-full'} group cursor-pointer`}>
       <div className="relative overflow-hidden h-full">
         <img src={prs1} alt="" className='h-auto w-full object-cover' />
         <div className='absolute top-[24px] right-6'>
-          {product?.isNew ? (<span className='w-12 h-12 rounded-full bg-[#2EC1AC] flex items-center justify-center text-white font-medium'>New</span>) : (
-            <span className='w-12 h-12 rounded-full bg-[#E97171] flex items-center justify-center text-white font-medium'>-{product?.discount}%</span>
+          {product?.IsNew ? (<span className='w-12 h-12 rounded-full bg-[#2EC1AC] flex items-center justify-center text-white font-medium'>New</span>) : (
+            <span className='w-12 h-12 rounded-full bg-[#E97171] flex items-center justify-center text-white font-medium'>-{product?.DiscountPercent}%</span>
           )}
         </div>
         <div className="absolute h-full w-full bg-[#3A3A3A]/70 flex items-center justify-center bottom-0 hover:bottom-0 opacity-0 hover:opacity-100 transition-all duration-300">
@@ -45,24 +57,23 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, gridClass }) => {
               </div>
               <div className='flex items-center gap-1 font-semibold leading-6 text-white'
                 onClick={(e) => {
-                  dispatch(addToWishlist(product));
-                  setFavBtnActive((prevState) => !prevState);
+                  handleFavBtnClick();
                   e.preventDefault();
                   e.stopPropagation();
                 }}>
-                <img className='w-4 h-4' src={favBtnActive ? goldheart : heart} alt="" /> <span className={`${favBtnActive ? 'text-[#B88E2F]' : ''}`}>Like</span>
+                <img className='w-4 h-4' src={isLike ? goldheart : heart} alt="" /> <span className={`${isLike ? 'text-[#B88E2F]' : ''}`}>Like</span>
               </div>
             </div>
           </div>
         </div>
 
         <div className='p-[16px] pb-8 bg-[#F4F5F7]'>
-          <h1 className='text-[#3A3A3A] font-bold text-xl leading-7 mb-2'>{product?.title}</h1>
-          <p className='text-[#898989] font-medium'>{product?.subTitle}</p>
+          <h1 className='text-[#3A3A3A] font-bold text-xl leading-7 mb-2'>{product?.Title}</h1>
+          <p className='text-[#898989] font-medium'>{product?.SubTitle}</p>
 
           <div className='mt-[8px] flex gap-4 justify-between items-center'>
-            <span className='text-[#3A3A3A] font-bold text-xl'>Rp {Math.ceil(product?.price - ((product?.price * product?.discount) / 100))}</span>
-            <span className='text-[#B0B0B0] font-normal leading-6 line-through'>Rp {product?.price}</span>
+            <span className='text-[#3A3A3A] font-bold text-xl'>Rp {Math.ceil(product?.SalePrice - ((product?.SalePrice * product?.DiscountPercent) / 100))}</span>
+            <span className='text-[#B0B0B0] font-normal leading-6 line-through'>Rp {product?.SalePrice}</span>
           </div>
         </div>
       </div>

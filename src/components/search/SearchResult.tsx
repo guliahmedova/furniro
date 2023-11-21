@@ -1,4 +1,4 @@
-import ProductCard from "../common/ProductCard"
+// import ProductCard from "../common/ProductCard"
 
 const SearchResult = () => {
   return (
@@ -8,14 +8,11 @@ const SearchResult = () => {
           <span className="underline italic">"Query"</span> açar sözü üzrə axtarış nəticələri...
         </p>
         <div className="grid lg:grid-cols-4 gap-8 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-8">
-          <ProductCard/>
-          <ProductCard/>
-          <ProductCard/>
-          <ProductCard/>
+          {/* <ProductCard/> */}
         </div>
       </div>
     </section>
   )
 }
 
-export default SearchResult
+export default SearchResult;

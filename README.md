@@ -14,12 +14,9 @@ PAGS 🟦
 
 ------------------------------------------------------------------------------
 ESSENTIALS 💥
+- search 
+- add tocart
 - performance
-- axios
-- add wishlist - remove wishlist 
-- deploy - images visibility problem
 - productDetail responsive problem 
-- 
+- deploy - images visibility problem
 
-------------------------------------------------------------------------------
-SUALLAR ❓

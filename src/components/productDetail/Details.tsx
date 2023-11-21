@@ -16,8 +16,8 @@ import { getProducts } from '../../redux/features/productSlice';
 
 const Details = () => {
   const [sliderImg, setSliderImg] = useState(mainD);
-  const [size, setSize] = useState('L');
-  const [color, setColor] = useState('bg-[#816DFA]');
+  const [size, setSize] = useState('');
+  const [color, setColor] = useState('');
   const [productCount, setProductCount] = useState(0);
 
   const dispatch = useAppDispatch();
@@ -26,11 +26,10 @@ const Details = () => {
     dispatch(getProducts());
   }, []);
 
-
   const { productId } = useParams();
   const products: ProductTypes[] = useSelector((state: RootState) => state.product.entities);
   const detailProduct = products.find(prod => prod.id === productId);
-  console.log(detailProduct?.colors)
+  console.log(detailProduct?.ProductColors)
 
   const handleSlideImageChange = (id: string) => {
     const slider = slides.find(item => item.id === id)?.img;
@@ -68,7 +67,7 @@ const Details = () => {
           <Link to="/shop" className="text-[#9F9F9F]">Shop</Link>
           <img src={arrow} alt="" />
         </div>
-        <span className="text-[#000000] select-none lg:border-l-2 border-[#9F9F9F] lg:pl-[24px]">{detailProduct?.title}</span>
+        <span className="text-[#000000] select-none lg:border-l-2 border-[#9F9F9F] lg:pl-[24px]">{detailProduct?.Title}</span>
       </div>
 
       <div className="lg:max-w-[1334px] mx-auto mt-8 mb-14 lg:px-0 px-3">
@@ -77,15 +76,15 @@ const Details = () => {
           <div className="flex gap-8 lg:flex-row flex-col-reverse">
             <div className="flex lg:flex-col flex-row lg;gap-8 gap-3">
               {slides.map(item => (
-                <div key={item.id} className={`bg-${color}-600 rounded-lg lg:w-[76px] lg:h-20 flex items-center justify-center cursor-pointer`} onClick={() => handleSlideImageChange(item.id)}><img src={item.img} alt="" /></div>
+                <div key={item.id} style={{ backgroundColor: color }} className={`rounded-lg lg:w-[76px] lg:h-20 flex items-center justify-center cursor-pointer`} onClick={() => handleSlideImageChange(item.id)}><img src={item.img} alt="" /></div>
               ))}
             </div>
-            <div className={`bg-${color}-600 rounded-lg lg:w-[423px] lg:h-[500px]`}><img className="w-full h-full object-contain" src={sliderImg} alt="" /></div>
+            <div style={{ backgroundColor: color }} className={`rounded-lg lg:w-[423px] lg:h-[500px]`}><img className="w-full h-full object-contain" src={sliderImg} alt="" /></div>
           </div>
 
           <div>
-            <h1 className="text-black lg:text-[42px] lg:leading-[63px] text-2xl tracking-wide">{detailProduct?.title}</h1>
-            <span className="text-[#9F9F9F] lg:text-2xl font-medium text-lg lg:mt-0 mt-3 block">Rs. {detailProduct?.price}</span>
+            <h1 className="text-black lg:text-[42px] lg:leading-[63px] text-2xl tracking-wide">{detailProduct?.Title}</h1>
+            <span className="text-[#9F9F9F] lg:text-2xl font-medium text-lg lg:mt-0 mt-3 block">Rs. {detailProduct?.SalePrice}</span>
             <div className="flex gap-[18px] mt-4 mb-5">
               <div className="flex items-center gap-[6px]">
                 {stars.map((item, index) => (
@@ -98,8 +97,8 @@ const Details = () => {
             <div className="mb-[18px]">
               <h4 className="text-[#9F9F9F] text-[14px] mb-3">Size</h4>
               <div className="flex items-center gap-4">
-                {detailProduct?.sizes.map((item) => (
-                  <span key={item} onClick={() => handleSizeActiveClass(item)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-md ${size === item ? 'bg-[#B88E2F] text-white cursor-default' : 'bg-[#F9F1E7] cursor-pointer'} flex items-center justify-center  text-[13px]`}>{item}</span>
+                {detailProduct?.ProductSizes.map((item) => (
+                  <span key={item} onClick={() => handleSizeActiveClass(item)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-md ${size === item ? 'bg-[#B88E2F] text-white cursor-default' : 'bg-[#F9F1E7] cursor-pointer'} flex items-center justify-center uppercase text-[13px]`}>{item}</span>
                 ))}
               </div>
             </div>
@@ -107,8 +106,8 @@ const Details = () => {
             <div className="mb-8">
               <h4 className="text-[#9F9F9F] text-[14px] mb-3">Color</h4>
               <div className="flex gap-4 items-center">
-                {detailProduct?.colors.map((item) => (
-                  <button key={item} onClick={() => handleColor(item)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-full border-2 ${item === color ? 'border-[#B88E2F]' : ''} bg-${item}-600`}></button>
+                {detailProduct?.ProductColors.map((item) => (
+                  <button key={item} onClick={() => handleColor(item)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-full border-2 ${item === color ? 'border-[#B88E2F]' : ''}`} style={{ backgroundColor: item }}></button>
                 ))}
               </div>
             </div>
@@ -126,15 +125,19 @@ const Details = () => {
             <div className="border-t-2 border-[#D9D9D9] pt-10 flex flex-col gap-3">
               <div className="flex items-center">
                 <span className="text-[#9F9F9F] w-[92px]">SKU</span>
-                <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>SS001</span>
+                <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>{detailProduct?.Sku}</span>
               </div>
               <div className="flex items-center">
                 <span className="text-[#9F9F9F] w-[92px]">Category</span>
-                <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>Sofas</span>
+                <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>{detailProduct?.CategoryId}</span>
               </div>
               <div className="flex items-center">
                 <span className="text-[#9F9F9F] w-[92px]">Tags</span>
-                <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>Sofa, Chair, Home, Shop</span>
+                <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>
+                  {detailProduct?.ProductTags.map((tag) => (
+                    <span key={tag}>{tag}, </span>
+                  ))}
+                </span>
               </div>
               <div className="flex items-center">
                 <span className="text-[#9F9F9F] w-[92px]">Share</span>
