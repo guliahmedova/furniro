@@ -1,31 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { ProductTypes } from "../../models/productTypes";
 
-const initialState = {
+export interface ProductState {
+    filteredProducts: ProductTypes[],
+    searchText: string
+};
+
+const initialState: ProductState = {
     filteredProducts: [],
-    productList: [],
-    searchQuery: ''
+    searchText: ''
 };
 
 export const searchSlice = createSlice({
     name: 'search',
     initialState,
     reducers: {
-        updateSearchQuery: (state, action) => {
-            state.searchQuery = action.payload;
-            console.log("state.productList: ", state.productList);
-            state.filteredProducts = state.productList.filter(
-                (product) =>
-                    product?.Title.toLowerCase().includes(action.payload.toLowerCase()) || 
-                    product?.SubTitle.toLowerCase().includes(action.payload.toLowerCase())
-            );
-        },
-        setProducts: (state, action) => {
-            state.productList = action.payload;
-            state.filteredProducts = action.payload; 
-            console.log(action.payload);
+        addSearchText: (state, action: PayloadAction<string>) => {
+            state.searchText = action.payload;
         }
     }
 });
 
-export const { updateSearchQuery, setProducts } = searchSlice.actions;
+export const { addSearchText } = searchSlice.actions;
 export default searchSlice.reducer;

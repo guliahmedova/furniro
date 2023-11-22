@@ -1,8 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { ProductState } from '../../models/productState';
 import axios from 'axios';
 import { RootState } from '../app/store';
+import { ProductTypes } from '../../models/productTypes';
+
+export interface ProductState {
+    entities: ProductTypes[]
+    loading: 'idle' | 'pending' | 'succeeded' | 'failed',
+};
 
 export const getProducts = createAsyncThunk(
     'products',

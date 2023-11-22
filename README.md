@@ -14,9 +14,13 @@ PAGS 🟦
 
 ------------------------------------------------------------------------------
 ESSENTIALS 💥
-- search 
 - add tocart
 - performance
 - productDetail responsive problem 
 - deploy - images visibility problem
+- tag, title, subtitle - gore filterizasiya yazmaq
 
+------------------------------------------------------------------------------
+SUALLAR 
+- getproducts() - useffect icinde yazmaliyiq hemise
+- detail page componentlere bolmusem ve her bir component icinde productid lazimdi, parent component icinde productid tapib sonra children componentlere props kimi oturmeliyem? 

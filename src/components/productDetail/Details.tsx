@@ -29,7 +29,6 @@ const Details = () => {
   const { productId } = useParams();
   const products: ProductTypes[] = useSelector((state: RootState) => state.product.entities);
   const detailProduct = products.find(prod => prod.id === productId);
-  console.log(detailProduct?.ProductColors)
 
   const handleSlideImageChange = (id: string) => {
     const slider = slides.find(item => item.id === id)?.img;

@@ -3,7 +3,7 @@ import heroArrow from '../../assets/images//heroArrow.svg';
 import { ISecondaryHeroTypes } from '../../models/secondaryHeroTypes';
 import { FC } from 'react';
 
-const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch }) => {
+const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch, addSearchText, searchText }) => {
   return (
     <section className='lg:h-[316px] flex justify-center md:mg-top items-center bg-hero-image w-full bg-no-repeat bg-fix bg-center bg-cover'>
       <div className='text-center w-full lg:py-0 py-6'>
@@ -17,7 +17,11 @@ const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch }) => {
         {
           isSearch && (
             <form className='mt-6 lg:w-4/12 mx-auto lg:px-0 px-3'>
-              <input type="text" id="name" className="border-2 w-full lg:text-base rounded-xl outline-0 py-[10px] px-[31px] border-[#9F9F9F]" placeholder="Search..." required />
+              <input type="text" id="name"
+                value={searchText}
+                onChange={(event) => addSearchText && addSearchText(event?.target?.value)}
+                className="border-2 w-full lg:text-base rounded-xl outline-0 py-[10px] px-[31px] border-[#9F9F9F]"
+                placeholder="Search..." required />
             </form>
           )
         }

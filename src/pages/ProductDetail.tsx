@@ -2,7 +2,7 @@ import Details from "../components/productDetail/Details"
 import RelatedProducts from "../components/productDetail/RelatedProducts"
 import DetailTabbedNavigation from "../components/productDetail/DetailTabbedNavigation"
 
-  const ProductDetail = () => {
+const ProductDetail = () => {
   return (
     <>
       <Details/>
@@ -12,4 +12,4 @@ import DetailTabbedNavigation from "../components/productDetail/DetailTabbedNavi
   )
 }
 
-export default ProductDetail
+export default ProductDetail;
