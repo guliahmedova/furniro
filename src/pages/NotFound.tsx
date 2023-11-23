@@ -1,11 +1,16 @@
+import sadFace from '../assets/images/sad-circle.svg';
+
 const NotFound = () => {
     return (
-        <section className="bg-white">
-            <div className="lg:max-w-[1236px] mx-auto mt-[56px] mb-[69px] uppercase lg:text-8xl text-2xl lg:font-extrabold font-bold text-red-800 text-center">
-                404 page Not found
+        <section className="bg-white py-28">
+            <div className='flex justify-center text-[#9F9F9F] flex-col items-center gap-3 select-none'>
+                <img src={sadFace} alt="" className='w-20 h-20' />
+                <span className='font-medium text-5xl'>404</span>
+                <span>Page not found</span>
+                <p className='font-medium'>The Page you are looking for doesn't exist or an other error occured.</p>
             </div>
         </section>
     )
 }
 
-export default NotFound
+export default NotFound;

@@ -1,11 +1,17 @@
 import { useSelector } from "react-redux";
 import ProductCard from "../common/ProductCard";
-import { RootState } from "../../redux/app/store";
-import { FC } from "react";
+import { RootState, useAppDispatch } from "../../redux/app/store";
+import { FC, useEffect } from "react";
 import { ProductTypes } from "../../models/productTypes";
+import { getProducts } from "../../redux/features/productSlice";
 
 const ProductsContainer: FC<ProductTypes> = () => {
-    const products = useSelector((state: RootState) => state.product.entities);
+    const dispatch = useAppDispatch();
+    const products:ProductTypes[] = useSelector((state: RootState) => state.product.entities) || [];
+
+    useEffect(()=>{
+        dispatch(getProducts());
+    },[dispatch])
 
     return (
         <section className="bg-white">

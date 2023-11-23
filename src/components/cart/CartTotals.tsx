@@ -28,7 +28,7 @@ const CartTotals = () => {
 
                 </div>
 
-                <div className="bg-[#F9F1E7] lg:w-[393px] rounded-sm lg:px-[75px] lg:pb-[80px] px-6 pb-6">
+                <div className="bg-[#F9F1E7] lg:w-[393px] rounded-sm lg:px-[75px] lg:pb-[80px] px-6 pb-6 max-h-[390px]">
                     <h1 className="text-center pt-[20px] text-[#000000] font-semibold lg:text-[32px] text-2xl leading-[48px] lg:mb-[61px] mb-6">Cart Totals</h1>
                     <div className="mb-[31px] flex justify-between">
                         <span className="font-medium text-[16px] leading-6">Subtotal</span>

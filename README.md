@@ -17,10 +17,8 @@ ESSENTIALS 💥
 - add tocart
 - performance
 - productDetail responsive problem 
-- deploy - images visibility problem
-- tag, title, subtitle - gore filterizasiya yazmaq
+- deploy - images visibility problem and hero images display problem
+- search page-de datalar gorunmeli deyil
+- cart pagede cart totals cart height 
 
 ------------------------------------------------------------------------------
-SUALLAR 
-- getproducts() - useffect icinde yazmaliyiq hemise
-- detail page componentlere bolmusem ve her bir component icinde productid lazimdi, parent component icinde productid tapib sonra children componentlere props kimi oturmeliyem? 

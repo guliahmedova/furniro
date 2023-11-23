@@ -11,9 +11,9 @@ export type ProductTypes = {
     CategoryId: number,
     DescriptionId: number,
     CreatedAt: Date,
-    ProductImages: [],
+    ProductImages: string[],
     ProductTags: [],
-    ProductSizes: [],
-    ProductColors: [],
+    ProductSizes: string[],
+    ProductColors: string[],
     Reviews: []
 };

@@ -3,6 +3,8 @@ import ProductCard from "../common/ProductCard";
 import { useSelector } from "react-redux";
 import { ProductTypes } from "../../models/productTypes";
 import { RootState } from "../../redux/app/store";
+import { Link } from "react-router-dom";
+import favHeart from '../../assets/images/favorite-heart.svg';
 
 const FavoritesContainer = () => {
     const favProducts = useSelector((state: RootState) => state.wishlist.product);
@@ -10,8 +12,7 @@ const FavoritesContainer = () => {
     return (
         <section className="bg-white">
             {favProducts.length > 0 ? (<div className="lg:max-w-[1236px] mx-auto mt-[56px] mb-[69px] lg:px-0 px-3">
-                <h1 className="font-bold text-[#3A3A3A] mb-[32px] text-center lg:text-[30px] text-xl lg:leading-10">Your Favorite Products</h1>
-                <div className="grid lg:grid-cols-4 gap-8 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-8">
+                <div className="grid lg:grid-cols-4 gap-8 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-8 w-full">
                     {favProducts.map((item: ProductTypes) => (
                         <ProductCard
                             key={item.id}
@@ -20,7 +21,15 @@ const FavoritesContainer = () => {
                     ))}
                 </div>
                 <Pagination />
-            </div>) : (<div className="text-center py-28 text-7xl font-medium text-yellow-800">There are no products</div>)}
+            </div>) : (
+                <div className="py-28 flex justify-center items-center flex-col gap-3">
+                    <img src={favHeart} alt="" className="w-10 h-10" />
+                    <span className="text-red-600 font-bold text-2xl">Your Wishlist is empty!</span>
+                    <p className="font-medium text-gray-600">seems like you don't have wishes here.</p>
+                    <p className="font-medium text-gray-600">Make a wish!</p>
+                    <Link to="/shop" className="text-white font-medium text-lg bg-[#B88E2F] rounded-sm shadow-md p-3">Start Shopping</Link>
+                </div>
+            )}
         </section>
     )
 }

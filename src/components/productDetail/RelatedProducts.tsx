@@ -1,4 +1,4 @@
-import ProductCard from "../common/ProductCard";
+// import ProductCard from "../common/ProductCard";
 
 const RelatedProducts = () => {
     return (

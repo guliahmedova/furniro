@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import heroArrow from '../../assets/images//heroArrow.svg';
 import { ISecondaryHeroTypes } from '../../models/secondaryHeroTypes';
 import { FC } from 'react';
+import searchIcon from '../../assets/images/search.svg';
 
 const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch, addSearchText, searchText }) => {
   return (
@@ -16,12 +17,14 @@ const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch, addSear
         </div>
         {
           isSearch && (
-            <form className='mt-6 lg:w-4/12 mx-auto lg:px-0 px-3'>
+            <form className='mt-6 lg:w-4/12 mx-auto lg:px-0 px-3 relative'>
               <input type="text" id="name"
                 value={searchText}
                 onChange={(event) => addSearchText && addSearchText(event?.target?.value)}
                 className="border-2 w-full lg:text-base rounded-xl outline-0 py-[10px] px-[31px] border-[#9F9F9F]"
-                placeholder="Search..." required />
+                placeholder="Search..."
+                required />
+              <img src={searchIcon} alt="" className='absolute z-10 bg-white right-3 top-3 w-6 h-6 opacity-30' />
             </form>
           )
         }

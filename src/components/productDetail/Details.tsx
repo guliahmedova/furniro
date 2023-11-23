@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom"
+import { useState } from "react";
+import { Link } from "react-router-dom"
 import mainD from '../../assets/images/mainD.svg';
 import arrow from '../../assets/images//heroArrow.svg';
 import { slides } from "../../assets/const/slides";
@@ -9,26 +9,20 @@ import facebook from '../../assets/images/facebook.svg';
 import linkedin from '../../assets/images/linkedin.svg';
 import twitter from '../../assets/images/twitter.svg';
 const stars = [star, star, star, star, halfStar];
-import { ProductTypes } from "../../models/productTypes";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../redux/app/store";
-import { getProducts } from '../../redux/features/productSlice';
+import { RootState } from "../../redux/app/store";
+import { ProductTypes } from "../../models/productTypes";
 
 const Details = () => {
   const [sliderImg, setSliderImg] = useState(mainD);
-  const [size, setSize] = useState('');
-  const [color, setColor] = useState('');
   const [productCount, setProductCount] = useState(0);
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
-
-  const { productId } = useParams();
-  const products: ProductTypes[] = useSelector((state: RootState) => state.product.entities);
-  const detailProduct = products.find(prod => prod.id === productId);
+  const detailProduct: ProductTypes = useSelector((state: RootState) => state.product.product);
+  
+  const initialSize = detailProduct?.ProductSizes?.length > 0 ? detailProduct.ProductSizes[0] : ''; 
+  const [size, setSize] = useState(initialSize);
+  
+  const initialColor = detailProduct?.ProductColors?.length > 0 ? detailProduct.ProductColors[0] : '';
+  const [color, setColor] = useState(initialColor);
 
   const handleSlideImageChange = (id: string) => {
     const slider = slides.find(item => item.id === id)?.img;
@@ -96,7 +90,7 @@ const Details = () => {
             <div className="mb-[18px]">
               <h4 className="text-[#9F9F9F] text-[14px] mb-3">Size</h4>
               <div className="flex items-center gap-4">
-                {detailProduct?.ProductSizes.map((item) => (
+                {detailProduct?.ProductSizes?.map((item) => (
                   <span key={item} onClick={() => handleSizeActiveClass(item)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-md ${size === item ? 'bg-[#B88E2F] text-white cursor-default' : 'bg-[#F9F1E7] cursor-pointer'} flex items-center justify-center uppercase text-[13px]`}>{item}</span>
                 ))}
               </div>
@@ -105,7 +99,7 @@ const Details = () => {
             <div className="mb-8">
               <h4 className="text-[#9F9F9F] text-[14px] mb-3">Color</h4>
               <div className="flex gap-4 items-center">
-                {detailProduct?.ProductColors.map((item) => (
+                {detailProduct?.ProductColors?.map((item) => (
                   <button key={item} onClick={() => handleColor(item)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-full border-2 ${item === color ? 'border-[#B88E2F]' : ''}`} style={{ backgroundColor: item }}></button>
                 ))}
               </div>
@@ -133,7 +127,7 @@ const Details = () => {
               <div className="flex items-center">
                 <span className="text-[#9F9F9F] w-[92px]">Tags</span>
                 <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>
-                  {detailProduct?.ProductTags.map((tag) => (
+                  {detailProduct?.ProductTags?.map((tag) => (
                     <span key={tag}>{tag}, </span>
                   ))}
                 </span>

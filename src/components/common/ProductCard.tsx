@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import prs1 from '../../assets/images/prs1.svg';
 import { ProductTypes } from '../../models/productTypes';
 import share from '../../assets/images/share.svg';
 import compare from '../../assets/images/compare.svg';
@@ -28,12 +27,12 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
     } else {
       dispatch(addToWishlist(product));
     }
-  }
+  };
 
   return (
-    <Link to={`/productDetail/${product?.id}`} className={`${gridClass === 'view' ? 'h-[50vh]' : 'h-full'} group cursor-pointer`}>
+    <Link to={`/productDetail/${product?.id}`} className={`${gridClass === 'view' ? 'h-[30vh]' : 'h-full'} group cursor-pointer`}>
       <div className="relative overflow-hidden h-full">
-        <img src={prs1} alt="" className='h-auto w-full object-cover' />
+        <img src={product?.ProductImages[0]} alt="" className='h-[301px] w-full object-cover' />
         <div className='absolute top-[24px] right-6'>
           {product?.IsNew ? (<span className='w-12 h-12 rounded-full bg-[#2EC1AC] flex items-center justify-center text-white font-medium'>New</span>) : (
             <span className='w-12 h-12 rounded-full bg-[#E97171] flex items-center justify-center text-white font-medium'>-{product?.DiscountPercent}%</span>

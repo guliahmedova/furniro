@@ -3,7 +3,7 @@ import { ProductTypes } from "../../models/productTypes";
 import { FC } from "react";
 
 interface SearchResultProps {
-  products: ProductTypes[],
+  products?: ProductTypes[],
   searchText: string
 };
 
@@ -17,7 +17,7 @@ const SearchResult: FC<SearchResultProps> = ({ products, searchText }) => {
           </div>
         )}
         <div className="grid lg:grid-cols-4 gap-8 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-8">
-          {products.map((item) => (
+          {products?.map((item) => (
             <ProductCard key={item.id} product={item} />
           ))}
         </div>

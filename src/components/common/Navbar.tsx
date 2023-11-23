@@ -9,10 +9,14 @@ import openmenu from '../../assets/images/openmenu.svg';
 import closemenu from '../../assets/images/closemenu.svg';
 import shopCart from '../../assets/images/shoppingCart.svg';
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/app/store";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+
+  const wishlistproducts = useSelector((state: RootState) => state.wishlist.product);
 
   const { openModal } = useModal();
 
@@ -24,7 +28,7 @@ const Navbar = () => {
     }
   }, [isMenuOpen]);
 
-  useEffect(()=> {
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [location.pathname]);
 
@@ -56,7 +60,11 @@ const Navbar = () => {
           <Link to="/search">
             <img src={search} alt="" />
           </Link>
-          <Link to="/favorites">
+          <Link to="/favorites" className="relative">
+            {wishlistproducts.length > 0 &&
+              <div className="absolute -top-1 -right-1 bg-[#B88E2F] text-white text-center rounded-full w-4 h-4 text-[10px] flex items-center justify-center">
+                {wishlistproducts.length > 9 ? <span>9+</span> : <span>{wishlistproducts.length}</span>}
+              </div>}
             <img src={heart} alt="" />
           </Link>
           <div onClick={openModal} className="cursor-pointer">
