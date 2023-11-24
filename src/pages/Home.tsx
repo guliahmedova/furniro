@@ -1,25 +1,20 @@
-import React from "react";
 import ProductRange from "../components/home/ProductRange";
 import ProductsContainer from "../components/home/ProductsContainer";
-// import RoomsSlider from "../components/home/RoomsSlider";
 import FuniroFurniture from "../components/home/FuniroFurniture";
-import TestRoomSlider from "../components/home/SLickRoomSlider";
-const LazyPrimaryHero = React.lazy(() => import('../components/home/PrimaryHero'));
+import SLickRoomSlider from "../components/home/SLickRoomSlider";
 import Reveal from "../components/common/Reveal";
+import PrimaryHero from "../components/home/PrimaryHero";
 
 const Home = () => {
   return (
     <>
-      <React.Suspense fallback="Loading...">
-        <LazyPrimaryHero />
-      </React.Suspense>
+      <PrimaryHero />
       <Reveal><ProductRange /></Reveal>
-      <Reveal><ProductsContainer /></Reveal>
-      {/* <RoomsSlider /> */}
-      <TestRoomSlider />
+      <ProductsContainer />
+      <SLickRoomSlider />
       <Reveal><FuniroFurniture /></Reveal>
     </>
   )
 }
 
-export default Home
+export default Home;

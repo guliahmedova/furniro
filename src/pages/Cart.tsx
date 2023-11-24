@@ -1,17 +1,15 @@
 import logo from '../assets/images/logo.svg';
-import FeaturesBar from "../components/common/FeaturesBar";
 import CartTotals from "../components/cart/CartTotals";
-import { lazy, Suspense } from "react";
-const SecondaryHero = lazy(() => import('../components/common/SecondaryHero'));
+import FeaturesBar from "../components/common/FeaturesBar";
+import Reveal from '../components/common/Reveal';
+import SecondaryHero from '../components/common/SecondaryHero';
 
 const Cart = () => {
   return (
     <>
-      <Suspense fallback="Loading">
-        <SecondaryHero title="Cart" logo={logo} />
-      </Suspense>
-      <CartTotals />  
-      <FeaturesBar />
+      <Reveal><SecondaryHero title="Cart" logo={logo} /></Reveal>
+      <Reveal><CartTotals /></Reveal>
+      <Reveal><FeaturesBar /></Reveal>
     </>
   )
 }

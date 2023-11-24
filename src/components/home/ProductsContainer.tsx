@@ -1,17 +1,17 @@
 import { useSelector } from "react-redux";
 import ProductCard from "../common/ProductCard";
 import { RootState, useAppDispatch } from "../../redux/app/store";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { ProductTypes } from "../../models/productTypes";
 import { getProducts } from "../../redux/features/productSlice";
 
-const ProductsContainer: FC<ProductTypes> = () => {
+const ProductsContainer = () => {
     const dispatch = useAppDispatch();
-    const products:ProductTypes[] = useSelector((state: RootState) => state.product.entities) || [];
+    const products: ProductTypes[] = useSelector((state: RootState) => state.product.entities) || [];
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getProducts());
-    },[dispatch])
+    }, [dispatch]);
 
     return (
         <section className="bg-white">
@@ -28,6 +28,6 @@ const ProductsContainer: FC<ProductTypes> = () => {
             </div>
         </section>
     )
-}
+};
 
 export default ProductsContainer;

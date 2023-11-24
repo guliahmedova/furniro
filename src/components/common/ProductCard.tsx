@@ -60,7 +60,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
                   e.preventDefault();
                   e.stopPropagation();
                 }}>
-                <img className='w-4 h-4' src={isLike ? goldheart : heart} alt="" /> <span className={`${isLike ? 'text-[#B88E2F]' : ''}`}>Like</span>
+                <img className='w-4 h-4' src={isLike ? goldheart : heart} alt="" /> <span className={`${isLike ? 'text-[#B88E2F]' : ''}`}>{isLike ? "Liked" : "Like"}</span>
               </div>
             </div>
           </div>

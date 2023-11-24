@@ -1,14 +1,12 @@
 import FavoritesContainer from "../components/favorites/FavoritesContainer";
-import { lazy, Suspense } from "react";
-const SecondaryHero = lazy(() => import('../components/common/SecondaryHero'));
+import SecondaryHero from "../components/common/SecondaryHero";
+import Reveal from "../components/common/Reveal";
 
 const Favorites = () => {
   return (
     <>
-      <Suspense fallback="Loading...">
-        <SecondaryHero title="Favorites" />
-      </Suspense>
-      <FavoritesContainer />
+      <Reveal> <SecondaryHero title="Favorites" /></Reveal>
+      <Reveal><FavoritesContainer /></Reveal>
     </>
   )
 }

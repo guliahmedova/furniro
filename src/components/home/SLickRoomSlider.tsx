@@ -76,7 +76,7 @@ const SlickRoomSLider = () => {
                 <div className="lg:w-11/12 overflow-hidden relative">
                     {
                         currentSlide !== 1 && (
-                            <button onClick={() => sliderRef.current?.slickPrev()} className="absolute z-10 top-56 scale-[-1] w-12 h-12 rounded-full shadow-2xl bg-white flex items-center justify-center">
+                            <button onClick={() => sliderRef.current?.slickPrev()} className="absolute z-10 top-56 lg:left-6 left-0 scale-[-1] w-12 h-12 rounded-full shadow-2xl bg-white flex items-center justify-center">
                                 <img src={sliderBtn} alt="" />
                             </button>
                         )
@@ -103,7 +103,7 @@ const SlickRoomSLider = () => {
                             ))}
                         </Slider>
                     </div>
-                    <button onClick={() => sliderRef.current?.slickNext()} className="absolute z-10 top-56 lg:right-14 right-0 w-12 h-12 rounded-full shadow-2xl bg-white flex items-center justify-center">
+                    <button onClick={() => sliderRef.current?.slickNext()} className="absolute z-10 top-56 lg:right-6 right-0 w-12 h-12 rounded-full shadow-2xl bg-white flex items-center justify-center">
                         <img src={sliderBtn} alt="" />
                     </button>
                 </div>

@@ -3,24 +3,26 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import Home from './pages/Home.tsx';
-import Shop from './pages/Shop.tsx';
-import Blog from './pages/Blog.tsx';
-import Contact from './pages/Contact.tsx';
-import ProductDetail from './pages/ProductDetail.tsx';
-import Cart from './pages/Cart.tsx';
-import Checkout from './pages/Checkout.tsx';
-import Search from './pages/Search.tsx';
-import Favorites from './pages/Favorites.tsx';
-import NotFound from './pages/NotFound.tsx';
-import ProductComparison from './pages/ProductComparison.tsx';
 import { ModalProvider } from './contexts/ModalContext.tsx';
-import Login from './pages/Login.tsx';
-import Register from './pages/Register.tsx';
 import { store } from './redux/app/store.ts';
 import { persistor } from './redux/app/store.ts';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
+import {
+  Home,
+  Shop,
+  Blog,
+  Contact,
+  ProductDetail,
+  Cart,
+  Checkout,
+  Search,
+  Favorites,
+  ProductComparison,
+  NotFound,
+  Login,
+  Register
+} from './pages/index.ts';
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route>
@@ -41,7 +43,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='/login' element={<Login />} />
     <Route path='/register' element={<Register />} />
   </Route>
-))
+));
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

@@ -1,10 +1,19 @@
 import { Link } from 'react-router-dom';
 import heroArrow from '../../assets/images//heroArrow.svg';
 import { ISecondaryHeroTypes } from '../../models/secondaryHeroTypes';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import searchIcon from '../../assets/images/search.svg';
 
 const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch, addSearchText, searchText }) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const text = event.target.value;
+    addSearchText && addSearchText(text);
+  };
+
+  const memoizedSearchText = useMemo(() => {
+    return searchText;
+  }, [searchText]);
+
   return (
     <section className='lg:h-[316px] flex justify-center md:mg-top items-center bg-hero-image w-full bg-no-repeat bg-fix bg-center bg-cover'>
       <div className='text-center w-full lg:py-0 py-6'>
@@ -18,12 +27,15 @@ const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch, addSear
         {
           isSearch && (
             <form className='mt-6 lg:w-4/12 mx-auto lg:px-0 px-3 relative'>
-              <input type="text" id="name"
-                value={searchText}
-                onChange={(event) => addSearchText && addSearchText(event?.target?.value)}
+              <input
+                type="text"
+                id="name"
+                value={memoizedSearchText}
+                onChange={handleInputChange}
                 className="border-2 w-full lg:text-base rounded-xl outline-0 py-[10px] px-[31px] border-[#9F9F9F]"
                 placeholder="Search..."
-                required />
+                required
+              />
               <img src={searchIcon} alt="" className='absolute z-10 bg-white right-3 top-3 w-6 h-6 opacity-30' />
             </form>
           )

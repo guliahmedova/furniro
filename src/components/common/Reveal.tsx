@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 
 interface RevealProps {
-    children: JSX.Element;
+    children: ReactNode;
 };
 
 const Reveal: React.FC<RevealProps> = ({ children }) => {
