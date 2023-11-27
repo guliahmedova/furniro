@@ -9,12 +9,12 @@ const DetailTabbedNavigation = () => {
   };
 
   return (
-    <section className="mt-[69px] pt-[46px] pb-[61px] border-t-2 border-b-2 border-[#D9D9D9]">
+    <section className="mt-[69px] pt-[46px] pb-[61px] border-t border-b border-[#D9D9D9]">
       <div className='lg:max-w-[1239px] mx-auto lg:px-0 px-3'>
-        <div className='flex lg:gap-14 gap-3 lg:justify-center mb-[37px]'>
-          <span onClick={() => toggleTabs(1)} className={`lg:text-2xl text-center ease-in-out duration-300 ${tabIndex === 1 ? 'text-black font-medium select-none' : 'text-[#9F9F9F] font-normal cursor-pointer'}`}>Description</span>
-          <span onClick={() => toggleTabs(2)} className={`lg:text-2xl text-center ease-in-out duration-300 ${tabIndex === 2 ? 'text-black font-medium select-none' : 'text-[#9F9F9F] font-normal cursor-pointer'}`}>Additional Information</span>
-          <span onClick={() => toggleTabs(3)} className={`lg:text-2xl text-center ease-in-out duration-300 ${tabIndex === 3 ? 'text-black font-medium select-none' : 'text-[#9F9F9F] font-normal cursor-pointer'}`}>Reviews [5]</span>
+        <div className='flex lg:gap-14 gap-3 lg:justify-center justify-between mb-[37px]'>
+          <span onClick={() => toggleTabs(1)} className={`lg:text-2xl text-center ease-in-out duration-300 text-sm ${tabIndex === 1 ? 'text-black font-medium select-none' : 'text-[#9F9F9F] font-normal cursor-pointer'}`}>Description</span>
+          <span onClick={() => toggleTabs(2)} className={`lg:text-2xl text-center ease-in-out duration-300 text-sm flex-shrink-0 ${tabIndex === 2 ? 'text-black font-medium select-none' : 'text-[#9F9F9F] font-normal cursor-pointer'}`}>Additional Information</span>
+          <span onClick={() => toggleTabs(3)} className={`lg:text-2xl text-center ease-in-out duration-300 text-sm flex-shrink-0 ${tabIndex === 3 ? 'text-black font-medium select-none' : 'text-[#9F9F9F] font-normal cursor-pointer'}`}>Reviews [5]</span>
         </div>
 
         <div className={`${tabIndex === 1 ? 'block' : 'hidden'}`}>

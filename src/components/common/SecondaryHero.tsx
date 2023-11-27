@@ -1,8 +1,8 @@
+import { FC, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import searchIcon from '../../assets/images/search.svg';
 import heroArrow from '../../assets/images//heroArrow.svg';
 import { ISecondaryHeroTypes } from '../../models/secondaryHeroTypes';
-import { FC, useMemo } from 'react';
-import searchIcon from '../../assets/images/search.svg';
 
 const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch, addSearchText, searchText }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +15,7 @@ const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch, addSear
   }, [searchText]);
 
   return (
-    <section className='lg:h-[316px] flex justify-center md:mg-top items-center bg-hero-image w-full bg-no-repeat bg-fix bg-center bg-cover'>
+    <section className='lg:h-[31vh] flex justify-center md:mg-top items-center bg-hero-image w-full bg-no-repeat bg-fix bg-center bg-cover'>
       <div className='text-center w-full lg:py-0 py-6'>
         <img src={logo} className='mx-auto' alt="" />
         <h1 className='lg:text-[48px] font-medium lg:leading-[72px] select-none md:text-2xl text-xl'>{title}</h1>
@@ -43,6 +43,6 @@ const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch, addSear
       </div>
     </section>
   )
-}
+};
 
 export default SecondaryHero;

@@ -1,6 +1,5 @@
 import FavoritesContainer from "../components/favorites/FavoritesContainer";
-import SecondaryHero from "../components/common/SecondaryHero";
-import Reveal from "../components/common/Reveal";
+import { SecondaryHero, Reveal } from "../components/common/index";
 
 const Favorites = () => {
   return (

@@ -1,4 +1,4 @@
-import ProductCard from "../common/ProductCard"
+import { ProductCard } from "../common/index";
 import { ProductTypes } from "../../models/productTypes";
 import { FC } from "react";
 

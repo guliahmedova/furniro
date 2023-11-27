@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import ProductCard from "../common/ProductCard";
+import { ProductCard } from "../common/index";
 import { RootState, useAppDispatch } from "../../redux/app/store";
 import { useEffect } from "react";
 import { ProductTypes } from "../../models/productTypes";
@@ -12,6 +12,8 @@ const ProductsContainer = () => {
     useEffect(() => {
         dispatch(getProducts());
     }, [dispatch]);
+
+    // console.log(products);
 
     return (
         <section className="bg-white">

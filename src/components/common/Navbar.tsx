@@ -42,10 +42,10 @@ const Navbar = () => {
         </div>
 
         <div className="lg:flex hidden items-center gap-4 font-medium lg:gap-[75px] text-base">
-          <NavLink to='/'>Home</NavLink>
-          <NavLink to='/shop'>Shop</NavLink>
-          <NavLink to='/blog'>Blog</NavLink>
-          <NavLink to='/contact'>Contact</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} to='/'>Home</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} to='/shop'>Shop</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} to='/blog'>Blog</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} to='/contact'>Contact</NavLink>
         </div>
 
         <div className="lg:flex hidden items-center lg:gap-11">
@@ -68,15 +68,15 @@ const Navbar = () => {
         </div>
 
         {/* MOBILE NAVBAR */}
-        <div className={`md:hidden bg-white text-2xl absolute z-20 w-full h-full bottom-0 py-32 pl-3 flex flex-col gap-10 duration-500 ${isMenuOpen ? 'left-0' : 'left-[-100%]'}`}>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/'>Home</NavLink>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/shop'>Shop</NavLink>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/blog'>Blog</NavLink>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to='/contact'>Contact</NavLink>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to="/account">Account</NavLink>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to="/search">Search</NavLink>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to="/favorites">Favorites</NavLink>
-          <NavLink onClick={() => setIsMenuOpen(!isMenuOpen)} to="/cart">Cart</NavLink>
+        <div className={`lg:hidden bg-white text-2xl absolute z-20 w-full h-full bottom-0 py-32 pl-3 flex flex-col gap-10 duration-500 ${isMenuOpen ? 'left-0' : 'left-[-100%]'}`}>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/'>Home</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/shop'>Shop</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/blog'>Blog</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/contact'>Contact</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/account">Account</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/search">Search</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/favorites">Favorites</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/cart">Cart</NavLink>
         </div>
 
       </nav>

@@ -5,7 +5,7 @@ import compare from '../../assets/images/compare.svg';
 import heart from '../../assets/images/whiteheart.svg';
 import goldheart from '../../assets/images/goldheart.svg';
 import { addToWishlist, removeFromWishlist } from '../../redux/features/wishlistSlice';
-import { FC } from 'react';
+import React, { FC, memo, useCallback } from 'react';
 import { RootState, useAppDispatch } from '../../redux/app/store';
 import { useSelector } from 'react-redux';
 
@@ -21,40 +21,38 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
     state.wishlist.product.some((favItem) => favItem?.id === product?.id)
   ));
 
-  const handleFavBtnClick = () => {
+  const handleFavBtnClick = useCallback(() => {
     if (isLike) {
       dispatch(removeFromWishlist(product));
     } else {
       dispatch(addToWishlist(product));
     }
-  };
+  }, [dispatch, isLike, product]);
+
+  const handleBtnsClick = useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
+    e.preventDefault();
+  }, []);
 
   return (
-    <Link to={`/productDetail/${product?.id}`} className={`${gridClass === 'view' ? 'h-[30vh]' : 'h-full'} group cursor-pointer`}>
+    <Link to={`/productDetail/${product?.id}`} className={`${gridClass === 'view' ? 'h-[30vh]' : 'h-full'} cursor-pointer`}>
       <div className="relative overflow-hidden h-full">
         <img src={product?.ProductImages[0]} alt="" className='h-[301px] w-full object-cover' />
         <div className='absolute top-[24px] right-6'>
           {product?.IsNew ? (<span className='w-12 h-12 rounded-full bg-[#2EC1AC] flex items-center justify-center text-white font-medium'>New</span>) : (
-            <span className='w-12 h-12 rounded-full bg-[#E97171] flex items-center justify-center text-white font-medium'>-{product?.DiscountPercent}%</span>
-          )}
+            <span className='w-12 h-12 rounded-full flex items-center justify-center bg-[#E97171] text-white font-medium'>-{product?.DiscountPercent}%</span>)}
         </div>
         <div className="absolute h-full w-full bg-[#3A3A3A]/70 flex items-center justify-center bottom-0 hover:bottom-0 opacity-0 hover:opacity-100 transition-all duration-300">
           <div>
             <button className='bg-white w-[202px] block mb-6 mx-auto opacity-100 text-[#B88E2F] font-bold text-[16px] leading-6 py-[12px]'>Add to cart</button>
-            <div className='flex items-center gap-5 mt-[24px]'>
-              <div className='flex items-center gap-1 font-semibold leading-6 text-white' onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-              }}>
+            <div className='flex items-center gap-3 mt-[24px] px-3'>
+              <div className='flex items-center font-semibold leading-6 text-white' onClick={handleBtnsClick}>
                 <img src={share} alt="" /> <span>Share</span>
               </div>
-              <div className='flex items-center gap-1 font-semibold leading-6 text-white' onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-              }}>
+              <div className='flex items-center font-semibold leading-6 text-white' onClick={handleBtnsClick}>
                 <img src={compare} alt="" /> <span>Compare</span>
               </div>
-              <div className='flex items-center gap-1 font-semibold leading-6 text-white'
+              <div className='flex items-center font-semibold leading-6 text-white'
                 onClick={(e) => {
                   handleFavBtnClick();
                   e.preventDefault();
@@ -66,13 +64,13 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
           </div>
         </div>
 
-        <div className='p-[16px] pb-8 bg-[#F4F5F7]'>
+        <div className='h-full pb-7 px-4 pt-4 bg-[#F4F5F7]'>
           <h1 className='text-[#3A3A3A] font-bold text-xl leading-7 mb-2'>{product?.Title}</h1>
-          <p className='text-[#898989] font-medium'>{product?.SubTitle}</p>
+          <p className='text-[#898989] lg:text-base text-sm font-medium'>{product?.SubTitle}</p>
 
           <div className='mt-[8px] flex gap-4 justify-between items-center'>
-            <span className='text-[#3A3A3A] font-bold text-xl'>Rp {Math.ceil(product?.SalePrice - ((product?.SalePrice * product?.DiscountPercent) / 100))}</span>
-            <span className='text-[#B0B0B0] font-normal leading-6 line-through'>Rp {product?.SalePrice}</span>
+            <span className='text-[#3A3A3A] font-bold lg:text-xl'>Rp {Math.ceil(product?.SalePrice - ((product?.SalePrice * product?.DiscountPercent) / 100))}</span>
+            <span className='text-[#B0B0B0] font-normal lg:leading-6 line-through'>Rp {product?.SalePrice}</span>
           </div>
         </div>
       </div>
@@ -80,4 +78,4 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
   )
 }
 
-export default ProductCard
+export default memo(ProductCard);

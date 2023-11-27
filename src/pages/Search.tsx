@@ -5,8 +5,7 @@ import { RootState, useAppDispatch } from "../redux/app/store";
 import { addSearchText } from "../redux/features/searchSlice";
 import { getProducts } from "../redux/features/productSlice";
 import { ProductTypes } from "../models/productTypes";
-import SecondaryHero from "../components/common/SecondaryHero";
-import Reveal from "../components/common/Reveal";
+import {SecondaryHero, Reveal} from "../components/common/index";
 
 const Search = () => {
     const searchText = useSelector((state: RootState) => state.search.searchText);

@@ -1,18 +1,17 @@
-import Pagination from "../common/Pagination";
-import ProductCard from "../common/ProductCard";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { useAppDispatch } from "../../redux/app/store";
-import { useEffect } from "react";
-import { getProducts } from '../../redux/features/productSlice';
-import { ProductTypes } from "../../models/productTypes";
-import { RootState } from "../../redux/app/store";
 import { FC } from "react";
+import { useEffect } from "react";
+import { RootState } from "../../redux/app/store";
+import { useAppDispatch } from "../../redux/app/store";
+import { ProductTypes } from "../../models/productTypes";
+import { ProductCard, Pagination } from "../common/index";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { getProducts } from '../../redux/features/productSlice';
 
 interface CardsProps {
     gridClass?: string
 };
 
-const Cards:FC<CardsProps> = ({gridClass}) => {
+const Cards: FC<CardsProps> = ({ gridClass }) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -24,7 +23,7 @@ const Cards:FC<CardsProps> = ({gridClass}) => {
 
     return (
         <section className="bg-white">
-            <div className="max-w-[1236px] mx-auto mt-[56px] mb-[69px] lg:px-0 px-3">
+            <div className="w-[85%] mx-auto mt-[56px] mb-[69px]">
                 {loading === 'pending' ? (<div className="text-center">
                     <div role="status">
                         <svg aria-hidden="true" className="inline w-16 h-16 text-gray-200 animate-spin dark:text-gray-600 fill-[#B88E2F]" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,7 +38,7 @@ const Cards:FC<CardsProps> = ({gridClass}) => {
                             <ProductCard
                                 key={product.id}
                                 product={product}
-                                gridClass ={gridClass}
+                                gridClass={gridClass}
                             />
                         ))}
                     </div>
@@ -48,6 +47,6 @@ const Cards:FC<CardsProps> = ({gridClass}) => {
             </div>
         </section>
     )
-}
+};
 
-export default Cards
+export default Cards;

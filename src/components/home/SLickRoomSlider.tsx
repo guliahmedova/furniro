@@ -14,10 +14,13 @@ const SlickRoomSLider = () => {
     const settings = {
         dots: true,
         arrows: true,
-        autoplay: true,
+        autoplay: false,
         autoplaySpeed: 3000,
         dotsClass: 'slick-dots custom-dots',
         infinite: true,
+        useCSS: true,
+        // variableWidth: true,
+        // adaptiveHeight: true,
         speed: 300,
         slidesToShow: 3,
         slidesToScroll: 1,
@@ -97,7 +100,7 @@ const SlickRoomSLider = () => {
                                         </div>
                                         <div className='bg-[#B88E2F] flex items-center justify-center w-[40px] h-[40px]'>
                                             <img src={arrow} alt="" />
-                                        </div>  
+                                        </div>
                                     </div>
                                 </div>
                             ))}
@@ -112,4 +115,4 @@ const SlickRoomSLider = () => {
     )
 }
 
-export default SlickRoomSLider
+export default SlickRoomSLider;

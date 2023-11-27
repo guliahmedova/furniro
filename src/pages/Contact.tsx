@@ -1,8 +1,6 @@
 import logo from '../assets/images/logo.svg';
-import FeaturesBar from "../components/common/FeaturesBar";
+import { FeaturesBar, SecondaryHero, Reveal } from "../components/common/index";
 import ContactForm from "../components/contact/ContactForm";
-import SecondaryHero from '../components/common/SecondaryHero';
-import Reveal from '../components/common/Reveal';
 
 const Contact = () => {
   return (

@@ -1,8 +1,6 @@
 import logo from '../assets/images/logo.svg';
 import CartTotals from "../components/cart/CartTotals";
-import FeaturesBar from "../components/common/FeaturesBar";
-import Reveal from '../components/common/Reveal';
-import SecondaryHero from '../components/common/SecondaryHero';
+import { FeaturesBar, Reveal, SecondaryHero } from "../components/common/index";
 
 const Cart = () => {
   return (

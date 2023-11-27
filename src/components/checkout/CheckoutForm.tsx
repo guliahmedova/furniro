@@ -164,7 +164,7 @@ const CheckoutForm = () => {
                             )
                         }
                     </div>
-                    <button className='text-black text-xl mt-12 border-2 border-black rounded-[15px] py-[17px] w-[318px] mx-auto block'>Place order</button>
+                    <button className='text-black text-xl mt-12 border-2 border-black rounded-[15px] py-[17px] w-[318px] mx-auto block hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out'>Place order</button>
                 </div>
             </div>
         </section>

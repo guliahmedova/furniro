@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="border-t border-[#e7e5e5] pt-12 mb-9">
-      <div className="max-w-[1240.01px] mx-auto px-3">
+      <div className="w-[85%] mx-auto">
         <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:px-0 px-3 lg:gap-0 gap-6">
           <div className="pr-6">
             <h1 className="text-2xl font-bold pb-11 block">Funiro.</h1>
@@ -25,13 +25,13 @@ const Footer = () => {
           </div>
           <div>
             <span className="text-[#9F9F9F] font-medium pb-12 block">Newsletter</span>
-            <form className="flex items-center gap-3">
-              <input type="text" placeholder="Enter Your Email Address" className="border-b-2 border-black outline-0" />
-              <button className="border-b-2 border-black font-medium">SUBSCRIBE</button>
+            <form className="flex gap-3">
+              <input type="text" placeholder="Enter Your Email Address" className="border-b border-black outline-0 lg:text-base text-sm" />
+              <button className="border-b border-black lg:font-medium text-sm">SUBSCRIBE</button>
             </form>
           </div>
         </div>
-        <div className="mt-12 border-t pt-9">2023 furino. All rights reverved</div>
+        <div className="mt-12 border-t pt-9 px-3">2023 furino. All rights reverved</div>
       </div>
     </footer>
   )

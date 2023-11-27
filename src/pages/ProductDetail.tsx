@@ -16,7 +16,7 @@ const ProductDetail = () => {
     if (productId) {
       dispatch(getProductById(productId));
     }
-  }, [dispatch, productId])
+  }, [dispatch, productId]);
 
   return (
     <>

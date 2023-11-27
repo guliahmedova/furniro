@@ -6,13 +6,13 @@ import support from '../../assets/images/customer-support.svg';
 const FeaturesBar = () => {
     return (
         <section className='bg-[#FAF3EA]'>
-            <div className="mx-8 lg:mx-20 py-24">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="py-24 w-[85%] mx-auto">
+                <div className="flex justify-between lg:flex-row flex-col flex-wrap gap-6">
                     <div className="flex gap-3 items-center">
                         <img className='w-10 lg:w-fit' src={quality} alt="" />
                         <div>
-                            <span className='font-semibold lg:text-2xl md:text-xl'>High Quality</span>
-                            <p className='text-[#030303] font-medium lg:text-xl'>crafted from top materials</p>
+                            <span className='font-semibold lg:text-2xl sm:text-xl'>High Quality</span>
+                            <p className='text-[#898989] font-medium lg:text-xl'>crafted from top materials</p>
                         </div>
                     </div>
                     <div className="flex gap-3 items-center">
@@ -40,6 +40,6 @@ const FeaturesBar = () => {
             </div>
         </section>
     )
-}
+};
 
-export default FeaturesBar
+export default FeaturesBar;

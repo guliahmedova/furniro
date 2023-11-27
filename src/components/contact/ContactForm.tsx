@@ -36,7 +36,7 @@ const ContactForm = () => {
 
     return (
         <section>
-            <div className="lg:w-[1058px] mx-auto mt-[98px] mb-[63px] lg:px-0 px-3">
+            <div className="w-[85%] mx-auto mt-[98px] mb-[63px] lg:px-0 px-3">
                 <div className="text-center">
                     <h1 className="text-[#000000] font-semibold select-none lg:text-[36px] lg:leading-[54px] text-2xl">Get In Touch With Us</h1>
                     <p className="lg:max-w-[644px] lg:tracking-wider select-none mx-auto text-[#9F9F9F] font-normal text-[16px] leading-[24px]">For More Information About Our Product & Services. Please Feel Free To Drop Us An Email. Our Staff Always Be There To Help You Out. Do Not Hesitate!</p>

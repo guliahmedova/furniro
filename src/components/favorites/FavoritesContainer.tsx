@@ -1,5 +1,4 @@
-import Pagination from "../common/Pagination";
-import ProductCard from "../common/ProductCard";
+import { Pagination, ProductCard } from '../common/index';
 import { useSelector } from "react-redux";
 import { ProductTypes } from "../../models/productTypes";
 import { RootState } from "../../redux/app/store";

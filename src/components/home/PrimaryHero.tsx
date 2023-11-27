@@ -1,7 +1,7 @@
 
 const PrimaryHero = () => {
   return (
-    <section className='bg-primary-hero-image h-screen w-full bg-fixed bg-center bg-no-repeat bg-cover md:bg-top font-Poppins'>
+    <section className='bg-primary-hero-image w-full bg-fixed bg-center bg-no-repeat bg-cover md:bg-top font-Poppins' style={{height: "100svh"}}>
       <div className="h-screen w-full flex lg:justify-end items-center lg:px-[58px] justify-center px-3">
         <div className=" bg-[#FFF3E3] border-r-8 shadow-sm pt-[62px] h-fit pb-[37px] lg:px-9 px-6 min-w-min">
           <span className="font-medium tracking-[3px]">New Arrival</span>

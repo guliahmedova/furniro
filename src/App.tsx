@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Modal from "./components/common/Modal";
-import { Navbar, Footer, ScrollToTop } from './components/common/index';
+import { Navbar, Footer, ScrollToTop, Modal } from './components/common/index';
 
 const App = () => {
   return (

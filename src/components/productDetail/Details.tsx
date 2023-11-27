@@ -17,10 +17,10 @@ const Details = () => {
   const [sliderImg, setSliderImg] = useState(mainD);
   const [productCount, setProductCount] = useState(0);
   const detailProduct: ProductTypes = useSelector((state: RootState) => state.product.product);
-  
-  const initialSize = detailProduct?.ProductSizes?.length > 0 ? detailProduct.ProductSizes[0] : ''; 
+
+  const initialSize = detailProduct?.ProductSizes?.length > 0 ? detailProduct.ProductSizes[0] : '';
   const [size, setSize] = useState(initialSize);
-  
+
   const initialColor = detailProduct?.ProductColors?.length > 0 ? detailProduct.ProductColors[0] : '';
   const [color, setColor] = useState(initialColor);
 
@@ -84,7 +84,7 @@ const Details = () => {
                   <img key={index} src={item} alt="" />
                 ))}
               </div>
-              <span className="text-[#9F9F9F] text-[13px] border-l-2 border-[#9F9F9F] block pl-[22px]">5 Customer Review</span>
+              <span className="text-[#9F9F9F] text-[13px] border-l border-[#9F9F9F] block pl-[22px]">5 Customer Review</span>
             </div>
             <p className="lg:text-[13px] lg:max-w-[390px] font-medium text-black mb-[22px]">Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.</p>
             <div className="mb-[18px]">
@@ -106,16 +106,18 @@ const Details = () => {
             </div>
 
             <div className="flex lg:flex-row flex-col gap-4 mb-[60px]">
-              <div className="flex items-center justify-between lg:px-3 border-2 border-[#9F9F9F] rounded-lg lg:min-w-[123px] h-16">
+              <div className="flex items-center justify-between px-3 border-2 border-[#9F9F9F] rounded-lg lg:w-[30%] mx-auto w-[60%] h-16">
                 <button className="font-medium text-xl" onClick={decreaseProductCount}>-</button>
                 <span className="font-medium">{productCount}</span>
                 <button className="font-medium text-xl" onClick={increaseProductCount}>+</button>
               </div>
-              <button className="lg:w-[215px] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl capitalize">Add to cart</button>
-              <button className="lg:w-[215px] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl">+ Compare</button>
+              <button className="xl:w-[35%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out capitalize">Add to cart</button>
+              <button className="xl:w-[35%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out">+ Compare</button>
             </div>
 
-            <div className="border-t-2 border-[#D9D9D9] pt-10 flex flex-col gap-3">
+            <span className="border-t border-[#D9D9D9] xl:w-[600px] block" ></span>
+
+            <div className="pt-10 flex flex-col gap-3">
               <div className="flex items-center">
                 <span className="text-[#9F9F9F] w-[92px]">SKU</span>
                 <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>{detailProduct?.Sku}</span>
@@ -136,9 +138,9 @@ const Details = () => {
                 <span className="text-[#9F9F9F] w-[92px]">Share</span>
                 <span className="text-[#9F9F9F] pr-3">:</span>
                 <div className="flex items-center gap-[25px]">
-                  <img src={facebook} alt="" />
-                  <img src={linkedin} alt="" />
-                  <img src={twitter} alt="" />
+                  <img src={facebook} alt="" className="cursor-pointer" />
+                  <img src={linkedin} alt="" className="cursor-pointer" />
+                  <img src={twitter} alt="" className="cursor-pointer" />
                 </div>
               </div>
             </div>
