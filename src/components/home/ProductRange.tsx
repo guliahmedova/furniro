@@ -3,7 +3,7 @@ import productRanges from "../../assets/const/productRange";
 const ProductRange = () => {
   return (
     <section className="bg-white">
-      <div className="max-w-[1236px] mx-auto my-[57px]">
+      <div className="xl:w-[85%] w-[95%] mx-auto my-[57px]">
 
         <div className="text-center">
           <h1 className="text-[#333333] lg:text-[32px] font-bold lg:leading-10 sm:text-2xl text-lg">Browse The Range</h1>
@@ -14,7 +14,7 @@ const ProductRange = () => {
             {
               productRanges.map(item => (
                 <div key={item.id}>
-                  <img src={item.img} alt="" className="w-full rounded-lg"  loading="lazy"/>
+                  <img src={item.img} alt="product-img" className="w-full rounded-lg"  loading="lazy"/>
                   <span className="mt-[30px] capitalize text-[#333333] font-semibold text-2xl leading-9 text-center w-full block">{item.title}</span>
                 </div>
               ))

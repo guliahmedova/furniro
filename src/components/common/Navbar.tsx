@@ -33,11 +33,11 @@ const Navbar = () => {
 
         <div className="lg:w-auto w-full py-7 lg:px-0 px-3 z-50 flex justify-between items-center">
           <Link to="/" className="flex items-center w-fit gap-1">
-            <img src={logo} alt="" />
+            <img src={logo} alt="logo" />
             <span className="font-bold md:text-[34px] text-2xl">Furniro</span>
           </Link>
           <div className="w-6 cursor-pointer lg:hidden z-10" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            <img src={isMenuOpen ? closemenu : openmenu} alt="" />
+            <img src={isMenuOpen ? closemenu : openmenu} alt="menu-icon" />
           </div>
         </div>
 
@@ -50,20 +50,20 @@ const Navbar = () => {
 
         <div className="lg:flex hidden items-center lg:gap-11">
           <Link to="/account">
-            <img src={account} alt="" />
+            <img src={account} alt="account-icon" />
           </Link>
           <Link to="/search">
-            <img src={search} alt="" />
+            <img src={search} alt="search-icon" />
           </Link>
           <Link to="/favorites" className="relative">
             {wishlistproducts.length > 0 &&
               <div className="absolute -top-1 -right-1 bg-[#B88E2F] text-white text-center rounded-full w-4 h-4 text-[10px] flex items-center justify-center">
                 {wishlistproducts.length > 9 ? <span>9+</span> : <span>{wishlistproducts.length}</span>}
               </div>}
-            <img src={heart} alt="" />
+            <img src={heart} alt="heart-icon" />
           </Link>
           <div onClick={openModal} className="cursor-pointer">
-            <img src={shopCart} alt="" />
+            <img src={shopCart} alt="shopcart-icon" />
           </div>
         </div>
 

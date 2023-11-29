@@ -45,14 +45,14 @@ const ContactForm = () => {
                 <div className='flex lg:justify-between lg:mt-[82px] lg:flex-row flex-col lg:mb-0 mt-12'>
                     <div className='lg:p-10 flex flex-col lg:gap-[43px] lg:w-6/12 px-3 gap-6'>
                         <div className='flex gap-[30px]'>
-                            <img src={address} alt="" />
+                            <img src={address} alt="address-icon" />
                             <div>
                                 <span className='text-[24px] font-medium'>Address</span>
                                 <p className='font-normal text-[#000000] lg:max-w-[212px] tracking-wider leading-[24px]'>236 5th SE Avenue, New York NY10000, United States</p>
                             </div>
                         </div>
                         <div className='flex gap-[30px]'>
-                            <img src={phone} alt="" />
+                            <img src={phone} alt="phone-icon" />
                             <div>
                                 <span className='text-[24px] font-medium'>Phone</span>
                                 <p className='font-normal text-[#000000] lg:max-w-[212px] tracking-wider leading-[24px]'>Mobile: +(84) 546-6789</p>
@@ -60,7 +60,7 @@ const ContactForm = () => {
                             </div>
                         </div>
                         <div className='flex gap-[30px]'>
-                            <img src={workingTime} alt="" />
+                            <img src={workingTime} alt="time-icon" />
                             <div>
                                 <span className='text-[24px] font-medium'>Working Time</span>
                                 <p className='font-normal text-[#000000] lg:max-w-[212px] tracking-wider leading-[24px]'>Monday-Friday: 9:00 - 22:00</p>

@@ -17,16 +17,16 @@ const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch, addSear
   return (
     <section className='lg:h-[31vh] flex justify-center md:mg-top items-center bg-hero-image w-full bg-no-repeat bg-fix bg-center bg-cover'>
       <div className='text-center w-full lg:py-0 py-6'>
-        <img src={logo} className='mx-auto' alt="" />
+        <img src={logo} className='mx-auto' alt="logo" />
         <h1 className='lg:text-[48px] font-medium lg:leading-[72px] select-none md:text-2xl text-xl'>{title}</h1>
         <div className='flex items-center leading-6 gap-[6px] justify-center'>
           <Link to="/" className='font-medium lg:text-base text-sm'>Home</Link>
-          <img src={heroArrow} alt="" />
+          <img src={heroArrow} alt="arrow-icon" />
           <span className='lg:text-base font-normal text-[#000000] select-none text-sm'>{title}</span>
         </div>
         {
           isSearch && (
-            <form className='mt-6 lg:w-4/12 mx-auto lg:px-0 px-3 relative'>
+            <form className='mt-6 xl:w-[30%] w-[50%] mx-auto lg:px-0 px-3 relative'>
               <input
                 type="text"
                 id="name"
@@ -36,7 +36,7 @@ const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch, addSear
                 placeholder="Search..."
                 required
               />
-              <img src={searchIcon} alt="" className='absolute z-10 bg-white right-3 top-3 w-6 h-6 opacity-30' />
+              <img src={searchIcon} alt="search-icon" className='absolute z-10 bg-white right-6 top-3 w-6 h-6 opacity-30' />
             </form>
           )
         }

@@ -54,11 +54,11 @@ const Details = () => {
       <div className="flex py-8 items-center lg:gap-[25px] gap-3 lg:px-[99px] px-3 bg-[#F9F1E7]">
         <div className="flex items-center gap-[14px]">
           <Link to='/' className="text-[#9F9F9F]">Home</Link>
-          <img src={arrow} alt="" />
+          <img src={arrow} alt="arrow" />
         </div>
         <div className="flex items-center gap-[14px]">
           <Link to="/shop" className="text-[#9F9F9F]">Shop</Link>
-          <img src={arrow} alt="" />
+          <img src={arrow} alt="arrow" />
         </div>
         <span className="text-[#000000] select-none lg:border-l-2 border-[#9F9F9F] lg:pl-[24px]">{detailProduct?.Title}</span>
       </div>
@@ -69,10 +69,10 @@ const Details = () => {
           <div className="flex gap-8 lg:flex-row flex-col-reverse">
             <div className="flex lg:flex-col flex-row lg;gap-8 gap-3">
               {slides.map(item => (
-                <div key={item.id} style={{ backgroundColor: color }} className={`rounded-lg lg:w-[76px] lg:h-20 flex items-center justify-center cursor-pointer`} onClick={() => handleSlideImageChange(item.id)}><img src={item.img} alt="" /></div>
+                <div key={item.id} style={{ backgroundColor: color }} className={`rounded-lg lg:w-[76px] lg:h-20 flex items-center justify-center cursor-pointer`} onClick={() => handleSlideImageChange(item.id)}><img src={item.img} alt="product-img" /></div>
               ))}
             </div>
-            <div style={{ backgroundColor: color }} className={`rounded-lg lg:w-[423px] lg:h-[500px]`}><img className="w-full h-full object-contain" src={sliderImg} alt="" /></div>
+            <div style={{ backgroundColor: color }} className={`rounded-lg lg:w-[423px] lg:h-[500px]`}><img className="w-full h-full object-contain" src={sliderImg} alt="slide-img" /></div>
           </div>
 
           <div>
@@ -138,9 +138,9 @@ const Details = () => {
                 <span className="text-[#9F9F9F] w-[92px]">Share</span>
                 <span className="text-[#9F9F9F] pr-3">:</span>
                 <div className="flex items-center gap-[25px]">
-                  <img src={facebook} alt="" className="cursor-pointer" />
-                  <img src={linkedin} alt="" className="cursor-pointer" />
-                  <img src={twitter} alt="" className="cursor-pointer" />
+                  <img src={facebook} alt="facebook" className="cursor-pointer" />
+                  <img src={linkedin} alt="linkedin" className="cursor-pointer" />
+                  <img src={twitter} alt="twitter" className="cursor-pointer" />
                 </div>
               </div>
             </div>

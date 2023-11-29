@@ -10,7 +10,7 @@ interface SearchResultProps {
 const SearchResult: FC<SearchResultProps> = ({ products, searchText }) => {
   return (
     <section>
-      <div className="lg:max-w-[1236px] mx-auto mt-[56px] mb-[69px] lg:px-0 px-3">
+      <div className="xl:w-[85%] w-[95%] mx-auto mt-[56px] mb-[69px] lg:px-0 px-3">
         {searchText && (
           <div className="font-medium text-gray-400 lg:text-left capitalize lg:text-2xl text-xl text-center">
             <span className="underline italic">{searchText}</span> açar sözü üzrə axtarış nəticələri...

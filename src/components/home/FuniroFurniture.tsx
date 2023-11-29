@@ -19,29 +19,29 @@ const FuniroFurniture = () => {
             <div className='flex justify-between gap-4 w-full h-screen overflow-hidden lg:mt-0 mt-4'>
                 <div className='flex flex-col gap-4'>
                     <div className='flex gap-4'>
-                        <div className='w-[68px] h-[382px]'><img className='w-full h-full object-cover' src={r1} alt="" /></div>
-                        <div className='flex place-items-end w-[451px]'><img className='w-full h-[312px] object-cover' src={r2} alt="" /></div>
+                        <div className='w-[68px] h-[382px]'><img className='w-full h-full object-cover' src={r1} alt="img1" /></div>
+                        <div className='flex place-items-end w-[451px]'><img className='w-full h-[312px] object-cover' src={r2} alt="img2" /></div>
                     </div>
                     <div className='flex gap-4'>
-                        <div className='w-[175px] h-[323px]'><img className='w-full h-full object-cover' src={r6} alt="" /></div>
-                        <div className='w-[344px] h-[242px]'><img className='w-full h-full object-cover' src={r7} alt="" /></div>
+                        <div className='w-[175px] h-[323px]'><img className='w-full h-full object-cover' src={r6} alt="img3" /></div>
+                        <div className='w-[344px] h-[242px]'><img className='w-full h-full object-cover' src={r7} alt="img4" /></div>
                     </div>
                 </div>
 
 
                 <div className='flex place-items-center'>
-                    <div className='w-[295px] h-[392px]'><img className='w-full h-full object-cover' src={r3} alt="" /></div>
+                    <div className='w-[295px] h-[392px]'><img className='w-full h-full object-cover' src={r3} alt="img5" /></div>
                 </div>
 
 
                 <div className='flex flex-col gap-4'>
                     <div className='flex gap-4'>
-                        <div className='flex place-items-end w-[290px]'><img className='w-full h-[348px] object-cover' src={r4} alt="" /></div>
-                        <div className='w-[380px] h-[433px]'><img className='w-full h-full object-cover' src={r5} alt="" /></div>
+                        <div className='flex place-items-end w-[290px]'><img className='w-full h-[348px] object-cover' src={r4} alt="img6" /></div>
+                        <div className='w-[380px] h-[433px]'><img className='w-full h-full object-cover' src={r5} alt="img7" /></div>
                     </div>
                     <div className='flex gap-4'>
-                        <div className='w-[178px] h-[242px]'><img className='w-full h-full object-cover' src={r8} alt="" /></div>
-                        <div className='w-[258px] h-[196px]'><img className='w-full h-full object-cover' src={r9} alt="" /></div>
+                        <div className='w-[178px] h-[242px]'><img className='w-full h-full object-cover' src={r8} alt="img8" /></div>
+                        <div className='w-[258px] h-[196px]'><img className='w-full h-full object-cover' src={r9} alt="img9" /></div>
                     </div>
                 </div>
 

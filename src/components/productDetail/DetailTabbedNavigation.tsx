@@ -23,8 +23,8 @@ const DetailTabbedNavigation = () => {
             <span>Weighing in under 7 pounds, the Kilburn is a lightweight piece of vintage styled engineering. Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound that is both articulate and pronounced. The analogue knobs allow you to fine tune the controls to your personal preferences while the guitar-influenced leather strap enables easy and stylish travel.</span>
           </p>
           <div className='flex lg:flex-row flex-col gap-7 mt-[36px]'>
-            <div className='lg:w-[605px] h-[348px] rounded-lg bg-[#F9F1E7]'><img className='w-full h-full object-contain' src={sofa1} alt="" /></div>
-            <div className='lg:w-[605px] h-[348px] rounded-lg bg-[#F9F1E7]'><img className='w-full h-full object-contain' src={sofa2} alt="" /></div>
+            <div className='lg:w-[605px] h-[348px] rounded-lg bg-[#F9F1E7]'><img className='w-full h-full object-contain' src={sofa1} alt="product-img1" /></div>
+            <div className='lg:w-[605px] h-[348px] rounded-lg bg-[#F9F1E7]'><img className='w-full h-full object-contain' src={sofa2} alt="product-img2" /></div>
           </div>
         </div>
 

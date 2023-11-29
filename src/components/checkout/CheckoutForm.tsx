@@ -26,11 +26,10 @@ const CheckoutForm = () => {
     });
 
     const [accordion, setAccordion] = useState(false);
-    console.log(accordion);
 
     return (
         <section className="mt-[63px] mb-[123px]">
-            <div className="lg:max-w-[1242px] mx-auto flex lg:flex-row flex-col lg:px-0 px-3">
+            <div className="xl:w-[85%] w-[95%] mx-auto flex lg:flex-row flex-col lg:px-0 px-3">
                 <div className="lg:w-6/12 lg:mb-0 mb-12">
                     <h1 className="font-semibold text-[#000000] text-4xl mb-9 leading-10 lg:text-left text-center">Billing details</h1>
                     <form onSubmit={handleSubmit}>
@@ -140,8 +139,8 @@ const CheckoutForm = () => {
                     </div>
                     <div className="mt-[22px]">
                         <div className='flex items-center gap-4 cursor-pointer' onClick={() => setAccordion(!accordion)}>
-                            <img src={accordion ? blackCircle : emptyCircle} className='w-[14px] h-[14px]' />
-                            <label htmlFor='rad3' className='font-medium cursor-pointer'>Direct Bank Transfer</label>
+                            <img src={accordion ? blackCircle : emptyCircle} alt='circle-icon' className='w-[14px] h-[14px]' />
+                            <span className='font-medium cursor-pointer'>Direct Bank Transfer</span>
                         </div>
                         {
                             accordion && (

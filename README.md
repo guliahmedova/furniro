@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------
 PAGS 🟦
 - Home ++ +
-- Shop ++
+- Shop ++ 
 - Cart ++
 - Blog ++
 - Contact ++
@@ -18,9 +18,8 @@ ESSENTIALS 💥
 - performance
 - show more
 - pagination 
-- slider 
 - bezen hero imageler ekranda gorunmur
 - navbar overflow hidden problem 
 - modali acanda ekranda qeribe movement bas verir
-- image alt atributes 
+
 ------------------------------------------------------------------------------

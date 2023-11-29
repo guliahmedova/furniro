@@ -18,12 +18,12 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
             <div className='flex lg:justify-between lg:flex-row px-28 py-7 flex-col w-full'>
                 <div className='flex items-center justify-center gap-6 lg:flex-row flex-col-reverse'>
                     <div className='flex items-center gap-2'>
-                        <img src={filterIcon} alt="" />
+                        <img src={filterIcon} alt="filter-icon" />
                         <span>Filter</span>
                     </div>
                     <div className='flex items-center lg:gap-6 gap-4'>
-                        <img src={gtidIcon} alt="" onClick={() => changeGridClass('grid')} className={`${gridClass === 'grid' ? 'cursor-default' : 'cursor-pointer'}`} />
-                        <img src={viewIcon} alt="" onClick={() => changeGridClass('view')} className={`${gridClass === 'view' ? 'cursor-default' : 'cursor-pointer'}`} />
+                        <img src={gtidIcon} alt="grid-icon" onClick={() => changeGridClass('grid')} className={`${gridClass === 'grid' ? 'cursor-default' : 'cursor-pointer'}`} />
+                        <img src={viewIcon} alt="view-icon" onClick={() => changeGridClass('view')} className={`${gridClass === 'view' ? 'cursor-default' : 'cursor-pointer'}`} />
                     </div>
                     <span className='select-none lg:border-l-2 border-[#9F9F9F] lg:pl-[24px] lg:text-base text-sm'>Showing 1–16 of {products.length} results</span>
                 </div>

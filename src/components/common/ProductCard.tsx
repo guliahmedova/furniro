@@ -44,13 +44,13 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
         </div>
         <div className="absolute h-full w-full bg-[#3A3A3A]/70 flex items-center justify-center bottom-0 hover:bottom-0 opacity-0 hover:opacity-100 transition-all duration-300">
           <div>
-            <button className='bg-white w-[202px] block mb-6 mx-auto opacity-100 text-[#B88E2F] font-bold text-[16px] leading-6 py-[12px]'>Add to cart</button>
+            <div className='bg-white w-[202px] block mb-6 text-center mx-auto opacity-100 text-[#B88E2F] font-bold text-[16px] leading-6 py-[12px]' onClick={handleBtnsClick}>Add to cart</div>
             <div className='flex items-center gap-3 mt-[24px] px-3'>
               <div className='flex items-center font-semibold leading-6 text-white' onClick={handleBtnsClick}>
-                <img src={share} alt="" /> <span>Share</span>
+                <img src={share} alt="share-icon" /> <span>Share</span>
               </div>
               <div className='flex items-center font-semibold leading-6 text-white' onClick={handleBtnsClick}>
-                <img src={compare} alt="" /> <span>Compare</span>
+                <img src={compare} alt="compare-icon" /> <span>Compare</span>
               </div>
               <div className='flex items-center font-semibold leading-6 text-white'
                 onClick={(e) => {
@@ -58,7 +58,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
                   e.preventDefault();
                   e.stopPropagation();
                 }}>
-                <img className='w-4 h-4' src={isLike ? goldheart : heart} alt="" /> <span className={`${isLike ? 'text-[#B88E2F]' : ''}`}>{isLike ? "Liked" : "Like"}</span>
+                <img className='w-4 h-4' src={isLike ? goldheart : heart} alt="heart-icon" /> <span className={`${isLike ? 'text-[#B88E2F]' : ''}`}>{isLike ? "Liked" : "Like"}</span>
               </div>
             </div>
           </div>

@@ -26,6 +26,33 @@ body::-webkit-scrollbar-thumb:hover {
     background: #b88e2f;
 }
 
+
+
+
+/* -------------------------------------- */
+.cart-table::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.cart-table::-webkit-scrollbar-track {
+    border-radius: 1px;
+    background: whitesmoke;
+}
+
+.cart-table::-webkit-scrollbar-track:hover {
+    background: white;
+}
+
+.cart-table::-webkit-scrollbar-thumb {
+    background: gainsboro;
+    border-radius: 10px;
+}
+
+.cart-table::-webkit-scrollbar-thumb:hover {
+    background: gray;
+}
+
 /*--------------*/
 .slick-slide div:focus {
     outline: none !important;

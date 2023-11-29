@@ -16,17 +16,17 @@ const BlogSection = () => {
                         blogs.map(item => (
                             <div key={item.id}>
                                 <div className='mb-[17px] lg:w-[817px] lg:h-[500px]'>
-                                    <img src={item.img} alt="" className='w-full h-full object-cover' />
+                                    <img src={item.img} alt="card-image" className='w-full h-full object-cover' />
                                 </div>
                                 <div className='flex lg:gap-9 items-center mb-4 lg:justify-normal justify-between'>
                                     <div className='flex lg:gap-2 items-center'>
-                                        <img src={admin} alt="" /> <span className='text-sm lg:text-base'>Admin</span>
+                                        <img src={admin} alt="admin-icon" /> <span className='text-sm lg:text-base'>Admin</span>
                                     </div>
                                     <div className='flex lg:gap-2 items-center'>
-                                        <img src={date} alt="" /> <span className='text-sm lg:text-base'>14 Oct 2022</span>
+                                        <img src={date} alt="date-icon" /> <span className='text-sm lg:text-base'>14 Oct 2022</span>
                                     </div>
                                     <div className='flex lg:gap-2 items-center'>
-                                        <img src={wood} alt="" /> <span className='text-sm lg:text-base'>Wood</span>
+                                        <img src={wood} alt="wood-icon" /> <span className='text-sm lg:text-base'>Wood</span>
                                     </div>
                                 </div>
                                 <div className='mb-[30px]'>
@@ -42,7 +42,7 @@ const BlogSection = () => {
                 <div className='lg:sticky lg:top-5 self-start w-full'>
                     <form className='border-2 border-[#9F9F9F] relative rounded-[10px] lg:h-14 mb-11 lg:w-[80%] w-full mx-auto'>
                         <input type="text" className='w-full h-full rounded-[10px] outline-0 border-0 p-3' />
-                        <button className='absolute lg:top-[17px] top-[10px] right-3 w-5 h-5 z-10 bg-white'><img src={search} alt="" /></button>
+                        <button className='absolute lg:top-[17px] top-[10px] right-3 w-5 h-5 z-10 bg-white'><img src={search} alt="search-icon" /></button>
                     </form>
                     <div className=' mx-auto mb-10 lg:px-[20%]'>
                         <h1 className='text-black font-medium text-2xl mb-8'>Categories</h1>
@@ -60,7 +60,7 @@ const BlogSection = () => {
                         <div className='flex flex-col gap-10'>
                             {recentPosts.map(item => (
                                 <div key={item.id} className='flex gap-3 items-center'>
-                                    <img src={item.img} alt="" />
+                                    <img src={item.img} alt="recent-post-card-image" />
                                     <div className='flex flex-col'>
                                         <span className='text-black font-medium leading-5'>{item.title}</span>
                                         <span className='text-[#9F9F9F] text-xs mt-1'>{item.date}</span>

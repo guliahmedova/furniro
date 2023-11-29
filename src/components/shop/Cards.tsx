@@ -23,7 +23,7 @@ const Cards: FC<CardsProps> = ({ gridClass }) => {
 
     return (
         <section className="bg-white">
-            <div className="w-[85%] mx-auto mt-[56px] mb-[69px]">
+            <div className="xl:w-[85%] w-[95%] mx-auto mt-[56px] mb-[69px]">
                 {loading === 'pending' ? (<div className="text-center">
                     <div role="status">
                         <svg aria-hidden="true" className="inline w-16 h-16 text-gray-200 animate-spin dark:text-gray-600 fill-[#B88E2F]" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
