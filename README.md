@@ -21,5 +21,6 @@ ESSENTIALS 💥
 - bezen hero imageler ekranda gorunmur
 - navbar overflow hidden problem 
 - modali acanda ekranda qeribe movement bas verir
+- slider lazy load edende gorunmur
 
 ------------------------------------------------------------------------------

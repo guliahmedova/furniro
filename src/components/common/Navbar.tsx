@@ -31,7 +31,7 @@ const Navbar = () => {
     <header className="bg-white md:shadow-sm">
       <nav className="flex items-center font-medium justify-around">
 
-        <div className="lg:w-auto w-full py-7 lg:px-0 px-3 z-50 flex justify-between items-center">
+        <div className="lg:w-auto w-full py-7 lg:px-0 px-3 z-20 flex justify-between items-center">
           <Link to="/" className="flex items-center w-fit gap-1">
             <img src={logo} alt="logo" />
             <span className="font-bold md:text-[34px] text-2xl">Furniro</span>

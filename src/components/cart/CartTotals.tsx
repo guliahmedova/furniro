@@ -5,7 +5,7 @@ const CartTotals = () => {
     return (
         <section>
             <div className="pt-[72px] pb-[85px] flex gap-8 xl:flex-row flex-col w-[85%] mx-auto bg--500 justify-between lg:px-0 px-3">
-                
+
                 <div className='relative overflow-x-auto w-full | cart-table'>
                     <table className="w-full">
                         <thead className='w-full bg-[#F9F1E7] h-14'>
@@ -29,19 +29,7 @@ const CartTotals = () => {
                                 <td className='text-[#9F9F9F] text-base text-center'>Rs. 250,000.00</td>
                                 <td><span className='border border-[#9F9F9F] w-6 h-6 py-1 px-3 rounded-md mx-auto flex items-center justify-center select-none'>1</span></td>
                                 <td className='text-black font-medium text-base'>Rs. 250,000.00</td>
-                                <td><span className='w-6 h-6 bg-[#B88E2F] text-sm select-none rounded-md py-1 px-3 flex items-center justify-center uppercase text-white mx-auto'>xl</span></td>
-                                <td><span className='block w-6 h-6 bg-red-600 rounded-full mx-auto'></span></td>
-                                <td><button className='block mx-auto'><img src={deleteIcon} alt="" /></button></td>
-                            </tr>
-                            <tr className='w-full overflow-x-scroll h-[20vh]'>
-                                <td>
-                                    <div className='bg-[#F9F1E7] w-24 h-24 flex items-center justify-center rounded-xl'><img src={d} alt="" /></div>
-                                </td>
-                                <td className='text-[#9F9F9F] text-base'>Asgaard sofa</td>
-                                <td className='text-[#9F9F9F] text-base text-center'>Rs. 250,000.00</td>
-                                <td><span className='border border-[#9F9F9F] w-6 h-6 py-1 px-3 rounded-md mx-auto flex items-center justify-center select-none'>1</span></td>
-                                <td className='text-black font-medium text-base'>Rs. 250,000.00</td>
-                                <td><span className='w-6 h-6 bg-[#B88E2F] text-sm select-none rounded-md py-1 px-3 flex items-center justify-center uppercase text-white mx-auto'>xl</span></td>
+                                <td><span className='w-6 h-6 bg-[#B88E2F] text-[12px] select-none rounded-md py-1 px-3 flex items-center justify-center uppercase text-white mx-auto'>xl</span></td>
                                 <td><span className='block w-6 h-6 bg-red-600 rounded-full mx-auto'></span></td>
                                 <td><button className='block mx-auto'><img src={deleteIcon} alt="" /></button></td>
                             </tr>
