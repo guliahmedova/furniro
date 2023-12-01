@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
@@ -8,21 +8,37 @@ import { store } from './redux/app/store.ts';
 import { persistor } from './redux/app/store.ts';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
-import {
-  Home,
-  Shop,
-  Blog,
-  Contact,
-  ProductDetail,
-  Cart,
-  Checkout,
-  Search,
-  Favorites,
-  ProductComparison,
-  NotFound,
-  Login,
-  Register
-} from './pages/index.ts';
+import Spinner from './components/common/Spinner.tsx';
+
+// import {
+//   Home,
+//   Shop,
+//   Blog,
+//   Contact,
+//   ProductDetail,
+//   Cart,
+//   Checkout,
+//   Search,
+//   Favorites,
+//   ProductComparison,
+//   NotFound,
+//   Login,
+//   Register
+// } from './pages/index.ts';
+
+const Home = lazy(() => import('./pages/Home.tsx'));
+const Shop = lazy(() => import('./pages/Shop.tsx'));
+const Blog = lazy(() => import('./pages/Blog.tsx'));
+const Contact = lazy(() => import('./pages/Contact.tsx'));
+const ProductDetail = lazy(() => import('./pages/ProductDetail.tsx'));
+const Cart = lazy(() => import('./pages/Cart.tsx'));
+const Checkout = lazy(() => import('./pages/Checkout.tsx'));
+const Search = lazy(() => import('./pages/Search.tsx'));
+const Favorites = lazy(() => import('./pages/Favorites.tsx'));
+const ProductComparison = lazy(() => import('./pages/ProductComparison.tsx'));
+const NotFound = lazy(() => import('./pages/NotFound.tsx'));
+const Login = lazy(() => import('./pages/Login.tsx'));
+const Register = lazy(() => import('./pages/Register.tsx'));
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route>
@@ -47,12 +63,14 @@ const router = createBrowserRouter(createRoutesFromElements(
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ModalProvider>
-          <RouterProvider router={router} />
-        </ModalProvider>
-      </PersistGate>
-    </Provider>
+    <Suspense fallback={<Spinner />}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ModalProvider>
+            <RouterProvider router={router} />
+          </ModalProvider>
+        </PersistGate>
+      </Provider>
+    </Suspense>
   </React.StrictMode>,
 );

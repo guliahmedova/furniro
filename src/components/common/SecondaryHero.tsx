@@ -17,7 +17,7 @@ const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch, addSear
   return (
     <section className='lg:h-[31vh] flex justify-center md:mg-top items-center bg-hero-image w-full bg-no-repeat bg-fix bg-center bg-cover'>
       <div className='text-center w-full lg:py-0 py-6'>
-        <img src={logo} className='mx-auto' alt="logo" />
+        <img src={logo} className='mx-auto' alt='' />
         <h1 className='lg:text-[48px] font-medium lg:leading-[72px] select-none md:text-2xl text-xl'>{title}</h1>
         <div className='flex items-center leading-6 gap-[6px] justify-center'>
           <Link to="/" className='font-medium lg:text-base text-sm'>Home</Link>

@@ -112,7 +112,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
             <span className='font-medium uppercase text-sm'>color</span>
             <div className='mt-2 flex gap-2'>
               {product?.ProductColors.map((item) => (
-                <div style={{ backgroundColor: `${item}` }} className={`w-6 h-6 rounded-full block text-center text-white ${item === activeColor ? 'border border-blue-500 cursor-default' : 'cursor-pointer'}`} onClick={(e) => {
+                <div key={item} style={{ backgroundColor: `${item}` }} className={`w-6 h-6 rounded-full block text-center text-white ${item === activeColor ? 'border border-blue-500 cursor-default' : 'cursor-pointer'}`} onClick={(e) => {
                   setActiveColor(item);
                   e.preventDefault();
                   e.stopPropagation();
@@ -127,7 +127,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
             <span className='font-medium uppercase text-sm'>size</span>
             <div className='mt-2 flex gap-2'>
               {product?.ProductSizes.map((item) => (
-                <span className={`w-6 h-6 bg-[#B88E2F] rounded-full text-white select-none text-[10px] uppercase flex justify-center items-center ${item === activeSize ? 'border border-blue-500 cursor-default' : 'cursor-pointer'}`}
+                <span key={item} className={`w-6 h-6 bg-[#B88E2F] rounded-full text-white select-none text-[10px] uppercase flex justify-center items-center ${item === activeSize ? 'border border-blue-500 cursor-default' : 'cursor-pointer'}`}
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();

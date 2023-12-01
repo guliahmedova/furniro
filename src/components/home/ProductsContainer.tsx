@@ -13,8 +13,6 @@ const ProductsContainer = () => {
         dispatch(getProducts());
     }, [dispatch]);
 
-    // console.log(products);
-
     return (
         <section className="bg-white">
             <div className="xl:w-[85%] w-[90%] mx-auto mt-[56px] mb-[69px]">
