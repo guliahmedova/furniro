@@ -7,8 +7,8 @@ export default {
     },
     extend: {
       backgroundImage: {
-        "hero-image": "url('assets/images/secondaryHero.svg')",
-        "primary-hero-image": "url('assets/images/primaryHero.svg')"
+        "hero-image": "url('/assets/images/secondaryHero.svg')",
+        "primary-hero-image": "url('/assets/images/primaryHero.svg')"
       }
     },
   },
