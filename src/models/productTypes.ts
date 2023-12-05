@@ -1,19 +1,23 @@
 export type ProductTypes = {
-    id: string,
-    Title: string,
-    SubTitle: string,
-    Introduction: string,
-    SalePrice: number,
-    CostPrice: number,
-    DiscountPercent: number,
-    Sku: string,
-    IsNew: boolean,
-    CategoryId: number,
-    DescriptionId: number,
-    CreatedAt: Date,
-    ProductImages: string[],
-    ProductTags: [],
-    ProductSizes: string[],
-    ProductColors: string[],
-    Reviews: []
+    id: number,
+    title: string,
+    subTitle: string,
+    salePrice: number,
+    discountPercent: number,
+    discountedPrice: number,
+    imageFiles: string[],
+    sku: string,
+    isNew: boolean,
+    tags: [{
+        id: number,
+        tagName: string
+    }],
+    colors: [{
+        id: number,
+        colorHexCode: string
+    }],
+    sizes: [{
+        id: number,
+        sizeName: string
+    }]
 };

@@ -9,21 +9,21 @@ export interface ProductState {
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
     product: ProductTypes,
     filteredProducts: ProductTypes[],
-    searchText: string
+    searchText: string,
 };
 
 export const getProducts = createAsyncThunk(
-    'getProducts',
-    async () => {
-        const response = await axios.get('https://65573b01bd4bcef8b6124977.mockapi.io/products');
+    'OurProducts',
+    async (page: number) => {
+        const response = await axios.get(`http://immutable858-001-site1.atempurl.com/api/UserProduct/OurProducts?Page=${page}`);
         return (await response.data);
     }
 );
 
 export const getProductById = createAsyncThunk(
-    'getProductById',
-    async (productId: string) => {
-        const response = await axios.get(`https://65573b01bd4bcef8b6124977.mockapi.io/products/${productId}`);
+    'productGetById',
+    async (productId: number) => {
+        const response = await axios.get(`http://immutable858-001-site1.atempurl.com/api/UserProduct/getById/ProductPage?Id=${productId}`);
         return (await response.data);
     }
 );
@@ -42,7 +42,7 @@ const productSlice = createSlice({
     reducers: {
         addSearchText: (state, action: PayloadAction<string>) => {
             state.searchText = action.payload;
-            state.filteredProducts = state.entities.filter((product) => product.Title.toLowerCase().startsWith(state.searchText.toLocaleLowerCase()));
+            state.filteredProducts = state.entities.filter((product) => product.title.toLowerCase().startsWith(state.searchText.toLocaleLowerCase()));
         }
     },
     extraReducers: (builder) => {

@@ -1,16 +1,18 @@
 import { useSelector } from "react-redux";
 import { ProductCard } from "../common/index";
 import { RootState, useAppDispatch } from "../../redux/app/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ProductTypes } from "../../models/productTypes";
 import { getProducts } from "../../redux/features/productSlice";
 
 const ProductsContainer = () => {
     const dispatch = useAppDispatch();
-    const products: ProductTypes[] = useSelector((state: RootState) => state.product.entities) || [];
+    const products: ProductTypes[] = useSelector((state: RootState) => state.product.entities);
+
+    const [showMore, setShowMore] = useState(1);
 
     useEffect(() => {
-        dispatch(getProducts());
+        dispatch(getProducts(showMore));
     }, [dispatch]);
 
     return (
@@ -24,7 +26,7 @@ const ProductsContainer = () => {
                             product={item} />
                     ))}
                 </div>
-                <button className="mt-[32px] border-2 py-[12px] block w-[245px] mx-auto border-[#B88E2F] text-[#B88E2F] font-bold text-[16px] leading-6">Show More</button>
+                <button className="mt-[32px] border-2 py-[12px] block w-[245px] mx-auto border-[#B88E2F] text-[#B88E2F] font-bold text-[16px] leading-6" onClick={() => setShowMore(prevState => prevState + 1)}>Show More</button>
             </div>
         </section>
     )

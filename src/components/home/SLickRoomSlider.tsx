@@ -19,8 +19,6 @@ const SlickRoomSLider = () => {
         dotsClass: 'slick-dots custom-dots',
         infinite: true,
         useCSS: true,
-        // variableWidth: true,
-        // adaptiveHeight: true,
         speed: 300,
         slidesToShow: 3,
         slidesToScroll: 1,

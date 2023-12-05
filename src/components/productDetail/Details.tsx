@@ -18,10 +18,10 @@ const Details = () => {
   const [productCount, setProductCount] = useState(0);
   const detailProduct: ProductTypes = useSelector((state: RootState) => state.product.product);
 
-  const initialSize = detailProduct?.ProductSizes?.length > 0 ? detailProduct.ProductSizes[0] : '';
+  const initialSize = detailProduct?.sizes?.length > 0 ? detailProduct.sizes[0].sizeName : '';
   const [size, setSize] = useState(initialSize);
 
-  const initialColor = detailProduct?.ProductColors?.length > 0 ? detailProduct.ProductColors[0] : '';
+  const initialColor = detailProduct?.colors?.length > 0 ? detailProduct.colors[0].colorHexCode : '';
   const [color, setColor] = useState(initialColor);
 
   const handleSlideImageChange = (id: string) => {
@@ -60,7 +60,7 @@ const Details = () => {
           <Link to="/shop" className="text-[#9F9F9F]">Shop</Link>
           <img src={arrow} alt="arrow" />
         </div>
-        <span className="text-[#000000] select-none lg:border-l-2 border-[#9F9F9F] lg:pl-[24px]">{detailProduct?.Title}</span>
+        <span className="text-[#000000] select-none lg:border-l-2 border-[#9F9F9F] lg:pl-[24px]">{detailProduct?.title}</span>
       </div>
 
       <div className="lg:max-w-[1334px] mx-auto mt-8 mb-14 lg:px-0 px-3">
@@ -76,8 +76,8 @@ const Details = () => {
           </div>
 
           <div>
-            <h1 className="text-black lg:text-[42px] lg:leading-[63px] text-2xl tracking-wide">{detailProduct?.Title}</h1>
-            <span className="text-[#9F9F9F] lg:text-2xl font-medium text-lg lg:mt-0 mt-3 block">Rs. {detailProduct?.SalePrice}</span>
+            <h1 className="text-black lg:text-[42px] lg:leading-[63px] text-2xl tracking-wide">{detailProduct?.title}</h1>
+            <span className="text-[#9F9F9F] lg:text-2xl font-medium text-lg lg:mt-0 mt-3 block">Rs. {detailProduct?.salePrice}</span>
             <div className="flex gap-[18px] mt-4 mb-5">
               <div className="flex items-center gap-[6px]">
                 {stars.map((item, index) => (
@@ -90,8 +90,8 @@ const Details = () => {
             <div className="mb-[18px]">
               <h4 className="text-[#9F9F9F] text-[14px] mb-3">Size</h4>
               <div className="flex items-center gap-4">
-                {detailProduct?.ProductSizes?.map((item) => (
-                  <span key={item} onClick={() => handleSizeActiveClass(item)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-md ${size === item ? 'bg-[#B88E2F] text-white cursor-default' : 'bg-[#F9F1E7] cursor-pointer'} flex items-center justify-center uppercase text-[13px]`}>{item}</span>
+                {detailProduct?.sizes?.map((item) => (
+                  <span key={item.id} onClick={() => handleSizeActiveClass(item.sizeName)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-md ${size === item.sizeName ? 'bg-[#B88E2F] text-white cursor-default' : 'bg-[#F9F1E7] cursor-pointer'} flex items-center justify-center uppercase text-[13px]`}>{item.sizeName}</span>
                 ))}
               </div>
             </div>
@@ -99,8 +99,8 @@ const Details = () => {
             <div className="mb-8">
               <h4 className="text-[#9F9F9F] text-[14px] mb-3">Color</h4>
               <div className="flex gap-4 items-center">
-                {detailProduct?.ProductColors?.map((item) => (
-                  <button key={item} onClick={() => handleColor(item)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-full border-2 ${item === color ? 'border-[#B88E2F]' : ''}`} style={{ backgroundColor: item }}></button>
+                {detailProduct?.colors?.map((item) => (
+                  <button key={item.id} onClick={() => handleColor(item.colorHexCode)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-full border-2 ${item.colorHexCode === color ? 'border-[#B88E2F]' : ''}`} style={{ backgroundColor: item.colorHexCode }}></button>
                 ))}
               </div>
             </div>
@@ -120,19 +120,19 @@ const Details = () => {
             <div className="pt-10 flex flex-col gap-3">
               <div className="flex items-center">
                 <span className="text-[#9F9F9F] w-[92px]">SKU</span>
-                <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>{detailProduct?.Sku}</span>
+                <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>{detailProduct?.sku}</span>
               </div>
               <div className="flex items-center">
                 <span className="text-[#9F9F9F] w-[92px]">Category</span>
-                <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>{detailProduct?.CategoryId}</span>
+                {/* <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>{detailProduct?.CategoryId}</span> */}
               </div>
               <div className="flex items-center">
                 <span className="text-[#9F9F9F] w-[92px]">Tags</span>
-                <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>
+                {/* <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>
                   {detailProduct?.ProductTags?.map((tag) => (
                     <span key={tag}>{tag}, </span>
                   ))}
-                </span>
+                </span> */}
               </div>
               <div className="flex items-center">
                 <span className="text-[#9F9F9F] w-[92px]">Share</span>

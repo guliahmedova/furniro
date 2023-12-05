@@ -13,12 +13,12 @@ interface CardsProps {
 
 const Cards: FC<CardsProps> = ({ gridClass }) => {
     const dispatch = useAppDispatch();
+    const currentpage = useSelector((state: RootState) => state.pagination.currentPage);
+    const products: ProductTypes[] = useSelector((state: RootState) => state.product.entities);
 
     useEffect(() => {
-        dispatch(getProducts());
-    }, []);
-
-    const products: ProductTypes[] = useSelector((state: RootState) => state.product.entities);
+        dispatch(getProducts(currentpage));
+    }, [dispatch, currentpage]);
 
     return (
         <section className="bg-white">

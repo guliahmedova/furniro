@@ -1,27 +1,57 @@
+import { RootState, useAppDispatch } from "../../redux/app/store";
+import { useSelector } from "react-redux";
+import { onNavigateNext, onNavigatePrev, onClickCurrentPage } from "../../redux/features/paginationSlice";
+
 const Pagination = () => {
+    const dispatch = useAppDispatch();
+    const currentpage = useSelector((state: RootState) => state.pagination.currentPage);
+
+    const totalPages = 48;
+    const perPage = 8;
+
+    const dotsCount = Math.ceil(totalPages / perPage);
+    let dots = [];
+
+    for (let index = 0; index < dotsCount; index++) {
+        dots.push(<li key={index} onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dispatch(onClickCurrentPage(index + 1))
+        }}>
+            <span
+                className={`flex items-center justify-center h-14 xl:w-14 leading-tight rounded-md ${currentpage === index + 1 ? 'bg-[#B88E2F] text-white cursor-default' : 'bg-[#F9F1E7] text-black cursor-pointer'}`}>
+                {index + 1}
+            </span>
+        </li>)
+    };
+
     return (
         <div className="flex justify-center mt-[70px]">
             <nav aria-label="Page navigation example mx-auto block">
-                <ul className="flex items-center text-base h-10 lg:gap-[38px] gap-6">
-                    {/* <li>
-                        <a href="#" className="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-                    </li> */}
-                    <li>
-                        <a href="#" className="flex items-center justify-center px-4 h-10 leading-tight text-white rounded-md bg-[#B88E2F]">1</a>
-                    </li>
-                    <li>
-                        <a href="#" className="flex items-center justify-center px-4 h-10 leading-tight text-black rounded-md bg-[#F9F1E7]">2</a>
-                    </li>
-                    <li>
-                        <a href="#" aria-current="page" className="flex items-center justify-center px-4 h-10 leading-tight text-black rounded-md bg-[#F9F1E7]">3</a>
-                    </li>
-                    <li>
-                        <a href="#" className="flex items-center justify-center px-4 h-10 leading-tight text-black rounded-md bg-[#F9F1E7]">Next</a>
-                    </li>
+                <ul className={`flex items-center xl:gap-9 gap-1 text-base h-14`}>
+                    {currentpage !== 1 && (
+                        <li onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            dispatch(onNavigatePrev());
+                        }}>
+                            <span className="flex items-center justify-center px-4 h-14 leading-tight text-black rounded-md bg-[#F9F1E7] cursor-pointer">Previous</span>
+                        </li>
+                    )}
+                    {dots}
+                    {currentpage !== dotsCount && (
+                        <li onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            dispatch(onNavigateNext());
+                        }}>
+                            <span className="flex items-center justify-center px-4 h-14 leading-tight text-black rounded-md bg-[#F9F1E7] cursor-pointer">Next</span>
+                        </li>
+                    )}
                 </ul>
             </nav>
         </div>
     )
 }
 
-export default Pagination
+export default Pagination; 
