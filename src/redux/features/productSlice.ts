@@ -1,21 +1,23 @@
-import { PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { RootState } from '../app/store';
 import { ProductTypes } from '../../models/productTypes';
+import { RootState } from '../app/store';
+
+const baseurl = 'http://immutable858-001-site1.atempurl.com/api/UserProduct/';
 
 export interface ProductState {
     entities: ProductTypes[]
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
     product: ProductTypes,
-    filteredProducts: ProductTypes[],
-    searchText: string,
+    totalProductCount: number,
+    newProducts: ProductTypes[],
+    paginationProducts: ProductTypes[]
 };
 
 export const getProducts = createAsyncThunk(
-    'OurProducts',
+    'getProducts',
     async (page: number) => {
-        const response = await axios.get(`http://immutable858-001-site1.atempurl.com/api/UserProduct/OurProducts?Page=${page}`);
+        const response = await axios.get(`${baseurl}Products?ShowMore.TakeProduct=${page}`);
         return (await response.data);
     }
 );
@@ -23,7 +25,47 @@ export const getProducts = createAsyncThunk(
 export const getProductById = createAsyncThunk(
     'productGetById',
     async (productId: number) => {
-        const response = await axios.get(`http://immutable858-001-site1.atempurl.com/api/UserProduct/getById/ProductPage?Id=${productId}`);
+        const response = await axios.get(`${baseurl}getById/ProductPage?Id=${productId}`);
+        return (await response.data);
+    }
+);
+
+export const getNewProducts = createAsyncThunk(
+    'getNewProducts',
+    async (count: number) => {
+        const response = await axios.get(`${baseurl}NewProducts?ShowMore.TakeProduct=${count}`);
+        return (await response.data);
+    }
+);
+
+export const getPaginationProducts = createAsyncThunk(
+    'getPaginationProducts',
+    async ({
+        page,
+        take,
+        prompt= '',
+        categoryName = '',
+        isNew = true,
+        productTags = '',
+        productSizes='',
+        productColors='',
+        maxPrice ='',  
+        minPrice = 0, 
+        orderBy = ''
+    }: {
+        page: number,
+        take: number,
+        prompt?: string,
+        categoryName?: string,
+        isNew?: boolean,
+        productTags?: string,
+        productSizes?: string,
+        productColors?: string,
+        maxPrice?: number | string,
+        minPrice?: number,
+        orderBy?: string
+    }) => {
+        const response = await axios.get(`${baseurl}Products?Page=${page}&Prompt=${prompt}&ShowMore.TakeProduct=${take}&CategoryNames=${categoryName}&IsNew=${isNew}&ProductTags=${productTags}&ProductSizes=${productSizes}&ProductColors=${productColors}&MinPrice=${minPrice}&MaxPrice=${maxPrice}&OrderBy=${orderBy}`);
         return (await response.data);
     }
 );
@@ -32,28 +74,35 @@ const initialState = {
     entities: [],
     loading: 'idle',
     product: {} as ProductTypes,
-    searchText: "",
-    filteredProducts: [],
+    totalProductCount: 0,
+    newProducts: [],
+    paginationProducts: []
 } as ProductState;
 
 const productSlice = createSlice({
     name: 'products',
     initialState,
-    reducers: {
-        addSearchText: (state, action: PayloadAction<string>) => {
-            state.searchText = action.payload;
-            state.filteredProducts = state.entities.filter((product) => product.title.toLowerCase().startsWith(state.searchText.toLocaleLowerCase()));
-        }
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getProducts.fulfilled, (state, action) => {
-            state.entities = action.payload;
+            state.entities = action.payload[0].products;
             state.loading = 'succeeded';
         });
         builder.addCase(getProducts.pending, (state) => {
             state.loading = 'pending'
         });
         builder.addCase(getProducts.rejected, (state) => {
+            state.loading = 'failed'
+        });
+
+        builder.addCase(getNewProducts.fulfilled, (state, action) => {
+            state.newProducts = action.payload;
+            state.loading = 'succeeded';
+        });
+        builder.addCase(getNewProducts.pending, (state) => {
+            state.loading = 'pending'
+        });
+        builder.addCase(getNewProducts.rejected, (state) => {
             state.loading = 'failed'
         });
 
@@ -67,11 +116,22 @@ const productSlice = createSlice({
         builder.addCase(getProductById.rejected, (state) => {
             state.loading = 'failed'
         });
+
+        builder.addCase(getPaginationProducts.fulfilled, (state, action) => {
+            state.paginationProducts = action.payload[0].products;
+            state.totalProductCount = action.payload[0].totalProductCount;
+            state.loading = 'succeeded';
+        });
+        builder.addCase(getPaginationProducts.pending, (state) => {
+            state.loading = 'pending'
+        });
+        builder.addCase(getPaginationProducts.rejected, (state) => {
+            state.loading = 'failed'
+        });
     },
-})
+});
 
 export const selectProducts = (state: RootState) => state.product.entities;
 export const selectProductById = (state: RootState) => state.product.product;
 export const selectProductLoadingStatus = (state: RootState) => state.product.loading;
-export const { addSearchText } = productSlice.actions;
 export default productSlice.reducer;

@@ -4,10 +4,10 @@ import searchIcon from '../../assets/images/search.svg';
 import heroArrow from '../../assets/images//heroArrow.svg';
 import { ISecondaryHeroTypes } from '../../models/secondaryHeroTypes';
 
-const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch, addSearchText, searchText }) => {
+const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch, searchText, saveSearchText }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const text = event.target.value;
-    addSearchText && addSearchText(text);
+    saveSearchText && saveSearchText(text);
   };
 
   const memoizedSearchText = useMemo(() => {
@@ -26,7 +26,7 @@ const SecondaryHero: FC<ISecondaryHeroTypes> = ({ title, logo, isSearch, addSear
         </div>
         {
           isSearch && (
-            <form className='mt-6 xl:w-[30%] w-[50%] mx-auto lg:px-0 px-3 relative'>
+            <form className='mt-6 xl:w-[30%] w-[50%] mx-auto lg:px-0 px-3 relative' onSubmit={(e) => e.preventDefault()}>
               <input
                 type="text"
                 id="name"

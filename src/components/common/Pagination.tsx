@@ -1,15 +1,18 @@
 import { RootState, useAppDispatch } from "../../redux/app/store";
 import { useSelector } from "react-redux";
 import { onNavigateNext, onNavigatePrev, onClickCurrentPage } from "../../redux/features/paginationSlice";
+import { FC } from "react";
 
-const Pagination = () => {
+interface PaginationProps {
+    page: number,
+    total: number
+};
+
+const Pagination: FC<PaginationProps> = ({ page, total }) => {
     const dispatch = useAppDispatch();
     const currentpage = useSelector((state: RootState) => state.pagination.currentPage);
 
-    const totalPages = 48;
-    const perPage = 8;
-
-    const dotsCount = Math.ceil(totalPages / perPage);
+    const dotsCount = Math.ceil(total / page);
     let dots = [];
 
     for (let index = 0; index < dotsCount; index++) {
@@ -19,7 +22,7 @@ const Pagination = () => {
             dispatch(onClickCurrentPage(index + 1))
         }}>
             <span
-                className={`flex items-center justify-center h-14 xl:w-14 leading-tight rounded-md ${currentpage === index + 1 ? 'bg-[#B88E2F] text-white cursor-default' : 'bg-[#F9F1E7] text-black cursor-pointer'}`}>
+                className={`flex items-center justify-center h-14 xl:w-14 w-auto xl:px-0 px-4 leading-tight text-xl rounded-md ${currentpage === index + 1 ? 'bg-[#B88E2F] text-white cursor-default' : 'bg-[#F9F1E7] text-black cursor-pointer'}`}>
                 {index + 1}
             </span>
         </li>)

@@ -26,9 +26,6 @@ body::-webkit-scrollbar-thumb:hover {
     background: #b88e2f;
 }
 
-
-
-
 /* -------------------------------------- */
 .cart-table::-webkit-scrollbar {
     width: 10px;
@@ -86,16 +83,38 @@ body::-webkit-scrollbar-thumb:hover {
     outline-offset: 8px;
     transition: all ease-in-out 0.1s;
 }
-/* .slick-slide.slick-active{
-    max-width: 370px !important;
-    height: 582px !important;
-} */
-/* .slick-slide.slick-active.slick-current div{
-    width: 100%;
-    height: 100%;
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 16px;
 }
-.slick-slide {
-    width: 372px !important;
-    height: 486px !important;
-    box-sizing: border-box;
-} */
+
+.parent img:nth-child(1) {
+    grid-area: 1 / 1 / 6 / 2;
+}
+.parent img:nth-child(2) {
+    grid-area: 6 / 1 / 9 / 3;
+}
+.parent img:nth-child(3) {
+    grid-area: 2 / 2 / 6 / 6;
+}
+.parent img:nth-child(4) {
+    grid-area: 6 / 3 / 8 / 6;
+}
+.parent img:nth-child(5) {
+    grid-area: 1 / 11 / 6 / 13;
+}
+.parent img:nth-child(6) {
+    grid-area: 3 / 6 / 7 / 8;
+}
+.parent img:nth-child(7) {
+    grid-area: 2 / 8 / 6 / 11;
+}
+.parent img:nth-child(8) {
+    grid-area: 6 / 8 / 9 / 10;
+}
+.parent img:nth-child(9) {
+    grid-area: 6 / 10 / 8 / 12;
+}

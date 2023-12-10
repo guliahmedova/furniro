@@ -6,6 +6,9 @@ export type ProductTypes = {
     discountPercent: number,
     discountedPrice: number,
     imageFiles: string[],
+    productImages: [{
+        imageFile: string
+    }]
     sku: string,
     isNew: boolean,
     tags: [{

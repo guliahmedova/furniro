@@ -1,11 +1,9 @@
-import { FC } from "react";
-import { useEffect } from "react";
-import { RootState } from "../../redux/app/store";
-import { useAppDispatch } from "../../redux/app/store";
-import { ProductTypes } from "../../models/productTypes";
-import { ProductCard, Pagination } from "../common/index";
+import { FC, useEffect } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
-import { getProducts } from '../../redux/features/productSlice';
+import { ProductTypes } from "../../models/productTypes";
+import { RootState, useAppDispatch } from "../../redux/app/store";
+import { getPaginationProducts } from '../../redux/features/productSlice';
+import { Pagination, ProductCard } from "../common/index";
 
 interface CardsProps {
     gridClass?: string
@@ -14,10 +12,13 @@ interface CardsProps {
 const Cards: FC<CardsProps> = ({ gridClass }) => {
     const dispatch = useAppDispatch();
     const currentpage = useSelector((state: RootState) => state.pagination.currentPage);
-    const products: ProductTypes[] = useSelector((state: RootState) => state.product.entities);
+    const products: ProductTypes[] = useSelector((state: RootState) => state.product.paginationProducts);
+
+    const totalProductCount = useSelector((state: RootState) => state.product.totalProductCount);
+    const perPage = 16;
 
     useEffect(() => {
-        dispatch(getProducts(currentpage));
+        dispatch(getPaginationProducts({ page: currentpage, take: 16, }));
     }, [dispatch, currentpage]);
 
     return (
@@ -32,7 +33,7 @@ const Cards: FC<CardsProps> = ({ gridClass }) => {
                         />
                     ))}
                 </div>
-                <Pagination />
+                <Pagination page={perPage} total={totalProductCount} />
             </div>
         </section>
     )
