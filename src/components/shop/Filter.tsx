@@ -1,9 +1,10 @@
-import gtidIcon from '../../assets/images/grid.svg';
-import filterIcon from '../../assets/images/filter.svg';
-import viewIcon from '../../assets/images/viewList.svg';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
+import filterIcon from '../../assets/images/filter.svg';
+import gtidIcon from '../../assets/images/grid.svg';
+import viewIcon from '../../assets/images/viewList.svg';
 import { RootState } from '../../redux/app/store';
+import { useModal } from '../../contexts/ModalContext';
 
 interface FilterProps {
     changeGridClass: (gridType: string) => void;
@@ -13,11 +14,13 @@ interface FilterProps {
 const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
     const totalProduct = useSelector((state: RootState) => state.product.totalProductCount);
 
+    const { openModal } = useModal();
+
     return (
         <section className='bg-[#F9F1E7]'>
             <div className='flex lg:justify-between lg:flex-row px-28 py-7 flex-col w-full'>
                 <div className='flex items-center justify-center gap-6 lg:flex-row flex-col-reverse'>
-                    <div className='flex items-center gap-2 cursor-pointer'>
+                    <div className='flex items-center gap-2 cursor-pointer' onClick={() => openModal('FilterPopup')}>
                         <img src={filterIcon} alt="filter-icon" />
                         <span>Filter</span>
                     </div>

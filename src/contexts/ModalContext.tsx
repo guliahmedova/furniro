@@ -1,21 +1,21 @@
-import { useContext, createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { ModalContextTypes } from "../models/modalContextTypes";
 
 export const ModalContext = createContext({
-    modal: false,
-    openModal: () => { },
+    modal: "",
+    openModal: (name: string) => { name },
     closeModal: () => { },
 });
 
 export const ModalProvider = ({ children }: ModalContextTypes) => {
-    const [modal, setModal] = useState(false);
+    const [modal, setModal] = useState('');
 
-    const openModal = () => {
-        setModal(true);
+    const openModal = (name: string) => {
+        setModal(name);
     };
 
     const closeModal = () => {
-        setModal(false);
+        setModal('');
     };
 
     return <ModalContext.Provider value={{ modal, openModal, closeModal }}>{children}</ModalContext.Provider>

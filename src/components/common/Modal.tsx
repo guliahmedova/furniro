@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useModal } from "../../contexts/ModalContext";
+import closeFuncIcon from '../../assets/images/closeModal.svg';
+import deleteIcon from '../../assets/images/deleteItem.svg';
 import md1 from '../../assets/images/sD1.svg';
 import md2 from '../../assets/images/sD2.svg';
-import deleteIcon from '../../assets/images/deleteItem.svg';
-import closeModalIcon from '../../assets/images/closeModal.svg';
+import { useModal } from "../../contexts/ModalContext";
 
 const Modal = () => {
     const { modal, closeModal } = useModal();
@@ -29,7 +29,7 @@ const Modal = () => {
                 <div className="bg-white top-0 h-fit py-7 w-auto">
                     <div className="flex justify-between gap-40 lg:px-8 px-3">
                         <h2 className="text-black font-bold lg:text-2xl text-sm">Shopping Cart</h2>
-                        <button onClick={closeModal}><img src={closeModalIcon} alt="close-icon" /></button>
+                        <button onClick={closeModal}><img src={closeFuncIcon} alt="close-icon" /></button>
                     </div>
                     <hr className="lg:w-[287px] bg-[#D9D9D9] mt-7 ml-8" />
                     <div className="flex flex-col gap-5 mt-11 lg:px-8 px-3 overflow-y-scroll h-[50vh]">

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ProductTypes } from '../../models/productTypes';
 import { RootState } from '../app/store';
+import { DescriptionType } from '../../models/DescriptionType';
 
 const baseurl = 'http://immutable858-001-site1.atempurl.com/api/UserProduct/';
 
@@ -11,7 +12,10 @@ export interface ProductState {
     product: ProductTypes,
     totalProductCount: number,
     newProducts: ProductTypes[],
-    paginationProducts: ProductTypes[]
+    paginationProducts: ProductTypes[],
+    productDescriptions: DescriptionType,
+    productID: number,
+    relatedProducts: ProductTypes[]
 };
 
 export const getProducts = createAsyncThunk(
@@ -24,9 +28,9 @@ export const getProducts = createAsyncThunk(
 
 export const getProductById = createAsyncThunk(
     'productGetById',
-    async (productId: number) => {
+    async (productId: string | number) => {
         const response = await axios.get(`${baseurl}getById/ProductPage?Id=${productId}`);
-        return (await response.data);
+        return response.data;
     }
 );
 
@@ -43,15 +47,15 @@ export const getPaginationProducts = createAsyncThunk(
     async ({
         page,
         take,
-        prompt= '',
-        categoryName = '',
-        isNew = true,
-        productTags = '',
-        productSizes='',
-        productColors='',
-        maxPrice ='',  
-        minPrice = 0, 
-        orderBy = ''
+        // prompt= '',
+        // categoryName = '',
+        // isNew = true,
+        // productTags = '',
+        // productSizes='',
+        // productColors='',
+        // maxPrice ='',  
+        // minPrice = 0, 
+        // orderBy = ''
     }: {
         page: number,
         take: number,
@@ -65,7 +69,24 @@ export const getPaginationProducts = createAsyncThunk(
         minPrice?: number,
         orderBy?: string
     }) => {
-        const response = await axios.get(`${baseurl}Products?Page=${page}&Prompt=${prompt}&ShowMore.TakeProduct=${take}&CategoryNames=${categoryName}&IsNew=${isNew}&ProductTags=${productTags}&ProductSizes=${productSizes}&ProductColors=${productColors}&MinPrice=${minPrice}&MaxPrice=${maxPrice}&OrderBy=${orderBy}`);
+        //Products?Page=${page}&Prompt=${prompt}&ShowMore.TakeProduct=${take}&CategoryNames=${categoryName}&IsNew=${isNew}&ProductTags=${productTags}&ProductSizes=${productSizes}&ProductColors=${productColors}&MinPrice=${minPrice}&MaxPrice=${maxPrice}&OrderBy=${orderBy}
+        const response = await axios.get(`${baseurl}Products?Page=${page}&ShowMore.TakeProduct=${take}`);
+        return (await response.data);
+    }
+);
+
+export const getProductDescriptionById = createAsyncThunk(
+    'getProductDescriptionById',
+    async (productId: string) => {
+        const response = await axios.get(`${baseurl}getById/Description?Id=${productId}`);
+        return (await response.data);
+    }
+);
+
+export const getRelatedProducts = createAsyncThunk(
+    'getRelatedProducts',
+    async ({ productId, take }: { productId: string, take: number }) => {
+        const response = await axios.get(`${baseurl}RelatedProducts?ShowMore.TakeProduct=${take}&MainProductId=${productId}`);
         return (await response.data);
     }
 );
@@ -76,16 +97,24 @@ const initialState = {
     product: {} as ProductTypes,
     totalProductCount: 0,
     newProducts: [],
-    paginationProducts: []
+    paginationProducts: [],
+    productDescriptions: {} as DescriptionType,
+    productID: 0,
+    relatedProducts: []
 } as ProductState;
 
 const productSlice = createSlice({
     name: 'products',
     initialState,
-    reducers: {},
+    reducers: {
+        getProductIDByCLick(state, action) {
+            state.productID = action.payload;
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(getProducts.fulfilled, (state, action) => {
             state.entities = action.payload[0].products;
+            state.totalProductCount = action.payload[0].totalProductCount;
             state.loading = 'succeeded';
         });
         builder.addCase(getProducts.pending, (state) => {
@@ -128,9 +157,32 @@ const productSlice = createSlice({
         builder.addCase(getPaginationProducts.rejected, (state) => {
             state.loading = 'failed'
         });
+
+        builder.addCase(getProductDescriptionById.fulfilled, (state, action) => {
+            state.productDescriptions = action.payload;
+            state.loading = 'succeeded';
+        });
+        builder.addCase(getProductDescriptionById.pending, (state) => {
+            state.loading = 'pending'
+        });
+        builder.addCase(getProductDescriptionById.rejected, (state) => {
+            state.loading = 'failed'
+        });
+
+        builder.addCase(getRelatedProducts.fulfilled, (state, action) => {
+            state.relatedProducts = action.payload;
+            state.loading = 'succeeded';
+        });
+        builder.addCase(getRelatedProducts.pending, (state) => {
+            state.loading = 'pending'
+        });
+        builder.addCase(getRelatedProducts.rejected, (state) => {
+            state.loading = 'failed'
+        });
     },
 });
 
+export const { getProductIDByCLick } = productSlice.actions;
 export const selectProducts = (state: RootState) => state.product.entities;
 export const selectProductById = (state: RootState) => state.product.product;
 export const selectProductLoadingStatus = (state: RootState) => state.product.loading;

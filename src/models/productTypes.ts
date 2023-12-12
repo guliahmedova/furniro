@@ -2,6 +2,7 @@ export type ProductTypes = {
     id: number,
     title: string,
     subTitle: string,
+    introduction: string,
     salePrice: number,
     discountPercent: number,
     discountedPrice: number,
@@ -22,5 +23,9 @@ export type ProductTypes = {
     sizes: [{
         id: number,
         sizeName: string
-    }]
+    }],
+    category: {
+        id: number,
+        categoryName: string
+    }
 };

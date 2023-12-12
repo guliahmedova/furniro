@@ -9,7 +9,7 @@ import shopIcon from '../../assets/images/shoppingCart.svg';
 import heart from '../../assets/images/whiteheart.svg';
 import { ProductTypes } from '../../models/productTypes';
 import { RootState, useAppDispatch } from '../../redux/app/store';
-import { getProductById } from '../../redux/features/productSlice';
+import { getProductById, getProductIDByCLick } from '../../redux/features/productSlice';
 import { addToWishlist, removeFromWishlist } from '../../redux/features/wishlistSlice';
 import AddToCartModal from './AddToCartModal';
 
@@ -50,13 +50,18 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
     e.currentTarget.src = errorImg;
   };
 
+  const getProductIDByClickEvent = (id: number) => {
+    dispatch(getProductIDByCLick(id));
+    console.log("ProductCard.tsx - id: ", id);
+  };
+
   return (
     <>
-      <Link to={`/productDetail/${product?.id}`} className={`${gridClass === 'view' ? 'h-auto' : 'h-full'} cursor-pointer`}>
+      <Link to={`/productDetail/${product?.id}`} className={`${gridClass === 'view' ? 'h-auto' : 'h-full'} cursor-pointer`} onClick={() => getProductIDByClickEvent(product.id)}>
         <div className="relative overflow-hidden h-full">
           <img src={product?.imageFiles[0]} onError={getImageError} alt="" className='h-[301px] w-full object-cover' />
           <div className='absolute top-[24px] right-6'>
-            {product?.isNew ? (<span className='w-12 h-12 rounded-full bg-[#2EC1AC] flex items-center justify-center text-white font-medium'>New</span>) : (
+            {(product?.isNew || product?.discountPercent === 0)? (<span className='w-12 h-12 rounded-full bg-[#2EC1AC] flex items-center justify-center text-white font-medium'>New</span>) : (
               <span className='w-12 h-12 rounded-full flex items-center justify-center bg-[#E97171] text-white font-medium'>-{product?.discountPercent}%</span>)}
           </div>
           <div className="lg:absolute hidden h-full w-full bg-[#3A3A3A]/70 lg:flex items-center justify-center bottom-0 hover:bottom-0 opacity-0 hover:opacity-100 transition-all duration-300">

@@ -1,12 +1,27 @@
-import sofa1 from '../../assets/images/sofa1.svg';
-import sofa2 from '../../assets/images/sofa2.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { DescriptionType } from '../../models/DescriptionType';
+import { RootState, useAppDispatch } from '../../redux/app/store';
+import { getProductDescriptionById } from '../../redux/features/productSlice';
+import { useParams } from 'react-router-dom';
 
 const DetailTabbedNavigation = () => {
   const [tabIndex, setTabIndex] = useState(1);
   const toggleTabs = (index: number) => {
     setTabIndex(index);
   };
+
+  const productDescription: DescriptionType = useSelector((state: RootState) => state.product.productDescriptions);
+
+  const dispatch = useAppDispatch();
+
+  const { productId } = useParams();
+
+  useEffect(() => {
+    if (productId) {
+      dispatch(getProductDescriptionById(productId));
+    }
+  }, [dispatch, productId]);
 
   return (
     <section className="mt-[69px] pt-[46px] pb-[61px] border-t border-b border-[#D9D9D9]">
@@ -19,12 +34,16 @@ const DetailTabbedNavigation = () => {
 
         <div className={`${tabIndex === 1 ? 'block' : 'hidden'}`}>
           <p className='max-w-[1026px] mx-auto text-[#9F9F9F] font-normal tracking-wider'>
-            <span className='mb-[30px] block'>Embodying the raw, wayward spirit of rock ‘n’ roll, the Kilburn portable active stereo speaker takes the unmistakable look and sound of Marshall, unplugs the chords, and takes the show on the road.</span>
-            <span>Weighing in under 7 pounds, the Kilburn is a lightweight piece of vintage styled engineering. Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound that is both articulate and pronounced. The analogue knobs allow you to fine tune the controls to your personal preferences while the guitar-influenced leather strap enables easy and stylish travel.</span>
+            <span className='mb-[30px] block'>
+              {productDescription?.introduction}
+            </span>
           </p>
           <div className='flex lg:flex-row flex-col gap-7 mt-[36px]'>
-            <div className='lg:w-[605px] h-[348px] rounded-lg bg-[#F9F1E7]'><img className='w-full h-full object-contain' src={sofa1} alt="product-img1" /></div>
-            <div className='lg:w-[605px] h-[348px] rounded-lg bg-[#F9F1E7]'><img className='w-full h-full object-contain' src={sofa2} alt="product-img2" /></div>
+            {productDescription?.imageFiles && productDescription?.imageFiles.length > 0 && (
+              productDescription?.imageFiles.map((item, index)=> (
+                <div key={index} className='lg:w-[605px] h-[348px] rounded-lg bg-[#F9F1E7]'><img className='w-full h-full object-cover rounded-lg' src={item} alt="product-img1" /></div>
+              ))
+            )}
           </div>
         </div>
 

@@ -62,7 +62,7 @@ const Navbar = () => {
               </div>}
             <img src={heart} alt="heart-icon" />
           </Link>
-          <div onClick={openModal} className="cursor-pointer">
+          <div onClick={() => openModal('ShoppingModal')} className="cursor-pointer">
             <img src={shopCart} alt="shopcart-icon" />
           </div>
         </div>

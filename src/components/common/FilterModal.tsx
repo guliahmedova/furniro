@@ -1,12 +1,21 @@
 import closeIcon from '../../assets/images/closeModal.svg';
+import { useModal } from '../../contexts/ModalContext';
 
 const FilterModal = () => {
+    const { closeModal } = useModal();
+
+    const handleBackgroundClick = (e: React.MouseEvent) => {
+        if (e.target instanceof HTMLElement && e.target.classList.contains('filter-background')) {
+            closeModal();
+        };
+    };
+
     return (
-        <div className="fixed z-30 top-0 left-0 flex justify-center items-center w-full h-full bg-[#3A3A3A]/60">
+        <div onClick={handleBackgroundClick} className="filter-background | fixed z-30 top-0 left-0 flex justify-center items-center w-full h-full bg-[#3A3A3A]/60">
             <div className="bg-white min-w-[50%] min-h-[50%] rounded-lg p-4">
                 <div className='flex justify-between items-center mb-10'>
                     <h1 className='font-extrabold text-3xl'>Filters</h1>
-                    <button><img src={closeIcon} alt="" /></button>
+                    <button onClick={closeModal}><img src={closeIcon} alt="" /></button>
                 </div>
                 <form>
                     <div className="flex flex-col mb-5">

@@ -1,42 +1,50 @@
-import { useState } from "react";
-import { Link } from "react-router-dom"
-import mainD from '../../assets/images/mainD.svg';
-import arrow from '../../assets/images//heroArrow.svg';
-import { slides } from "../../assets/const/slides";
-import star from '../../assets/images/star.svg';
-import halfStar from '../../assets/images/halfStar.svg';
-import facebook from '../../assets/images/facebook.svg';
-import linkedin from '../../assets/images/linkedin.svg';
-import twitter from '../../assets/images/twitter.svg';
-const stars = [star, star, star, star, halfStar];
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/app/store";
+import { Link, useParams } from "react-router-dom";
+import arrow from '../../assets/images//heroArrow.svg';
+import facebook from '../../assets/images/facebook.svg';
+import halfStar from '../../assets/images/halfStar.svg';
+import linkedin from '../../assets/images/linkedin.svg';
+import star from '../../assets/images/star.svg';
+import twitter from '../../assets/images/twitter.svg';
 import { ProductTypes } from "../../models/productTypes";
+import { RootState, useAppDispatch } from "../../redux/app/store";
+import { getProductById } from "../../redux/features/productSlice";
+const stars = [star, star, star, star, halfStar];
 
 const Details = () => {
-  const [sliderImg, setSliderImg] = useState(mainD);
+  const dispatch = useAppDispatch();
+
   const [productCount, setProductCount] = useState(0);
-  const detailProduct: ProductTypes = useSelector((state: RootState) => state.product.product);
+  const product: ProductTypes = useSelector((state: RootState) => state.product.product);
 
-  const initialSize = detailProduct?.sizes?.length > 0 ? detailProduct.sizes[0].sizeName : '';
-  const [size, setSize] = useState(initialSize);
+  const [size, setSize] = useState(0);
 
-  const initialColor = detailProduct?.colors?.length > 0 ? detailProduct.colors[0].colorHexCode : '';
-  const [color, setColor] = useState(initialColor);
+  const [color, setColor] = useState(0);
 
-  const handleSlideImageChange = (id: string) => {
-    const slider = slides.find(item => item.id === id)?.img;
+  const [selectedImg, setSelectedImg] = useState(0);
+
+  const { productId } = useParams();
+
+  useEffect(() => {
+    if (productId) {
+      dispatch(getProductById(productId));
+    };
+  }, [dispatch, productId]);
+
+  const handleSlideImageChange = (index: number) => {
+    const slider = product?.imageFiles.find((_, index) => index === index);
     if (slider !== undefined) {
-      setSliderImg(slider);
+      setSelectedImg(index);
     }
   };
 
-  const handleSizeActiveClass = (size: string) => {
-    setSize(size);
+  const handleSizeActiveClass = (sizeIndex: number) => {
+    setSize(sizeIndex);
   };
 
-  const handleColor = (color: string) => {
-    setColor(color);
+  const handleColor = (colorIndex: number) => {
+    setColor(colorIndex);
   };
 
   const increaseProductCount = () => {
@@ -60,7 +68,7 @@ const Details = () => {
           <Link to="/shop" className="text-[#9F9F9F]">Shop</Link>
           <img src={arrow} alt="arrow" />
         </div>
-        <span className="text-[#000000] select-none lg:border-l-2 border-[#9F9F9F] lg:pl-[24px]">{detailProduct?.title}</span>
+        <span className="text-[#000000] select-none lg:border-l-2 border-[#9F9F9F] lg:pl-[24px]">{product?.title}</span>
       </div>
 
       <div className="lg:max-w-[1334px] mx-auto mt-8 mb-14 lg:px-0 px-3">
@@ -68,16 +76,20 @@ const Details = () => {
 
           <div className="flex gap-8 lg:flex-row flex-col-reverse">
             <div className="flex lg:flex-col flex-row lg;gap-8 gap-3">
-              {slides.map(item => (
-                <div key={item.id} style={{ backgroundColor: color }} className={`rounded-lg lg:w-[76px] lg:h-20 flex items-center justify-center cursor-pointer`} onClick={() => handleSlideImageChange(item.id)}><img src={item.img} alt="product-img" /></div>
+              {product?.imageFiles?.map((item, index) => (
+                <div key={item} className={`rounded-lg w-[76px] h-20 flex items-center justify-center cursor-pointer`} onClick={() => handleSlideImageChange(index)}><img src={item} className="w-full h-full object-cover rounded-lg" alt="product-img" /></div>
               ))}
             </div>
-            <div style={{ backgroundColor: color }} className={`rounded-lg lg:w-[423px] lg:h-[500px]`}><img className="w-full h-full object-contain" src={sliderImg} alt="slide-img" /></div>
+            {
+              product?.imageFiles && product?.imageFiles.length > 0 && (
+                <div className={`rounded-lg lg:w-[423px] lg:h-[500px]`}><img className="w-full h-full object-cover rounded-lg" src={product?.imageFiles[selectedImg]} alt="slide-img" /></div>
+              )
+            }
           </div>
 
           <div>
-            <h1 className="text-black lg:text-[42px] lg:leading-[63px] text-2xl tracking-wide">{detailProduct?.title}</h1>
-            <span className="text-[#9F9F9F] lg:text-2xl font-medium text-lg lg:mt-0 mt-3 block">Rs. {detailProduct?.salePrice}</span>
+            <h1 className="text-black lg:text-[42px] lg:leading-[63px] text-2xl tracking-wide">{product?.title}</h1>
+            <span className="text-[#9F9F9F] lg:text-2xl font-medium text-lg lg:mt-0 mt-3 block">Rs. {product?.salePrice}</span>
             <div className="flex gap-[18px] mt-4 mb-5">
               <div className="flex items-center gap-[6px]">
                 {stars.map((item, index) => (
@@ -86,12 +98,12 @@ const Details = () => {
               </div>
               <span className="text-[#9F9F9F] text-[13px] border-l border-[#9F9F9F] block pl-[22px]">5 Customer Review</span>
             </div>
-            <p className="lg:text-[13px] lg:max-w-[390px] font-medium text-black mb-[22px]">Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.</p>
+            <p className="lg:text-[13px] lg:max-w-[390px] font-medium text-black mb-[22px]">{product?.introduction}</p>
             <div className="mb-[18px]">
               <h4 className="text-[#9F9F9F] text-[14px] mb-3">Size</h4>
               <div className="flex items-center gap-4">
-                {detailProduct?.sizes?.map((item) => (
-                  <span key={item.id} onClick={() => handleSizeActiveClass(item.sizeName)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-md ${size === item.sizeName ? 'bg-[#B88E2F] text-white cursor-default' : 'bg-[#F9F1E7] cursor-pointer'} flex items-center justify-center uppercase text-[13px]`}>{item.sizeName}</span>
+                {product?.sizes?.map((item, index) => (
+                  <span key={item.id} onClick={() => handleSizeActiveClass(index)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-md ${index === size ? 'bg-[#B88E2F] text-white cursor-default' : 'bg-[#F9F1E7] cursor-pointer'} flex items-center justify-center uppercase text-[13px]`}>{item.sizeName}</span>
                 ))}
               </div>
             </div>
@@ -99,8 +111,8 @@ const Details = () => {
             <div className="mb-8">
               <h4 className="text-[#9F9F9F] text-[14px] mb-3">Color</h4>
               <div className="flex gap-4 items-center">
-                {detailProduct?.colors?.map((item) => (
-                  <button key={item.id} onClick={() => handleColor(item.colorHexCode)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-full border-2 ${item.colorHexCode === color ? 'border-[#B88E2F]' : ''}`} style={{ backgroundColor: item.colorHexCode }}></button>
+                {product?.colors?.map((item, index) => (
+                  <button key={item.id} onClick={() => handleColor(index)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-full border-2 ${index === color ? 'border-[#B88E2F]' : ''}`} style={{ backgroundColor: item.colorHexCode }}></button>
                 ))}
               </div>
             </div>
@@ -120,19 +132,19 @@ const Details = () => {
             <div className="pt-10 flex flex-col gap-3">
               <div className="flex items-center">
                 <span className="text-[#9F9F9F] w-[92px]">SKU</span>
-                <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>{detailProduct?.sku}</span>
+                <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>{product?.sku}</span>
               </div>
               <div className="flex items-center">
                 <span className="text-[#9F9F9F] w-[92px]">Category</span>
-                {/* <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>{detailProduct?.CategoryId}</span> */}
+                <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>{product?.category?.categoryName}</span>
               </div>
               <div className="flex items-center">
                 <span className="text-[#9F9F9F] w-[92px]">Tags</span>
-                {/* <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>
-                  {detailProduct?.ProductTags?.map((tag) => (
-                    <span key={tag}>{tag}, </span>
+                <span className="text-[#9F9F9F]"><span className="text-[#9F9F9F] pr-3">:</span>
+                  {product?.tags?.map((tag) => (
+                    <span key={tag.id}>#{tag.tagName}, </span>
                   ))}
-                </span> */}
+                </span>
               </div>
               <div className="flex items-center">
                 <span className="text-[#9F9F9F] w-[92px]">Share</span>

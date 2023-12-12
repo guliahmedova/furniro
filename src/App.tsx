@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { Navbar, Footer, ScrollToTop, Modal } from './components/common/index';
+import { Footer, Navbar, ScrollToTop } from './components/common/index';
+import ModalManager from "./components/common/modals/ModalManager";
 
 const App = () => {
   return (
@@ -7,7 +8,7 @@ const App = () => {
       <ScrollToTop />
       <Navbar />
       <Outlet />
-      <Modal />
+      <ModalManager />
       <Footer />
     </>
   )

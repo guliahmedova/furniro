@@ -71,7 +71,7 @@ const BlogSection = () => {
                     </div>
                 </div>
             </div>
-            <Pagination />
+            {/* <Pagination /> */}
         </section>
     )
 }
