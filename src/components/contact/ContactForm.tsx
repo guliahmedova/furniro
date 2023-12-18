@@ -1,13 +1,18 @@
 import { useFormik } from 'formik';
-import phone from '../../assets/images/phone.svg';
-import address from '../../assets/images/address.svg';
-import workingTime from '../../assets/images/workingTime.svg';
-import { validate } from './contactFormValidate';
+import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import address from '../../assets/images/address.svg';
+import phone from '../../assets/images/phone.svg';
+import workingTime from '../../assets/images/workingTime.svg';
+import { RootState, useAppDispatch } from '../../redux/app/store';
+import { sendContactMessage } from '../../redux/features/contactSlice';
+import { validate } from './contactFormValidate';
 const MySwal = withReactContent(Swal);
 
 const ContactForm = () => {
+    const dispatch = useAppDispatch();
+
     const { handleChange, values, handleSubmit, errors, resetForm } = useFormik({
         initialValues: {
             yourName: '',
@@ -17,6 +22,7 @@ const ContactForm = () => {
         },
         validate,
         onSubmit: (values) => {
+            console.log('salam');
             MySwal.fire({
                 title: <p>{`Your work has been saved ${JSON.stringify(values.yourName, null, 2)}`}</p>,
                 position: "top-end",
@@ -24,8 +30,15 @@ const ContactForm = () => {
                 showConfirmButton: false,
                 timer: 1500,
                 didOpen: () => {
-                    MySwal.showLoading()
+                    MySwal.showLoading(),
+                    dispatch(sendContactMessage({
+                        name: values.yourName,
+                        email: values.email,
+                        subject: values.subject,
+                        message: values.message
+                    }));
                 },
+
             }).then((confirm) => {
                 if (confirm) {
                     resetForm();
@@ -33,6 +46,8 @@ const ContactForm = () => {
             });
         },
     });
+
+    // const contactMessage = useSelector((state: RootState) => state.contact.message);
 
     return (
         <section>

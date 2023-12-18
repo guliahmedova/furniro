@@ -52,7 +52,6 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
 
   const getProductIDByClickEvent = (id: number) => {
     dispatch(getProductIDByCLick(id));
-    console.log("ProductCard.tsx - id: ", id);
   };
 
   return (

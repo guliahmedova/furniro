@@ -7,6 +7,15 @@ import favHeart from '../../assets/images/favorite-heart.svg';
 
 const FavoritesContainer = () => {
     const favProducts = useSelector((state: RootState) => state.wishlist.product);
+    const loading = useSelector((state: RootState)=> state.wishlist.loading);
+    const currentPage = useSelector((state: RootState)=> state.pagination.currentPage);
+
+    console.log("favorite contaciner: ", loading, currentPage);
+
+    const perPage = 8;
+
+    // totalCount redux-dan gelecek
+    const totalCount = 48;
 
     return (
         <section className="bg-white">
@@ -19,7 +28,7 @@ const FavoritesContainer = () => {
                         />
                     ))}
                 </div>
-                <Pagination />
+                <Pagination page={perPage} total={totalCount} />
             </div>) : (
                 <div className="py-28 flex justify-center items-center flex-col gap-3">
                     <img src={favHeart} alt="heart-icon" className="w-10 h-10" />

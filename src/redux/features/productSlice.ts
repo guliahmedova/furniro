@@ -6,7 +6,7 @@ import { DescriptionType } from '../../models/DescriptionType';
 
 const baseurl = 'http://immutable858-001-site1.atempurl.com/api/UserProduct/';
 
-export interface ProductState {
+interface ProductState {
     entities: ProductTypes[]
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
     product: ProductTypes,
@@ -28,8 +28,8 @@ export const getProducts = createAsyncThunk(
 
 export const getProductById = createAsyncThunk(
     'productGetById',
-    async (productId: string | number) => {
-        const response = await axios.get(`${baseurl}getById/ProductPage?Id=${productId}`);
+    async ({ productID, sizeID }: { productID: number, sizeID: number }) => {
+        const response = await axios.get(`${baseurl}getById/ProductPage?Id=${productID}&SizeId=${sizeID}`);
         return response.data;
     }
 );
@@ -47,30 +47,27 @@ export const getPaginationProducts = createAsyncThunk(
     async ({
         page,
         take,
-        // prompt= '',
-        // categoryName = '',
-        // isNew = true,
-        // productTags = '',
-        // productSizes='',
-        // productColors='',
-        // maxPrice ='',  
-        // minPrice = 0, 
-        // orderBy = ''
+        categoryName = '',
+        isNew = true,
+        productTags = '',
+        productSizes = '',
+        productColors = '',
+        maxPrice = 0,
+        minPrice = 0,
+        orderBy = ''
     }: {
         page: number,
         take: number,
-        prompt?: string,
         categoryName?: string,
-        isNew?: boolean,
+        isNew?: boolean | null,
         productTags?: string,
         productSizes?: string,
         productColors?: string,
-        maxPrice?: number | string,
+        maxPrice?: number,
         minPrice?: number,
         orderBy?: string
     }) => {
-        //Products?Page=${page}&Prompt=${prompt}&ShowMore.TakeProduct=${take}&CategoryNames=${categoryName}&IsNew=${isNew}&ProductTags=${productTags}&ProductSizes=${productSizes}&ProductColors=${productColors}&MinPrice=${minPrice}&MaxPrice=${maxPrice}&OrderBy=${orderBy}
-        const response = await axios.get(`${baseurl}Products?Page=${page}&ShowMore.TakeProduct=${take}`);
+        const response = await axios.get(`${baseurl}Products?Page=${page}${take > 0 ? `&ShowMore.TakeProduct=${take}` : ''}${categoryName.length > 0 ? `&CategoryNames=${categoryName}` : ''}${typeof (isNew) === 'boolean' ? `&IsNew=${isNew}` : ''}${productTags.length > 0 ? `&ProductTags=${productTags}` : ''}${productSizes.length > 0 ? `&ProductSizes=${productSizes}` : ''}${productColors.length > 0 ? `&ProductColors=${productColors}` : ''}${minPrice > 0 ? `&MinPrice=${minPrice}` : ''}${maxPrice ? `&MaxPrice=${maxPrice}` : ''}${orderBy.length > 0 ? `&OrderBy=${orderBy}` : ''}`);
         return (await response.data);
     }
 );

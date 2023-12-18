@@ -1,5 +1,5 @@
 import { useModal } from "../../../contexts/ModalContext";
-import Modal from '../Modal';
+import Modal from './Modal';
 import FilterModal from "../FilterModal";
 
 interface IModal {

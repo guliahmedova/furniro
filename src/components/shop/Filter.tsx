@@ -34,11 +34,16 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
                 <div className='flex items-center justify-center gap-7 lg:mt-0 mt-6'>
                     <div className='flex items-center lg:gap-4 gap-3'>
                         <span className='lg:text-xl text-sm'>Show</span>
-                        <input type="text" placeholder='16' className='w-[55px] h-[55px] appearance-none text-center border-0 text-[#9F9F9F] lg:text-xl' />
+                        <select name="product-counts" id="showBy" className='w-[55px] h-[55px] text-center appearance-none border-0 text-[#9F9F9F] lg:text-xl outline-0'>
+                            <option value="Default" defaultChecked>4</option>
+                            <option value="Example 1">16</option>
+                            <option value="Example 2">64</option>
+                        </select>
+                        {/* <input type="text" placeholder='16' className='w-[55px] h-[55px] appearance-none text-center border-0 text-[#9F9F9F] lg:text-xl' /> */}
                     </div>
                     <div className='flex items-center lg:gap-4 gap-3'>
                         <span className='lg:text-xl text-sm'>Short by</span>
-                        <select name="product-counts" id="shortBy" className='lg:w-[188px] h-[55px] px-7 appearance-none border-0 text-[#9F9F9F] lg:text-xl'>
+                        <select name="product-counts" id="shortBy" className='lg:w-[188px] h-[55px] px-7 outline-0 appearance-none border-0 text-[#9F9F9F] lg:text-xl'>
                             <option value="Default" defaultChecked>Default</option>
                             <option value="Example 1">Example 1</option>
                             <option value="Example 2">Example 2</option>

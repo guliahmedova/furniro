@@ -1,7 +1,6 @@
-import { RootState, useAppDispatch } from "../../redux/app/store";
-import { useSelector } from "react-redux";
-import { onNavigateNext, onNavigatePrev, onClickCurrentPage } from "../../redux/features/paginationSlice";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
+import { useAppDispatch } from "../../redux/app/store";
+import { onClickCurrentPage } from "../../redux/features/paginationSlice";
 
 interface PaginationProps {
     page: number,
@@ -9,8 +8,22 @@ interface PaginationProps {
 };
 
 const Pagination: FC<PaginationProps> = ({ page, total }) => {
+    const [currentPage, setCurrentPage] = useState(1);
     const dispatch = useAppDispatch();
-    const currentpage = useSelector((state: RootState) => state.pagination.currentPage);
+
+    useEffect(()=>{
+        dispatch(onClickCurrentPage(currentPage));
+    },[dispatch, currentPage])
+
+    const onNavigatePrev = ()=>{
+        if (currentPage > 0) {
+            setCurrentPage(prevState => prevState - 1);
+        }
+    };
+
+    const onNavigateNext = ()=>{
+        setCurrentPage(prevState => prevState + 1);
+    };  
 
     const dotsCount = Math.ceil(total / page);
     let dots = [];
@@ -19,10 +32,10 @@ const Pagination: FC<PaginationProps> = ({ page, total }) => {
         dots.push(<li key={index} onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            dispatch(onClickCurrentPage(index + 1))
+            setCurrentPage(index + 1);
         }}>
             <span
-                className={`flex items-center justify-center h-14 xl:w-14 w-auto xl:px-0 px-4 leading-tight text-xl rounded-md ${currentpage === index + 1 ? 'bg-[#B88E2F] text-white cursor-default' : 'bg-[#F9F1E7] text-black cursor-pointer'}`}>
+                className={`flex items-center justify-center h-14 xl:w-14 w-auto xl:px-0 px-4 leading-tight text-xl rounded-md ${currentPage === index + 1 ? 'bg-[#B88E2F] text-white cursor-default' : 'bg-[#F9F1E7] text-black cursor-pointer'}`}>
                 {index + 1}
             </span>
         </li>)
@@ -32,21 +45,21 @@ const Pagination: FC<PaginationProps> = ({ page, total }) => {
         <div className="flex justify-center mt-[70px]">
             <nav aria-label="Page navigation example mx-auto block">
                 <ul className={`flex items-center xl:gap-9 gap-1 text-base h-14`}>
-                    {currentpage !== 1 && (
+                    {currentPage !== 1 && (
                         <li onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            dispatch(onNavigatePrev());
+                            onNavigatePrev();
                         }}>
                             <span className="flex items-center justify-center px-4 h-14 leading-tight text-black rounded-md bg-[#F9F1E7] cursor-pointer">Previous</span>
                         </li>
                     )}
                     {dots}
-                    {currentpage !== dotsCount && (
+                    {currentPage !== dotsCount && (
                         <li onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            dispatch(onNavigateNext());
+                            onNavigateNext();
                         }}>
                             <span className="flex items-center justify-center px-4 h-14 leading-tight text-black rounded-md bg-[#F9F1E7] cursor-pointer">Next</span>
                         </li>

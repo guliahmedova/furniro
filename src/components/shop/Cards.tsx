@@ -18,7 +18,18 @@ const Cards: FC<CardsProps> = ({ gridClass }) => {
     const perPage = 16;
 
     useEffect(() => {
-        dispatch(getPaginationProducts({ page: currentpage, take: 16, }));
+        dispatch(getPaginationProducts({
+            page: currentpage,
+            take: 16,
+            categoryName: 'Living Room',
+            isNew: true,
+            productTags: '',
+            productSizes: '',
+            productColors: '',
+            maxPrice: 0,
+            minPrice: 0,
+            orderBy: ''
+        }));
     }, [dispatch, currentpage]);
 
     return (

@@ -28,7 +28,7 @@ const Details = () => {
 
   useEffect(() => {
     if (productId) {
-      dispatch(getProductById(productId));
+      dispatch(getProductById({productID: parseInt(productId), sizeID: 2}));
     };
   }, [dispatch, productId]);
 

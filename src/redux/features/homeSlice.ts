@@ -4,7 +4,7 @@ import { GridImageType } from '../../models/gridImageType';
 
 const baseurl = 'http://immutable858-001-site1.atempurl.com/api/';
 
-export interface HomeState {
+interface HomeState {
     images: GridImageType[],
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
 };

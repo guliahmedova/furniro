@@ -31,7 +31,7 @@ const Navbar = () => {
     <header className="bg-white md:shadow-sm">
       <nav className="flex items-center font-medium justify-around">
 
-        <div className="lg:w-auto w-full py-7 lg:px-0 px-3 z-20 flex justify-between items-center">
+        <div className="lg:w-auto w-full py-7 lg:px-0 px-3 z-40 flex justify-between items-center">
           <Link to="/" className="flex items-center w-fit gap-1">
             <img src={logo} alt="logo" />
             <span className="font-bold md:text-[34px] text-2xl">Furniro</span>
@@ -49,7 +49,7 @@ const Navbar = () => {
         </div>
 
         <div className="lg:flex hidden items-center lg:gap-11">
-          <Link to="/account">
+          <Link to="/profile/edit">
             <img src={account} alt="account-icon" />
           </Link>
           <Link to="/search">
@@ -73,10 +73,11 @@ const Navbar = () => {
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/shop'>Shop</NavLink>
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/blog'>Blog</NavLink>
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/contact'>Contact</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/account">Account</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/profile/edit">Account</NavLink>
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/search">Search</NavLink>
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/favorites">Favorites</NavLink>
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/cart">Cart</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/profile">Profile</NavLink>
         </div>
 
       </nav>

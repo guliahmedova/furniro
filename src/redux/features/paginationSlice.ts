@@ -12,19 +12,11 @@ const paginationSlice = createSlice({
     name: 'pagination',
     initialState,
     reducers: {
-        onNavigateNext: (state) => {
-            state.currentPage++;
-        },
-        onNavigatePrev: (state) => {
-            if (state.currentPage > 0) {
-                state.currentPage--;
-            }
-        },
         onClickCurrentPage: (state, action) => {
             state.currentPage = action.payload;
         }
     },
 });
 
-export const { onNavigateNext, onNavigatePrev, onClickCurrentPage } = paginationSlice.actions;
+export const { onClickCurrentPage } = paginationSlice.actions;
 export default paginationSlice.reducer;

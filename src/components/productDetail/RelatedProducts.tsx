@@ -8,9 +8,8 @@ import { useParams } from "react-router-dom";
 
 const RelatedProducts = () => {
     const dispatch = useAppDispatch();
-
     const totalProductCount = useSelector((state: RootState) => state.product.totalProductCount);
-    const [showMore, setShowMore] = useState(8);
+    const [showMore, setShowMore] = useState(4);
     const relatedProducts = useSelector((state: RootState) => state.product.relatedProducts);
 
     const { productId } = useParams();
@@ -23,7 +22,7 @@ const RelatedProducts = () => {
 
     const handleShowMoreClick = () => {
         if (totalProductCount > showMore) {
-            setShowMore(prevState => prevState + 8);
+            setShowMore(prevState => prevState + 4);
         }
     };
 
@@ -38,7 +37,7 @@ const RelatedProducts = () => {
                             product={item} />
                     ))}
                 </div>
-                {totalProductCount !== showMore && (
+                {(totalProductCount !== showMore && showMore > 4) && (
                     <button onClick={handleShowMoreClick} className="mt-[32px] border-2 py-[12px] block w-[245px] mx-auto border-[#B88E2F] text-[#B88E2F] font-bold text-[16px] leading-6">Show More</button>
                 )}
             </div>

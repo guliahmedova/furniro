@@ -1,30 +1,15 @@
 import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
-import './index.css';
-import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import { ModalProvider } from './contexts/ModalContext.tsx';
-import { store } from './redux/app/store.ts';
-import { persistor } from './redux/app/store.ts';
-import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
+import App from './App.tsx';
 import Spinner from './components/common/Spinner.tsx';
-
-// import {
-//   Home,
-//   Shop,
-//   Blog,
-//   Contact,
-//   ProductDetail,
-//   Cart,
-//   Checkout,
-//   Search,
-//   Favorites,
-//   ProductComparison,
-//   NotFound,
-//   Login,
-//   Register
-// } from './pages/index.ts';
+import { ModalProvider } from './contexts/ModalContext.tsx';
+import './index.css';
+import ForgotPassword from './pages/auth/ForgotPassword.tsx';
+import ProfileEdit from './pages/auth/ProfileEdit.tsx';
+import { persistor, store } from './redux/app/store.ts';
 
 const Home = lazy(() => import('./pages/Home.tsx'));
 const Shop = lazy(() => import('./pages/Shop.tsx'));
@@ -37,8 +22,9 @@ const Search = lazy(() => import('./pages/Search.tsx'));
 const Favorites = lazy(() => import('./pages/Favorites.tsx'));
 const ProductComparison = lazy(() => import('./pages/ProductComparison.tsx'));
 const NotFound = lazy(() => import('./pages/NotFound.tsx'));
-const Login = lazy(() => import('./pages/Login.tsx'));
-const Register = lazy(() => import('./pages/Register.tsx'));
+const Login = lazy(() => import('./pages/auth/Login.tsx'));
+const Register = lazy(() => import('./pages/auth/Register.tsx'));
+const Profile = lazy(() => import('./pages/auth/Profile.tsx'));
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route>
@@ -54,6 +40,10 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path='search' element={<Search />} />
       <Route path='favorites' element={<Favorites />} />
       <Route path='productComparison' element={<ProductComparison />} />
+      <Route path='profile' element={<Profile />} >
+        <Route path='change-password' element={<ForgotPassword />} />
+        <Route path='edit' index element={<ProfileEdit />} />
+      </Route>
       <Route path='*' element={<NotFound />} />
     </Route>
     <Route path='/login' element={<Login />} />
@@ -62,15 +52,15 @@ const router = createBrowserRouter(createRoutesFromElements(
 ));
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <Suspense fallback={<Spinner />}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+  <Suspense fallback={<Spinner />}>
+    <PersistGate loading={null} persistor={persistor}>
+      <React.StrictMode>
+        <Provider store={store}>
           <ModalProvider>
             <RouterProvider router={router} />
           </ModalProvider>
-        </PersistGate>
-      </Provider>
-    </Suspense>
-  </React.StrictMode>,
+        </Provider>
+      </React.StrictMode>
+    </PersistGate>
+  </Suspense>
 );

@@ -4,10 +4,13 @@ import { FC } from "react";
 
 interface SearchResultProps {
   products?: ProductTypes[],
-  searchText: string
+  searchText: string,
+  handleShowMoreClick: () => void,
+  showMore: number,
+  totalCount: number
 };
 
-const SearchResult: FC<SearchResultProps> = ({ products, searchText }) => {
+const SearchResult: FC<SearchResultProps> = ({ products, searchText, handleShowMoreClick, totalCount, showMore }) => {
   return (
     <section>
       <div className="xl:w-[85%] w-[95%] mx-auto mt-[56px] mb-[69px] lg:px-0 px-3">
@@ -21,6 +24,9 @@ const SearchResult: FC<SearchResultProps> = ({ products, searchText }) => {
             <ProductCard key={item.id} product={item} />
           ))}
         </div>
+        {(totalCount !== showMore && totalCount > 4) && (
+          <button onClick={handleShowMoreClick} className="mt-[32px] border-2 py-[12px] block w-[245px] mx-auto border-[#B88E2F] text-[#B88E2F] font-bold text-[16px] leading-6">Show More</button>
+        )}
       </div>
     </section>
   )

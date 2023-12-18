@@ -26,6 +26,32 @@ body::-webkit-scrollbar-thumb:hover {
     background: #b88e2f;
 }
 
+
+
+/*categories*/
+.categories::-webkit-scrollbar {
+    width: 15px;
+}
+
+.categories::-webkit-scrollbar-track {
+    border-radius: 1px;
+    background: white;
+}
+
+.categories::-webkit-scrollbar-track:hover {
+    background: white;
+}
+
+.categories::-webkit-scrollbar-thumb {
+    background: whitesmoke;
+    border-radius: 10px;
+}
+
+.categories::-webkit-scrollbar-thumb:hover {
+    background: whitesmoke;
+}
+
+
 /* -------------------------------------- */
 .cart-table::-webkit-scrollbar {
     width: 10px;
