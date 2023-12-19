@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/app/store";
 import { userRegister } from "../../redux/features/authSlice";
-import { validate } from '../auth/RegisterValidate';
+import { RegisterYup } from './RegisterYup';
 
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -18,7 +18,7 @@ const Register = () => {
       roleId: 2,
       isActive: true
     },
-    validate,
+    validationSchema: RegisterYup,
     onSubmit: (values,) => {
       dispatch(userRegister({
         userName: values.userName,

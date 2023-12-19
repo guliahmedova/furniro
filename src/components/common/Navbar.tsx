@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import { NavLink, Link } from "react-router-dom";
-import { useModal } from "../../contexts/ModalContext";
-import logo from '../../assets/images/logo.svg';
-import heart from '../../assets/images/heart.svg';
-import search from '../../assets/images/search.svg';
-import account from '../../assets/images/account.svg';
-import openmenu from '../../assets/images/openmenu.svg';
-import closemenu from '../../assets/images/closemenu.svg';
-import shopCart from '../../assets/images/shoppingCart.svg';
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Link, NavLink } from "react-router-dom";
+import account from '../../assets/images/account.svg';
+import closemenu from '../../assets/images/closemenu.svg';
+import heart from '../../assets/images/heart.svg';
+import logo from '../../assets/images/logo.svg';
+import openmenu from '../../assets/images/openmenu.svg';
+import search from '../../assets/images/search.svg';
+import shopCart from '../../assets/images/shoppingCart.svg';
+import { useModal } from "../../contexts/ModalContext";
 import { RootState } from "../../redux/app/store";
 
 const Navbar = () => {
@@ -26,6 +26,7 @@ const Navbar = () => {
     }
   }, [isMenuOpen]);
 
+  const userToken = localStorage.getItem('userToken');
 
   return (
     <header className="bg-white md:shadow-sm">
@@ -42,14 +43,14 @@ const Navbar = () => {
         </div>
 
         <div className="lg:flex hidden items-center gap-4 font-medium lg:gap-[75px] text-base">
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} to='/'>Home</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} to='/shop'>Shop</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} to='/blog'>Blog</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} to='/contact'>Contact</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-semibold underline decoration-black" : ""} to='/'>Home</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} to='/shop'>Shop</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} to='/blog'>Blog</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} to='/contact'>Contact</NavLink>
         </div>
 
         <div className="lg:flex hidden items-center lg:gap-11">
-          <Link to="/profile/edit">
+          <Link to={`${userToken ? '/profile/edit' : '/login'}`}>
             <img src={account} alt="account-icon" />
           </Link>
           <Link to="/search">
@@ -69,15 +70,15 @@ const Navbar = () => {
 
         {/* MOBILE NAVBAR */}
         <div className={`lg:hidden bg-white text-2xl absolute z-20 w-full h-full bottom-0 py-32 pl-3 flex flex-col gap-10 duration-500 ${isMenuOpen ? 'left-0' : 'left-[-100%]'}`}>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/'>Home</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/shop'>Shop</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/blog'>Blog</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/contact'>Contact</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/profile/edit">Account</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/search">Search</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/favorites">Favorites</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/cart">Cart</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-slate-300" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/profile">Profile</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/'>Home</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/shop'>Shop</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/blog'>Blog</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/contact'>Contact</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to={`${userToken ? '/profile/edit' : '/login'}`}>Account</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/search">Search</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/favorites">Favorites</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/cart">Cart</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/profile">Profile</NavLink>
         </div>
 
       </nav>

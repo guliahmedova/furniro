@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/app/store";
 import { userLogin } from "../../redux/features/authSlice";
-import { validate } from '../auth/LoginValidate';
+import { LoginYup } from './LoginYup';
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -13,7 +13,7 @@ const Login = () => {
       userName: "",
       password: "",
     },
-    validate,
+    validationSchema: LoginYup,
     onSubmit: (values,) => {
       dispatch(userLogin({
         userName: values.userName,

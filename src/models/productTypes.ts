@@ -3,13 +3,10 @@ export type ProductTypes = {
     title: string,
     subTitle: string,
     introduction: string,
+    imageFiles: string[],
     salePrice: number,
     discountPercent: number,
     discountedPrice: number,
-    imageFiles: string[],
-    productImages: [{
-        imageFile: string
-    }]
     sku: string,
     isNew: boolean,
     tags: [{
@@ -18,7 +15,8 @@ export type ProductTypes = {
     }],
     colors: [{
         id: number,
-        colorHexCode: string
+        colorHexCode: string,
+        imageFiles: string[]
     }],
     sizes: [{
         id: number,

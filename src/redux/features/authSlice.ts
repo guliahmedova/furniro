@@ -11,6 +11,10 @@ interface AuthState {
     message: string,
     jwtToken: string,
     refreshToken: string,
+    userName: string,
+    firstName: string,
+    lastName: string,
+    email: string,
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
 };
 
@@ -27,7 +31,16 @@ export const userLogin = createAsyncThunk(
     async (body: LoginType) => {
         const response = await axios.post(`${baseurl}Login`, body);
         const token = response.data.jwtToken;
+        console.log(response.data);
         localStorage.setItem('userToken', JSON.stringify(token));
+        return (await response.data);
+    }
+);
+
+export const updateUser = createAsyncThunk(
+    'updateUser',
+    async (body: AppUserType) => {
+        const response = await axios.post(`${baseurl}UpdateUser`, body)
         return (await response.data);
     }
 );
@@ -38,7 +51,11 @@ const initialState = {
     message: "",
     jwtToken: '',
     refreshToken: '',
-    loading: 'idle'
+    loading: 'idle',
+    userName: '',
+    lastName: '',
+    firstName: '',
+    email: ''
 } as AuthState;
 
 const authSlice = createSlice({
@@ -63,23 +80,22 @@ const authSlice = createSlice({
             state.isSuccess = false;
         });
 
-
         builder.addCase(userLogin.pending, (state) => {
             state.loading = 'pending';
         });
         builder.addCase(userLogin.fulfilled, (state, action) => {
+            state.message = action.payload.message;
             state.isSuccess = true;
             state.loading = 'succeeded';
+            state.firstName = action.payload.firstName;
+            state.userName = action.payload.userName;
+            state.lastName = action.payload.lastName;
+            state.email = action.payload.email;
             state.jwtToken = action.payload.jwtToken;
-            if (action.payload.error) {
-                state.error = action.payload.error;
-            } else {
-                state.message = action.payload.message;
-            }
         });
         builder.addCase(userLogin.rejected, (state) => {
-            state.loading = 'failed';
             state.isSuccess = false;
+            state.loading = 'failed';
         });
     }
 });

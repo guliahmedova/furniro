@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { ProductTypes } from "../../models/productTypes";
 import { RootState, useAppDispatch } from "../../redux/app/store";
-import { getPaginationProducts } from '../../redux/features/productSlice';
+import { getFilterProducts } from '../../redux/features/productSlice';
 import { Pagination, ProductCard } from "../common/index";
 
 interface CardsProps {
@@ -18,11 +18,11 @@ const Cards: FC<CardsProps> = ({ gridClass }) => {
     const perPage = 16;
 
     useEffect(() => {
-        dispatch(getPaginationProducts({
+        dispatch(getFilterProducts({
             page: currentpage,
             take: 16,
-            categoryName: 'Living Room',
-            isNew: true,
+            categoryName: '',
+            isNew: null,
             productTags: '',
             productSizes: '',
             productColors: '',

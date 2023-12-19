@@ -28,12 +28,12 @@ const Details = () => {
 
   useEffect(() => {
     if (productId) {
-      dispatch(getProductById({productID: parseInt(productId), sizeID: 2}));
+      dispatch(getProductById({ productID: parseInt(productId), sizeID: 2 }));
     };
   }, [dispatch, productId]);
 
   const handleSlideImageChange = (index: number) => {
-    const slider = product?.imageFiles.find((_, index) => index === index);
+    const slider = product?.colors?.[0].imageFiles.find((_, index) => index === index);
     if (slider !== undefined) {
       setSelectedImg(index);
     }
@@ -76,15 +76,15 @@ const Details = () => {
 
           <div className="flex gap-8 lg:flex-row flex-col-reverse">
             <div className="flex lg:flex-col flex-row lg;gap-8 gap-3">
-              {product?.imageFiles?.map((item, index) => (
-                <div key={item} className={`rounded-lg w-[76px] h-20 flex items-center justify-center cursor-pointer`} onClick={() => handleSlideImageChange(index)}><img src={item} className="w-full h-full object-cover rounded-lg" alt="product-img" /></div>
+              {product?.colors?.[color].imageFiles?.map((item, index) => (
+                <div key={index} className={`rounded-lg w-[76px] h-20 flex items-center justify-center cursor-pointer`} onClick={() => handleSlideImageChange(index)}><img src={item} className="w-full h-full object-cover rounded-lg" alt="product-img" /></div>
               ))}
             </div>
-            {
-              product?.imageFiles && product?.imageFiles.length > 0 && (
-                <div className={`rounded-lg lg:w-[423px] lg:h-[500px]`}><img className="w-full h-full object-cover rounded-lg" src={product?.imageFiles[selectedImg]} alt="slide-img" /></div>
-              )
-            }
+            {product?.colors?.[color].imageFiles && product?.colors?.[color].imageFiles?.length > 0 && (
+              <div className='rounded-lg lg:w-[423px] lg:h-[500px]'>
+                <img className="w-full h-full object-cover rounded-lg" src={product?.colors?.[color].imageFiles[selectedImg]} alt="slide-img" />
+              </div>
+            )}
           </div>
 
           <div>

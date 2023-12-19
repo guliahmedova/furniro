@@ -39,7 +39,6 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
                             <option value="Example 1">16</option>
                             <option value="Example 2">64</option>
                         </select>
-                        {/* <input type="text" placeholder='16' className='w-[55px] h-[55px] appearance-none text-center border-0 text-[#9F9F9F] lg:text-xl' /> */}
                     </div>
                     <div className='flex items-center lg:gap-4 gap-3'>
                         <span className='lg:text-xl text-sm'>Short by</span>

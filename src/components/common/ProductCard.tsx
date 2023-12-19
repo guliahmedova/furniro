@@ -58,9 +58,10 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
     <>
       <Link to={`/productDetail/${product?.id}`} className={`${gridClass === 'view' ? 'h-auto' : 'h-full'} cursor-pointer`} onClick={() => getProductIDByClickEvent(product.id)}>
         <div className="relative overflow-hidden h-full">
-          <img src={product?.imageFiles[0]} onError={getImageError} alt="" className='h-[301px] w-full object-cover' />
+          <img src={product?.imageFiles?.[0]} onError={getImageError} alt="" className='h-[301px] w-full object-cover' />
+
           <div className='absolute top-[24px] right-6'>
-            {(product?.isNew || product?.discountPercent === 0)? (<span className='w-12 h-12 rounded-full bg-[#2EC1AC] flex items-center justify-center text-white font-medium'>New</span>) : (
+            {(product?.isNew || product?.discountPercent === 0) ? (<span className='w-12 h-12 rounded-full bg-[#2EC1AC] flex items-center justify-center text-white font-medium'>New</span>) : (
               <span className='w-12 h-12 rounded-full flex items-center justify-center bg-[#E97171] text-white font-medium'>-{product?.discountPercent}%</span>)}
           </div>
           <div className="lg:absolute hidden h-full w-full bg-[#3A3A3A]/70 lg:flex items-center justify-center bottom-0 hover:bottom-0 opacity-0 hover:opacity-100 transition-all duration-300">
@@ -69,7 +70,10 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   e.preventDefault();
-                  dispatch(getProductById(product.id));
+                  dispatch(getProductById({
+                    productID: product.id,
+                    sizeID: 1
+                  }));
                   handleAddToCartModalClick();
                 }}>
                 Add to cart
@@ -112,7 +116,10 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   e.preventDefault();
-                  dispatch(getProductById(product.id));
+                  dispatch(getProductById({
+                    productID: product.id,
+                    sizeID: 1
+                  }));
                   handleAddToCartModalClick();
                 }}>
                 <img src={shopIcon} alt="" /></button>
@@ -123,7 +130,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
 
       <AddToCartModal isModalOpen={isModalOpan} handleCLoseBtnClick={handleAddToCartModalClick}>
         <div className='grid grid-cols-4 gap-3'>
-          {productById?.imageFiles?.map((item) => (
+          {productById?.colors?.[0].imageFiles?.map((item) => (
             <div key={item} className='w-28 h-28 rounded-lg'>
               <img src={item} onError={getImageError} className='object-cover w-full h-full' alt="" />
             </div>

@@ -42,7 +42,7 @@ export const getNewProducts = createAsyncThunk(
     }
 );
 
-export const getPaginationProducts = createAsyncThunk(
+export const getFilterProducts = createAsyncThunk(
     'getPaginationProducts',
     async ({
         page,
@@ -143,15 +143,15 @@ const productSlice = createSlice({
             state.loading = 'failed'
         });
 
-        builder.addCase(getPaginationProducts.fulfilled, (state, action) => {
+        builder.addCase(getFilterProducts.fulfilled, (state, action) => {
             state.paginationProducts = action.payload[0].products;
             state.totalProductCount = action.payload[0].totalProductCount;
             state.loading = 'succeeded';
         });
-        builder.addCase(getPaginationProducts.pending, (state) => {
+        builder.addCase(getFilterProducts.pending, (state) => {
             state.loading = 'pending'
         });
-        builder.addCase(getPaginationProducts.rejected, (state) => {
+        builder.addCase(getFilterProducts.rejected, (state) => {
             state.loading = 'failed'
         });
 
