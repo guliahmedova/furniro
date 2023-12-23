@@ -1,26 +1,40 @@
 import { useSelector } from "react-redux"
-import { RootState } from "../../redux/app/store"
+import { RootState, useAppDispatch } from "../../redux/app/store"
 import { useFormik } from 'formik';
 import { RegisterYup } from "./RegisterYup";
+import { updateUser } from "../../redux/features/authSlice";
 
 const ProfileEdit = () => {
     const username = useSelector((state: RootState) => state.auth.userName);
     const firstname = useSelector((state: RootState) => state.auth.firstName);
     const lastname = useSelector((state: RootState) => state.auth.lastName);
     const email = useSelector((state: RootState) => state.auth.email);
+    const userID = useSelector((state:RootState)=> state.auth.userId);
+
+    const dispatch = useAppDispatch();
 
     const { handleChange, values, handleSubmit, errors, resetForm } = useFormik({
         initialValues: {
+            id: userID,
+            email: email,
             userName: username,
             firstName: firstname,
             lastName: lastname,
-            email: email,
-            password: "",
-            roleId: 2,
-            isActive: true
         },
         validationSchema: RegisterYup,
-        onSubmit: () => {
+        onSubmit: (values,) => {
+            dispatch(updateUser({
+                id: values.id,
+                userName: values.userName,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                email: values.email,
+            }),
+            ).then((confirm) => {
+                if (confirm) {
+                    alert('everything is under control!');
+                }
+            });
         }
     });
 
@@ -58,7 +72,7 @@ const ProfileEdit = () => {
                             </div>
                         </div>
 
-                        <button className="block bg-[#B88E2F] text-white font-medium text-lg md:w-[20%] w-full ml-auto py-4 rounded-md mt-5 hover:bg-yellow-600">Save Changes</button>
+                        <button type="submit" className="block bg-[#B88E2F] text-white font-medium text-lg md:w-[20%] w-full ml-auto py-4 rounded-md mt-5 hover:bg-yellow-600">Save Changes</button>
                     </form>
                 </div>
             </section>

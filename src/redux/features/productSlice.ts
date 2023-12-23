@@ -3,6 +3,8 @@ import axios from 'axios';
 import { ProductTypes } from '../../models/productTypes';
 import { RootState } from '../app/store';
 import { DescriptionType } from '../../models/DescriptionType';
+import { SizeType } from '../../models/SizeType';
+import { ColorType } from '../../models/ColorType';
 
 const baseurl = 'http://immutable858-001-site1.atempurl.com/api/UserProduct/';
 
@@ -15,7 +17,9 @@ interface ProductState {
     paginationProducts: ProductTypes[],
     productDescriptions: DescriptionType,
     productID: number,
-    relatedProducts: ProductTypes[]
+    relatedProducts: ProductTypes[],
+    sizes: SizeType[],
+    colors: ColorType[]
 };
 
 export const getProducts = createAsyncThunk(
@@ -88,6 +92,22 @@ export const getRelatedProducts = createAsyncThunk(
     }
 );
 
+export const getAllSizes = createAsyncThunk(
+    'getAllSizes',
+    async () => {
+        const response = await axios.get('http://immutable858-001-site1.atempurl.com/api/Size/getAll');
+        return (await response.data);
+    }
+);
+
+export const getAllColors = createAsyncThunk(
+    'getAllColors',
+    async () => {
+        const response = await axios.get('http://immutable858-001-site1.atempurl.com/api/Color/getAll');
+        return (await response.data);
+    }
+);
+
 const initialState = {
     entities: [],
     loading: 'idle',
@@ -97,7 +117,9 @@ const initialState = {
     paginationProducts: [],
     productDescriptions: {} as DescriptionType,
     productID: 0,
-    relatedProducts: []
+    relatedProducts: [],
+    sizes: [],
+    colors: []
 } as ProductState;
 
 const productSlice = createSlice({
@@ -174,6 +196,28 @@ const productSlice = createSlice({
             state.loading = 'pending'
         });
         builder.addCase(getRelatedProducts.rejected, (state) => {
+            state.loading = 'failed'
+        });
+
+        builder.addCase(getAllSizes.fulfilled, (state, action) => {
+            state.sizes = action.payload;
+            state.loading = 'succeeded';
+        });
+        builder.addCase(getAllSizes.pending, (state) => {
+            state.loading = 'pending'
+        });
+        builder.addCase(getAllSizes.rejected, (state) => {
+            state.loading = 'failed'
+        });
+
+        builder.addCase(getAllColors.fulfilled, (state, action) => {
+            state.colors = action.payload;
+            state.loading = 'succeeded';
+        });
+        builder.addCase(getAllColors.pending, (state) => {
+            state.loading = 'pending'
+        });
+        builder.addCase(getAllColors.rejected, (state) => {
             state.loading = 'failed'
         });
     },

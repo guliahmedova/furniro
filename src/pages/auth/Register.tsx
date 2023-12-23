@@ -1,12 +1,20 @@
 import { useFormik } from 'formik';
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../redux/app/store";
+import { RootState, useAppDispatch } from "../../redux/app/store";
 import { userRegister } from "../../redux/features/authSlice";
 import { RegisterYup } from './RegisterYup';
+import { useEffect, useState } from 'react';
+import closeEye from '../../assets/images/close-eye.svg';
+import openEye from '../../assets/images/open-eye.svg';
+import { useSelector } from 'react-redux';
 
 const Register = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const [showPassword, setshowPassword] = useState(false);
+
+  const { error, isSuccess } = useSelector((state: RootState) => state.auth);
 
   const { handleChange, values, handleSubmit, errors, resetForm } = useFormik({
     initialValues: {
@@ -19,7 +27,7 @@ const Register = () => {
       isActive: true
     },
     validationSchema: RegisterYup,
-    onSubmit: (values,) => {
+    onSubmit: (values) => {
       dispatch(userRegister({
         userName: values.userName,
         firstName: values.firstName,
@@ -28,69 +36,59 @@ const Register = () => {
         password: values.password,
         roleId: 2,
         isActive: true
-      }),
-      ).then((confirm) => {
-        navigate('/login');
-        if (confirm) {
-          resetForm();
-        }
-      })
+      }))
     }
   });
 
+  useEffect(() => {
+    if (isSuccess) {
+      navigate('/login');
+      resetForm();
+    }
+  }, [isSuccess, navigate, resetForm]);
+
   return (
     <section className="bg-primary-hero-image w-full h-screen bg-cover bg-fixed bg-center bg-no-repeat md:bg-top">
-      <div className="flex flex-col items-center justify-center mx-auto md:h-screen">
-        <div className="w-[50%] rounded-lg shadow-2xl dark:border bg-[#e3e3e3] dark:border-gray-700">
-          <div className="md:space-y-6 sm:p-8 h-fit w-full">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-black md:text-2xl text-center">Create and account</h1>
-            <form className="flex justify-between gap-10 w-full" onSubmit={handleSubmit}>
-              <div className="w-6/12 flex flex-col gap-3">
-                <div>
-                  <div className="flex justify-between items-center mb-1">
-                    <label htmlFor="userName" className="block text-sm font-medium text-black capitalize">User name</label>
-                    {errors.userName ? <div className='text-red-600 block font-semibold text-sm'>{errors.userName}</div> : ""}
-                  </div>
-                  <input type="text" name="userName" value={values.userName} onChange={handleChange} id="userName" className="bg-slate-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400" placeholder="Joe123" />
-                </div>
-                <div>
-                  <div className="flex justify-between items-center mb-1">
-                    <label htmlFor="firstName" className="block text-sm font-medium text-black capitalize">first name</label>
-                    {errors.firstName ? <div className='text-red-600 font-semibold text-sm'>{errors.firstName}</div> : null}
-                  </div>
-                  <input type="text" name="firstName" value={values.firstName} onChange={handleChange} id="firstName" className="bg-slate-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400" placeholder="Joe" />
-                </div>
-                <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <label htmlFor="lastName" className="block text-sm font-medium text-black capitalize">last name</label>
-                    {errors.lastName ? <div className='text-red-600 font-semibold text-sm'>{errors.lastName}</div> : null}
-                  </div>
-                  <input type="text" name="lastName" value={values.lastName} onChange={handleChange} id="lastName" className="bg-slate-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400" placeholder="Smith" />
-                </div>
-              </div>
-              <div className="w-6/12 flex flex-col gap-3">
-                <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <label htmlFor="email" className="block text-sm font-medium text-black capitalize">email</label>
-                    {errors.email ? <div className='text-red-600 font-semibold text-sm'>{errors.email}</div> : null}
-                  </div>
-                  <input type="email" name="email" value={values.email} onChange={handleChange} id="email" className="bg-slate-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400" placeholder="Joe@gmail.com" />
-                </div>
-                <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <label htmlFor="password" className="block text-sm font-medium text-black">Password</label>
-                    {errors.password ? <div className='text-red-600 font-semibold text-sm text-right'>{errors.password}</div> : null}
-                  </div>
-                  <input type="password" name="password" value={values.password} onChange={handleChange} id="password" placeholder="••••••••" className="bg-slate-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400" />
-                </div>
-                <button type="submit" className="w-full mt-6 text-white bg-yellow-700 border hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
-                <p className="text-sm font-medium text-black text-right">
-                  Already have an account? <Link to="/login" className="font-bold text-primary-600 hover:underline dark:text-primary-500">Login here</Link>
-                </p>
-              </div>
-            </form>
+      <div className='h-full xl:w-[60%] flex flex-col justify-center items-center mx-auto px-4'>
+        <h1 className='xl:text-xl md:text-lg text-sm font-bold mb-2 capitalize'>Create an Account </h1>
+        <form className="flex xl:justify-between xl:flex-row flex-col xl:gap-10 w-full xl:mt-0 mt-5 p-6 bg-[#e3e3e3] border border-gray-400 rounded-lg" onSubmit={handleSubmit}>
+          <div className="xl:w-6/12 w-full flex flex-col gap-3">
+            <div>
+              <label htmlFor="userName" className="block text-sm font-medium text-black capitalize mb-2">User name</label>
+              <input type="text" name="userName" value={values.userName} onChange={handleChange} id="userName" className="bg-slate-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400" placeholder="Joe123" />
+              {errors.userName ? <div className='text-red-600 font-semibold text-sm text-right'>{errors.userName}</div> : ""}
+            </div>
+            <div>
+              <label htmlFor="firstName" className="block text-sm font-medium text-black capitalize mb-2">first name</label>
+              <input type="text" name="firstName" value={values.firstName} onChange={handleChange} id="firstName" className="bg-slate-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400" placeholder="Joe" />
+              {errors.firstName ? <div className='text-red-600 font-semibold text-sm text-right'>{errors.firstName}</div> : null}
+            </div>
+            <div>
+              <label htmlFor="lastName" className="block text-sm font-medium text-black capitalize mb-2">last name</label>
+              <input type="text" name="lastName" value={values.lastName} onChange={handleChange} id="lastName" className="bg-slate-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400" placeholder="Smith" />
+              {errors.lastName ? <div className='text-red-600 font-semibold text-sm text-right'>{errors.lastName}</div> : null}
+            </div>
           </div>
-        </div>
+          <div className="xl:w-6/12 flex flex-col gap-3">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-black capitalize mb-2">email</label>
+              <input type="email" name="email" value={values.email} onChange={handleChange} id="email" className="bg-slate-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400" placeholder="Joe@gmail.com" />
+              {errors.email ? <div className='text-red-600 font-semibold text-sm text-right'>{errors.email}</div> : null}
+            </div>
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-black capitalize mb-2">Password</label>
+              <div className='relative'>
+                <input type={showPassword ? 'text' : 'password'} name="password" value={values.password} onChange={handleChange} id="password" placeholder="••••••••" className="bg-slate-100 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400" />
+                <img src={showPassword ? openEye : closeEye} className='absolute w-6 h-6 cursor-pointer right-2.5 top-2.5' onClick={() => setshowPassword(!showPassword)} alt="" />
+                {errors.password ? <div className='text-red-600 font-semibold text-sm text-right'>{errors.password}</div> : null}
+              </div>
+            </div>
+            <button type="submit" className="w-full mt-6 text-white bg-yellow-700 border hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
+            <p className="text-sm font-medium text-black text-right">
+              Already have an account? <Link to="/login" className="font-bold text-primary-600 hover:underline dark:text-primary-500">Login here</Link>
+            </p>
+          </div>
+        </form>
       </div>
     </section>
   )

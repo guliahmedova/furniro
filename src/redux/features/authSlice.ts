@@ -15,23 +15,28 @@ interface AuthState {
     firstName: string,
     lastName: string,
     email: string,
+    userId: number,
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
 };
 
-export const userRegister = createAsyncThunk(
-    'userRegister',
-    async (body: AppUserType) => {
-        const response = await axios.post(`${baseurl}CreateUser`, body)
-        return (await response.data);
+export const userRegister = createAsyncThunk('userRegister', async (body: AppUserType, { rejectWithValue }) => {
+    try {
+        const response = await axios.post(`${baseurl}CreateUser`, body);
+        return response.data;
+    } catch (error: any) {
+        if (error.response && error.response.data && error.response.data.Message) {
+            return rejectWithValue(error.response.data.Message);
+        } else {
+            return rejectWithValue('An unknown error occurred');
+        }
     }
-);
+});
 
 export const userLogin = createAsyncThunk(
     'userLogin',
     async (body: LoginType) => {
         const response = await axios.post(`${baseurl}Login`, body);
         const token = response.data.jwtToken;
-        console.log(response.data);
         localStorage.setItem('userToken', JSON.stringify(token));
         return (await response.data);
     }
@@ -40,14 +45,23 @@ export const userLogin = createAsyncThunk(
 export const updateUser = createAsyncThunk(
     'updateUser',
     async (body: AppUserType) => {
-        const response = await axios.post(`${baseurl}UpdateUser`, body)
+        const response = await axios.post(`${baseurl}UpdateUser`, body);
+        return (await response.data);
+    }
+);
+
+export const getUserById = createAsyncThunk(
+    'getUserById',
+    async (userId: number) => {
+        const response = await axios.get(`${baseurl}${userId}`);
         return (await response.data);
     }
 );
 
 const initialState = {
-    error: "",
+    error: '',
     isSuccess: false,
+    // message deyesen lazim deyil hec bir yerde-registerin response body-de yoxdu artiq
     message: "",
     jwtToken: '',
     refreshToken: '',
@@ -55,7 +69,8 @@ const initialState = {
     userName: '',
     lastName: '',
     firstName: '',
-    email: ''
+    email: '',
+    userId: 0
 } as AuthState;
 
 const authSlice = createSlice({
@@ -66,16 +81,14 @@ const authSlice = createSlice({
         builder.addCase(userRegister.pending, (state) => {
             state.loading = 'pending';
         });
-        builder.addCase(userRegister.fulfilled, (state, action) => {
+        builder.addCase(userRegister.fulfilled, (state) => {
             state.isSuccess = true;
             state.loading = 'succeeded';
-            if (action.payload.error) {
-                state.error = action.payload.error;
-            } else {
-                state.message = action.payload.message;
-            }
         });
-        builder.addCase(userRegister.rejected, (state) => {
+        builder.addCase(userRegister.rejected, (state, action) => {
+            if (action.payload) {
+                state.error = action.payload.toString();
+            } 
             state.loading = 'failed';
             state.isSuccess = false;
         });
@@ -87,14 +100,40 @@ const authSlice = createSlice({
             state.message = action.payload.message;
             state.isSuccess = true;
             state.loading = 'succeeded';
-            state.firstName = action.payload.firstName;
+            state.userId = action.payload.id;
+            state.email = action.payload.email;
             state.userName = action.payload.userName;
             state.lastName = action.payload.lastName;
-            state.email = action.payload.email;
             state.jwtToken = action.payload.jwtToken;
+            state.firstName = action.payload.firstName;
         });
         builder.addCase(userLogin.rejected, (state) => {
             state.isSuccess = false;
+            state.loading = 'failed';
+        });
+
+        builder.addCase(updateUser.pending, (state) => {
+            state.loading = 'pending';
+        });
+        builder.addCase(updateUser.fulfilled, (state) => {
+            state.loading = 'succeeded';
+        });
+        builder.addCase(updateUser.rejected, (state) => {
+            state.loading = 'failed';
+            state.isSuccess = false;
+        });
+
+        builder.addCase(getUserById.pending, (state) => {
+            state.loading = 'pending';
+        });
+        builder.addCase(getUserById.fulfilled, (state, action) => {
+            state.loading = 'succeeded';
+            state.userName = action.payload.userName;
+            state.firstName = action.payload.firstName;
+            state.lastName = action.payload.lastName;
+            state.email = action.payload.email;
+        });
+        builder.addCase(getUserById.rejected, (state) => {
             state.loading = 'failed';
         });
     }

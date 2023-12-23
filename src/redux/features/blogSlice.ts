@@ -15,8 +15,8 @@ interface BlogState {
 
 export const getBlogs = createAsyncThunk(
     'getBlogs',
-    async ({ page, take }: { take: number, page: number }) => {
-        const response = await axios.get(`${baseurl}?Page=${page}&ShowMore.TakeProduct=${take}`);
+    async ({ page, take, prompt, categoryId }: { take: number, page: number, prompt?: string, categoryId?: number }) => {
+        const response = await axios.get(`${baseurl}?Page=${page}&ShowMore.TakeProduct=${take}${prompt?.length ? `&Prompt=${prompt}` : ''}${categoryId !== 0 ? `&CategoryId=${categoryId}` : ''}`);
         return (await response.data);
     }
 );
@@ -51,8 +51,8 @@ const blogSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getBlogs.fulfilled, (state, action) => {
-            state.blogs = action.payload[0].blogs;
-            state.totalCount = action.payload[0].totalBlogCount;
+            state.blogs = action.payload?.[0].blogs;
+            state.totalCount = action.payload?.[0].totalBlogCount;
             state.loading = 'succeeded';
         });
         builder.addCase(getBlogs.pending, (state) => {
