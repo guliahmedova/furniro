@@ -1,28 +1,31 @@
-import { useSelector } from "react-redux"
-import { RootState, useAppDispatch } from "../../redux/app/store"
 import { useFormik } from 'formik';
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../redux/app/store";
+import { getUserById, updateUser } from "../../redux/features/authSlice";
 import { RegisterYup } from "./RegisterYup";
-import { updateUser } from "../../redux/features/authSlice";
+import { useEffect } from 'react';
 
 const ProfileEdit = () => {
+    const dispatch = useAppDispatch();
     const username = useSelector((state: RootState) => state.auth.userName);
     const firstname = useSelector((state: RootState) => state.auth.firstName);
     const lastname = useSelector((state: RootState) => state.auth.lastName);
     const email = useSelector((state: RootState) => state.auth.email);
-    const userID = useSelector((state:RootState)=> state.auth.userId);
 
-    const dispatch = useAppDispatch();
+    // redux gelecek bu deyer
+    const userID = 11;
+    console.log(username, firstname, lastname, email);
 
     const { handleChange, values, handleSubmit, errors, resetForm } = useFormik({
         initialValues: {
             id: userID,
-            email: email,
-            userName: username,
-            firstName: firstname,
-            lastName: lastname,
+            email: email && email,
+            userName: username && username,
+            firstName: firstname && firstname,
+            lastName: lastname && lastname,
         },
         validationSchema: RegisterYup,
-        onSubmit: (values,) => {
+        onSubmit: (values) => {
             dispatch(updateUser({
                 id: values.id,
                 userName: values.userName,
@@ -37,6 +40,12 @@ const ProfileEdit = () => {
             });
         }
     });
+
+    useEffect(()=>{
+        dispatch(getUserById(userID));
+    }, [dispatch, userID]);
+
+    console.log(values, "sla");
 
     return (
         <div className="w-[85%] mx-auto py-10">
@@ -72,7 +81,7 @@ const ProfileEdit = () => {
                             </div>
                         </div>
 
-                        <button type="submit" className="block bg-[#B88E2F] text-white font-medium text-lg md:w-[20%] w-full ml-auto py-4 rounded-md mt-5 hover:bg-yellow-600">Save Changes</button>
+                        <button type="submit" className="block bg-[#B88E2F] text-white font-medium text-lg md:w-[30%] w-full ml-auto py-4 rounded-md mt-5 hover:bg-yellow-600">Save Changes</button>
                     </form>
                 </div>
             </section>

@@ -3,16 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/app/store";
 import { userLogin } from "../../redux/features/authSlice";
 import { LoginYup } from './LoginYup';
-
-import openEye from '../../assets/images/open-eye.svg';
-import closeEye from '../../assets/images/close-eye.svg';
 import { useState } from 'react';
+import closeEye from '../../assets/images/close-eye.svg';
+import openEye from '../../assets/images/open-eye.svg';
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [showPassword, setshowPassword] = useState(false);
+  const [error, setError] = useState('');
 
   const { handleChange, values, handleSubmit, errors, resetForm } = useFormik({
     initialValues: {
@@ -20,14 +20,17 @@ const Login = () => {
       password: "",
     },
     validationSchema: LoginYup,
-    onSubmit: (values,) => {
+    onSubmit: (values) => {
       dispatch(userLogin({
         userName: values.userName,
-        password: values.password,
-      }),
-      ).then((confirm) => {
-        navigate('/');
-        if (confirm) {
+        password: values.password
+      })).then((confirm) => {
+        if (confirm.meta.requestStatus === 'rejected') {
+          setError('The username or password is incorrect.');
+        }
+        else if (confirm.meta.requestStatus === 'fulfilled') {
+          navigate('/');
+          setError('');
           resetForm();
         }
       })
@@ -38,6 +41,7 @@ const Login = () => {
     <section className="bg-primary-hero-image w-full h-screen bg-cover bg-fixed bg-center bg-no-repeat md:bg-top">
       <div className="h-full xl:w-[40%] flex flex-col justify-center items-center mx-auto px-4">
         <h1 className='xl:text-xl md:text-lg text-sm font-bold mb-2 capitalize'>Login to your Account </h1>
+        <span className='text-sm font-bold text-red-500 bg-[#e3e3e3] border border-gray-400'>{error && error} </span>
         <form className="flex flex-col xl:gap-5 w-full xl:mt-0 mt-5 p-6 bg-[#e3e3e3] border border-gray-400 rounded-lg" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="userName" className="block mb-2 text-sm font-medium text-black capitalize">user Name</label>

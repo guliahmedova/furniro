@@ -1,20 +1,18 @@
 import { useFormik } from 'formik';
+import { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { RootState, useAppDispatch } from "../../redux/app/store";
-import { userRegister } from "../../redux/features/authSlice";
-import { RegisterYup } from './RegisterYup';
-import { useEffect, useState } from 'react';
 import closeEye from '../../assets/images/close-eye.svg';
 import openEye from '../../assets/images/open-eye.svg';
-import { useSelector } from 'react-redux';
+import { useAppDispatch } from "../../redux/app/store";
+import { userRegister } from "../../redux/features/authSlice";
+import { RegisterYup } from './RegisterYup';
 
 const Register = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [showPassword, setshowPassword] = useState(false);
-
-  const { error, isSuccess } = useSelector((state: RootState) => state.auth);
+  const [error, setError] = useState('');
 
   const { handleChange, values, handleSubmit, errors, resetForm } = useFormik({
     initialValues: {
@@ -36,21 +34,24 @@ const Register = () => {
         password: values.password,
         roleId: 2,
         isActive: true
-      }))
+      })).then((confirm) => {
+        if (confirm.meta.requestStatus === 'rejected') {
+          setError(confirm.payload);
+        }
+        else if (confirm.meta.requestStatus === 'fulfilled') {
+          navigate('/login');
+          resetForm();
+          setError('');
+        }
+      })
     }
   });
-
-  useEffect(() => {
-    if (isSuccess) {
-      navigate('/login');
-      resetForm();
-    }
-  }, [isSuccess, navigate, resetForm]);
 
   return (
     <section className="bg-primary-hero-image w-full h-screen bg-cover bg-fixed bg-center bg-no-repeat md:bg-top">
       <div className='h-full xl:w-[60%] flex flex-col justify-center items-center mx-auto px-4'>
         <h1 className='xl:text-xl md:text-lg text-sm font-bold mb-2 capitalize'>Create an Account </h1>
+        <span className='text-sm font-bold text-red-500 bg-[#e3e3e3] border border-gray-400'>{error && error} </span>
         <form className="flex xl:justify-between xl:flex-row flex-col xl:gap-10 w-full xl:mt-0 mt-5 p-6 bg-[#e3e3e3] border border-gray-400 rounded-lg" onSubmit={handleSubmit}>
           <div className="xl:w-6/12 w-full flex flex-col gap-3">
             <div>

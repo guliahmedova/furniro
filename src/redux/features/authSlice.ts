@@ -61,7 +61,6 @@ export const getUserById = createAsyncThunk(
 const initialState = {
     error: '',
     isSuccess: false,
-    // message deyesen lazim deyil hec bir yerde-registerin response body-de yoxdu artiq
     message: "",
     jwtToken: '',
     refreshToken: '',
@@ -81,14 +80,12 @@ const authSlice = createSlice({
         builder.addCase(userRegister.pending, (state) => {
             state.loading = 'pending';
         });
-        builder.addCase(userRegister.fulfilled, (state) => {
-            state.isSuccess = true;
+        builder.addCase(userRegister.fulfilled, (state, action) => {
             state.loading = 'succeeded';
+            state.isSuccess = true;
+            state.message = action.payload.message;
         });
-        builder.addCase(userRegister.rejected, (state, action) => {
-            if (action.payload) {
-                state.error = action.payload.toString();
-            } 
+        builder.addCase(userRegister.rejected, (state) => {
             state.loading = 'failed';
             state.isSuccess = false;
         });
@@ -97,15 +94,10 @@ const authSlice = createSlice({
             state.loading = 'pending';
         });
         builder.addCase(userLogin.fulfilled, (state, action) => {
-            state.message = action.payload.message;
             state.isSuccess = true;
             state.loading = 'succeeded';
-            state.userId = action.payload.id;
-            state.email = action.payload.email;
-            state.userName = action.payload.userName;
-            state.lastName = action.payload.lastName;
+            state.message = action.payload.message;
             state.jwtToken = action.payload.jwtToken;
-            state.firstName = action.payload.firstName;
         });
         builder.addCase(userLogin.rejected, (state) => {
             state.isSuccess = false;
