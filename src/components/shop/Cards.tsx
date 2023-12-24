@@ -14,6 +14,9 @@ const Cards: FC<CardsProps> = ({ gridClass }) => {
     const currentpage = useSelector((state: RootState) => state.pagination.currentPage);
     const products: ProductTypes[] = useSelector((state: RootState) => state.product.paginationProducts);
 
+    const size = useSelector((state: RootState)=> state.product.size);
+    const color = useSelector((state: RootState)=> state.product.color);
+
     const totalProductCount = useSelector((state: RootState) => state.product.totalProductCount);
     const perPage = 16;
 
@@ -24,13 +27,13 @@ const Cards: FC<CardsProps> = ({ gridClass }) => {
             categoryName: '',
             isNew: null,
             productTags: '',
-            productSizes: '',
-            productColors: '',
+            productSizes: size,
+            productColors: color,
             maxPrice: 0,
             minPrice: 0,
             orderBy: ''
         }));
-    }, [dispatch, currentpage]);
+    }, [dispatch, currentpage, size]);
 
     return (
         <section className="bg-white">

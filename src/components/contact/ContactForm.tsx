@@ -1,11 +1,10 @@
 import { useFormik } from 'formik';
-import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import address from '../../assets/images/address.svg';
 import phone from '../../assets/images/phone.svg';
 import workingTime from '../../assets/images/workingTime.svg';
-import { RootState, useAppDispatch } from '../../redux/app/store';
+import { useAppDispatch } from '../../redux/app/store';
 import { sendContactMessage } from '../../redux/features/contactSlice';
 import { validate } from './contactFormValidate';
 const MySwal = withReactContent(Swal);

@@ -45,7 +45,7 @@ export const userLogin = createAsyncThunk(
 export const updateUser = createAsyncThunk(
     'updateUser',
     async (body: AppUserType) => {
-        const response = await axios.post(`${baseurl}UpdateUser`, body);
+        const response = await axios.put(`${baseurl}UpdateUser`, body);
         return (await response.data);
     }
 );

@@ -5,6 +5,7 @@ import { RootState } from '../app/store';
 import { DescriptionType } from '../../models/DescriptionType';
 import { SizeType } from '../../models/SizeType';
 import { ColorType } from '../../models/ColorType';
+import { Option } from '../../models/OptionType';
 
 const baseurl = 'http://immutable858-001-site1.atempurl.com/api/UserProduct/';
 
@@ -19,7 +20,9 @@ interface ProductState {
     productID: number,
     relatedProducts: ProductTypes[],
     sizes: SizeType[],
-    colors: ColorType[]
+    colors: ColorType[],
+    size: Option[],
+    color: Option[]
 };
 
 export const getProducts = createAsyncThunk(
@@ -54,8 +57,8 @@ export const getFilterProducts = createAsyncThunk(
         categoryName = '',
         isNew = true,
         productTags = '',
-        productSizes = '',
-        productColors = '',
+        productSizes = [],
+        productColors = [],
         maxPrice = 0,
         minPrice = 0,
         orderBy = ''
@@ -65,13 +68,13 @@ export const getFilterProducts = createAsyncThunk(
         categoryName?: string,
         isNew?: boolean | null,
         productTags?: string,
-        productSizes?: string,
-        productColors?: string,
+        productSizes?: Option[],
+        productColors?: Option[],
         maxPrice?: number,
         minPrice?: number,
         orderBy?: string
     }) => {
-        const response = await axios.get(`${baseurl}Products?Page=${page}${take > 0 ? `&ShowMore.TakeProduct=${take}` : ''}${categoryName.length > 0 ? `&CategoryNames=${categoryName}` : ''}${typeof (isNew) === 'boolean' ? `&IsNew=${isNew}` : ''}${productTags.length > 0 ? `&ProductTags=${productTags}` : ''}${productSizes.length > 0 ? `&ProductSizes=${productSizes}` : ''}${productColors.length > 0 ? `&ProductColors=${productColors}` : ''}${minPrice > 0 ? `&MinPrice=${minPrice}` : ''}${maxPrice ? `&MaxPrice=${maxPrice}` : ''}${orderBy.length > 0 ? `&OrderBy=${orderBy}` : ''}`);
+        const response = await axios.get(`${baseurl}Products?Page=${page}${take > 0 ? `&ShowMore.TakeProduct=${take}` : ''}${categoryName.length > 0 ? `&CategoryNames=${categoryName}` : ''}${typeof (isNew) === 'boolean' ? `&IsNew=${isNew}` : ''}${productTags.length > 0 ? `&ProductTags=${productTags}` : ''}${productSizes.length > 0 ? `${productSizes.map((item)=> `&ProductSizes=${item.value}`).join('')}` : ''}${productColors.length > 0 ? `${productColors.map((item)=> `&ProductColors=${item}`).join('')}` : ''}${minPrice > 0 ? `&MinPrice=${minPrice}` : ''}${maxPrice ? `&MaxPrice=${maxPrice}` : ''}${orderBy.length > 0 ? `&OrderBy=${orderBy}` : ''}`);
         return (await response.data);
     }
 );
@@ -119,7 +122,9 @@ const initialState = {
     productID: 0,
     relatedProducts: [],
     sizes: [],
-    colors: []
+    colors: [],
+    size: [],
+    color: []
 } as ProductState;
 
 const productSlice = createSlice({
@@ -128,6 +133,12 @@ const productSlice = createSlice({
     reducers: {
         getProductIDByCLick(state, action) {
             state.productID = action.payload;
+        },
+        getSize(state, action) {
+            state.size = action.payload;
+        },
+        getColor(state, action) {
+            state.color = action.payload.map((item : Option)=> item.value);
         }
     },
     extraReducers: (builder) => {
@@ -223,7 +234,7 @@ const productSlice = createSlice({
     },
 });
 
-export const { getProductIDByCLick } = productSlice.actions;
+export const { getProductIDByCLick, getSize, getColor } = productSlice.actions;
 export const selectProducts = (state: RootState) => state.product.entities;
 export const selectProductById = (state: RootState) => state.product.product;
 export const selectProductLoadingStatus = (state: RootState) => state.product.loading;

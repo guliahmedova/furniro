@@ -1,12 +1,13 @@
 import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Select from 'react-select';
+import Select, { ActionMeta } from 'react-select';
+import makeAnimated from 'react-select/animated';
 import filterIcon from '../../assets/images/filter.svg';
 import gtidIcon from '../../assets/images/grid.svg';
 import viewIcon from '../../assets/images/viewList.svg';
 import { RootState, useAppDispatch } from '../../redux/app/store';
-import { getAllColors, getAllSizes } from '../../redux/features/productSlice';
-import makeAnimated from 'react-select/animated';
+import { getAllColors, getAllSizes, getColor, getSize } from '../../redux/features/productSlice';
+import { Option } from '../../models/OptionType';
 const animatedComponents = makeAnimated();
 
 interface FilterProps {
@@ -15,29 +16,50 @@ interface FilterProps {
 };
 
 const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
+    const dispatch = useAppDispatch();
+
     const totalProduct = useSelector((state: RootState) => state.product.totalProductCount);
-    const [showFiltersMenu, setShowFiltersMenu] = useState(false);
+    const [showFiltersMenu, setShowFiltersMenu] = useState(true);
+    const [size, setSize] = useState<Option[]>([]);
+    const [color, setColor] = useState<Option[]>([]);
+    const [tag, setTag] = useState<Option[]>([]);
+    const [minPrice, setMinPrice] = useState(0);
+    const [maxPrice, setMaxPrice] = useState(0);
+    const [show, setShow] = useState(16);
+    const [sortBy, setSortBy] = useState('nameasc');
 
     const sizes = useSelector((state: RootState) => state.product.sizes);
     const colors = useSelector((state: RootState) => state.product.colors);
 
-    const dispatch = useAppDispatch();
+    //category names , tags !!!!!!!!!!!
 
     useEffect(() => {
         dispatch(getAllSizes());
         dispatch(getAllColors());
     }, [dispatch]);
 
-
     const sizeOptions = sizes?.map((size) => {
         return { value: size.sizeName, label: size.sizeName };
     });
 
     const colorOptions = colors?.map((color) => {
-        return { value: color.colorHexCode, label: <span style={{ backgroundColor: `${color.colorHexCode}` }} className='w-10 h-6 block rounded-full mx-auto text-center'></span> }
+        return { value: color.colorHexCode, label: color.colorHexCode }
     });
 
-    //category names , tags
+    const handleChangeSize = (option: readonly Option[], actionMeta: ActionMeta<Option>) => {
+        const mutableOption = [...option];
+        setSize(mutableOption);
+    };
+
+    const handleChangeColor = (option: readonly Option[], actionMeta: ActionMeta<Option>) => {
+        const mutableOption = [...option];
+        setColor(mutableOption);
+    };
+
+    useEffect(() => {
+        dispatch(getColor(color));
+        dispatch(getSize(size));
+    }, [dispatch, color, size]);
 
     return (
         <section className='bg-[#F9F1E7]'>
@@ -57,18 +79,20 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
                 <div className='flex items-center justify-center gap-7 lg:mt-0 mt-6'>
                     <div className='flex items-center lg:gap-4 gap-3'>
                         <span className='lg:text-xl text-sm'>Show</span>
-                        <select name="product-counts" id="showBy" className='w-[55px] h-[55px] text-center appearance-none border-0 text-[#9F9F9F] lg:text-xl outline-0'>
-                            <option value="Default" defaultChecked>4</option>
-                            <option value="Example 1">16</option>
-                            <option value="Example 2">64</option>
+                        <select name="show" value={show} onChange={(e) => setShow(parseInt(e.target.value))} id="showBy" className='w-[55px] h-[55px] text-center appearance-none border-0 text-[#9F9F9F] lg:text-xl outline-0'>
+                            <option value="16" defaultChecked>16</option>
+                            <option value="20">20</option>
+                            <option value="24">24</option>
+                            <option value="28">28</option>
                         </select>
                     </div>
                     <div className='flex items-center lg:gap-4 gap-3'>
-                        <span className='lg:text-xl text-sm'>Short by</span>
-                        <select name="product-counts" id="shortBy" className='lg:w-[188px] h-[55px] px-7 outline-0 appearance-none border-0 text-[#9F9F9F] lg:text-xl'>
-                            <option value="Default" defaultChecked>Default</option>
-                            <option value="Example 1">Example 1</option>
-                            <option value="Example 2">Example 2</option>
+                        <span className='lg:text-xl text-sm'>Sort by</span>
+                        <select name="sortBy" id="sortBy" value={sortBy} onChange={(e) => setSortBy(e.target.value)} className='lg:w-[188px] h-[55px] px-7 outline-0 appearance-none border-0 text-[#9F9F9F] lg:text-xl'>
+                            <option value="nameasc" defaultChecked>nameasc</option>
+                            <option value="namedesc">namedesc</option>
+                            <option value="priceasc">priceasc</option>
+                            <option value="pricedesc">pricedesc</option>
                         </select>
                     </div>
                 </div>
@@ -79,7 +103,7 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
                     <Select
                         closeMenuOnSelect={false}
                         components={animatedComponents}
-                        isMulti
+                        isMulti={true}
                         options={sizeOptions} />
                 </div>
 
@@ -88,7 +112,7 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
                     <Select
                         closeMenuOnSelect={false}
                         components={animatedComponents}
-                        isMulti
+                        isMulti={true}
                         options={sizeOptions} />
                 </div>
 
@@ -97,7 +121,8 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
                     <Select
                         closeMenuOnSelect={false}
                         components={animatedComponents}
-                        isMulti
+                        isMulti={true}
+                        onChange={handleChangeSize}
                         options={sizeOptions} />
                 </div>
 
@@ -106,18 +131,19 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
                     <Select
                         closeMenuOnSelect={false}
                         components={animatedComponents}
-                        isMulti
+                        isMulti={true}
+                        onChange={handleChangeColor}
                         options={colorOptions} />
                 </div>
 
                 <div className='xl:w-auto w-full'>
                     <span className='font-medium capitalize text-gray-500 mb-2 block text-sm'>Min price</span>
-                    <input type="text" className='p-1.5 outline-none' />
+                    <input type="number" className='p-1.5 outline-none' min={0} value={minPrice} name='minPrice' onChange={e => setMinPrice(parseInt(e.target.value))} />
                 </div>
 
                 <div className='xl:w-auto w-full'>
                     <span className='font-medium capitalize text-gray-500 mb-2 block text-sm'>Max price</span>
-                    <input type="text" className='p-1.5 outline-none' />
+                    <input type="text" className='p-1.5 outline-none' min={0} value={maxPrice} name='maxPrice' onChange={e => setMaxPrice(parseInt(e.target.value))} />
                 </div>
             </div>
         </section>

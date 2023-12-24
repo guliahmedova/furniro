@@ -13,10 +13,9 @@ const ProfileEdit = () => {
     const email = useSelector((state: RootState) => state.auth.email);
 
     // redux gelecek bu deyer
-    const userID = 11;
-    console.log(username, firstname, lastname, email);
+    const userID = 12;
 
-    const { handleChange, values, handleSubmit, errors, resetForm } = useFormik({
+    const { handleChange, values, handleSubmit, errors } = useFormik({
         initialValues: {
             id: userID,
             email: email && email,
@@ -26,26 +25,23 @@ const ProfileEdit = () => {
         },
         validationSchema: RegisterYup,
         onSubmit: (values) => {
-            dispatch(updateUser({
-                id: values.id,
-                userName: values.userName,
-                firstName: values.firstName,
-                lastName: values.lastName,
-                email: values.email,
-            }),
-            ).then((confirm) => {
-                if (confirm) {
-                    alert('everything is under control!');
-                }
-            });
+            console.log(values);
         }
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getUserById(userID));
-    }, [dispatch, userID]);
+    }, [dispatch, userID, values]);
 
-    console.log(values, "sla");
+    const handleBtnClick = () => {
+        dispatch(updateUser({
+            id: values.id,
+            userName: values.userName,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+        }))
+    };
 
     return (
         <div className="w-[85%] mx-auto py-10">
@@ -81,7 +77,7 @@ const ProfileEdit = () => {
                             </div>
                         </div>
 
-                        <button type="submit" className="block bg-[#B88E2F] text-white font-medium text-lg md:w-[30%] w-full ml-auto py-4 rounded-md mt-5 hover:bg-yellow-600">Save Changes</button>
+                        <button type="submit" onClick={handleBtnClick} className="block bg-[#B88E2F] text-white font-medium text-lg md:w-[30%] w-full ml-auto py-4 rounded-md mt-5 hover:bg-yellow-600">Save Changes</button>
                     </form>
                 </div>
             </section>
