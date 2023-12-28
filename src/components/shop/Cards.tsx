@@ -21,11 +21,8 @@ interface CardsProps {
 const Cards: FC<CardsProps> = ({ gridClass, size, color, tag, category, minPrice, maxPrice, show, sortBy }) => {
     const dispatch = useAppDispatch();
     const currentpage = useSelector((state: RootState) => state.pagination.currentPage);
-    const products: ProductTypes[] = useSelector((state: RootState) => state.shop.filteredProducts);
-    const totalProductCount = useSelector((state: RootState) => state.shop.totalProductCount);
+    const {totalProductCount, filteredProducts} = useSelector((state: RootState) => state.shop);
 
-    console.log('totalProductCount: ', totalProductCount);
-    
     useEffect(() => {
         dispatch(getFilteredProducts({
             page: currentpage,
@@ -45,7 +42,7 @@ const Cards: FC<CardsProps> = ({ gridClass, size, color, tag, category, minPrice
         <section className="bg-white">
             <div className="xl:w-[85%] w-[95%] mx-auto mt-[56px] mb-[69px]">
                 <div className={`${gridClass === 'grid' ? 'grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1' : 'flex flex-col'} gap-8`}>
-                    {products?.map((product: ProductTypes) => (
+                    {filteredProducts?.map((product: ProductTypes) => (
                         <ProductCard
                             key={product.id}
                             product={product}

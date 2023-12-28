@@ -14,7 +14,7 @@ interface BlogState {
 };
 
 export const getBlogs = createAsyncThunk(
-    'getBlogs',
+    'blogs/getBlogs',
     async ({ page, take, prompt, categoryId }: { take: number, page: number, prompt?: string, categoryId?: number }) => {
         const response = await axios.get(`${baseurl}?Page=${page}&ShowMore.TakeProduct=${take}${prompt?.length ? `&Prompt=${prompt}` : ''}${categoryId !== 0 ? `&CategoryId=${categoryId}` : ''}`);
         return (await response.data);
@@ -22,7 +22,7 @@ export const getBlogs = createAsyncThunk(
 );
 
 export const getBlogCategories = createAsyncThunk(
-    'getBlogCategories',
+    'blogs/getBlogCategories',
     async () => {
         const response = await axios.get(`${baseurl}/categories`);
         return (await response.data);
@@ -30,7 +30,7 @@ export const getBlogCategories = createAsyncThunk(
 );
 
 export const getRecentBlogs = createAsyncThunk(
-    'getRecentBlogs',
+    'blogs/getRecentBlogs',
     async () => {
         const response = await axios.get(`${baseurl}/recent-posts`);
         return (await response.data);

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { DescriptionType } from '../../models/DescriptionType';
 import { RootState, useAppDispatch } from '../../redux/app/store';
-import { getProductDescriptionById } from '../../redux/features/productSlice';
+import { getProductDescriptionById } from '../../redux/features/productDetailSlice';
 import { useParams } from 'react-router-dom';
 
 const DetailTabbedNavigation = () => {
@@ -11,7 +11,7 @@ const DetailTabbedNavigation = () => {
     setTabIndex(index);
   };
 
-  const productDescription: DescriptionType = useSelector((state: RootState) => state.product.productDescriptions);
+  const productDescription: DescriptionType = useSelector((state: RootState) => state.productDetail.productDescriptions);
 
   const dispatch = useAppDispatch();
 

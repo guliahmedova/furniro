@@ -6,11 +6,8 @@ import { Link } from "react-router-dom";
 import favHeart from '../../assets/images/favorite-heart.svg';
 
 const FavoritesContainer = () => {
-    const favProducts = useSelector((state: RootState) => state.wishlist.product);
-    const loading = useSelector((state: RootState)=> state.wishlist.loading);
-    const currentPage = useSelector((state: RootState)=> state.pagination.currentPage);
-
-    console.log("favorite contaciner: ", loading, currentPage);
+    const { product, loading } = useSelector((state: RootState) => state.wishlist);
+    const currentPage = useSelector((state: RootState) => state.pagination.currentPage);
 
     const perPage = 8;
 
@@ -19,9 +16,9 @@ const FavoritesContainer = () => {
 
     return (
         <section className="bg-white">
-            {favProducts.length > 0 ? (<div className="xl:w-[85%] w-[95%] mx-auto mt-[56px] mb-[69px] lg:px-0 px-3">
+            {product.length > 0 ? (<div className="xl:w-[85%] w-[95%] mx-auto mt-[56px] mb-[69px] lg:px-0 px-3">
                 <div className="grid lg:grid-cols-4 gap-8 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-8 w-full">
-                    {favProducts.map((item: ProductTypes) => (
+                    {product.map((item: ProductTypes) => (
                         <ProductCard
                             key={item.id}
                             product={item}

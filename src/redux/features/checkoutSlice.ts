@@ -12,7 +12,7 @@ interface CheckoutState {
 };
 
 export const getAllCountries = createAsyncThunk(
-    'getAllCountries',
+    'checkout/getAllCountries',
     async () => {
         const response = await axios.get(`${baseUrl}Country`);
         return (await response.data);
@@ -20,7 +20,7 @@ export const getAllCountries = createAsyncThunk(
 );
 
 export const getAllProvinces = createAsyncThunk(
-    'getAllProvinces',
+    'checkout/getAllProvinces',
     async () => {
         const response = await axios.get(`${baseUrl}Province`);
         return (await response.data);

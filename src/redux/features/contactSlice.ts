@@ -16,7 +16,7 @@ interface ContactState {
 };
 
 export const sendContactMessage = createAsyncThunk(
-    'sendContactMessage',
+    'contact/sendContactMessage',
     async (contactData: ContactType) => {
         const response = await axios.post(`${baseUrl}ContactMessage`, contactData);
         return (await response.data);
@@ -24,7 +24,7 @@ export const sendContactMessage = createAsyncThunk(
 );
 
 export const getContactDatas = createAsyncThunk(
-    'getContactDatas',
+    'contact/getContactDatas',
     async () => {
         const response = await axios.get(`${baseUrl}Contact`);
         return (await response.data);

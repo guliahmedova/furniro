@@ -19,7 +19,7 @@ const initialState: ProductState = {
 };
 
 export const searchProducts = createAsyncThunk(
-    'searchProducts',
+    'search/searchProducts',
     async ({ prompt, take }: { prompt: string, take: number }) => {
         const response = await axios.get(`http://immutable858-001-site1.atempurl.com/api/UserProduct/Products?Prompt=${prompt}&ShowMore.TakeProduct=${take}`);
         return (await response.data);

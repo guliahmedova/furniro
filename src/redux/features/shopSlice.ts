@@ -15,12 +15,12 @@ interface ProductState {
     totalProductCount: number,
     sizes: SizeType[],
     colors: ColorType[],
-    allCategories: CategoryType[],
-    allTags: TagType[],
+    categories: CategoryType[],
+    tags: TagType[],
 };
 
 export const getAllSizes = createAsyncThunk(
-    'getAllSizes',
+    'shop/getAllSizes',
     async () => {
         const response = await axios.get(`${baseurl}Size/getAll`);
         return (await response.data);
@@ -28,7 +28,7 @@ export const getAllSizes = createAsyncThunk(
 );
 
 export const getAllColors = createAsyncThunk(
-    'getAllColors',
+    'shop/getAllColors',
     async () => {
         const response = await axios.get(`${baseurl}Color/getAll`);
         return (await response.data);
@@ -36,7 +36,7 @@ export const getAllColors = createAsyncThunk(
 );
 
 export const getAllTags = createAsyncThunk(
-    'getAllTags',
+    'shop/getAllTags',
     async () => {
         const response = await axios.get(`${baseurl}Tag/getAll`);
         return (await response.data);
@@ -44,7 +44,7 @@ export const getAllTags = createAsyncThunk(
 );
 
 export const getAllCategories = createAsyncThunk(
-    'getAllCategories',
+    'shop/getAllCategories',
     async () => {
         const response = await axios.get(`${baseurl}Category/getAll`);
         return (await response.data);
@@ -52,7 +52,7 @@ export const getAllCategories = createAsyncThunk(
 );
 
 export const getFilteredProducts = createAsyncThunk(
-    'getFilteredProducts',
+    'shop/getFilteredProducts',
     async ({
         page,
         take,
@@ -90,8 +90,8 @@ const initialState = {
     totalProductCount: 0,
     sizes: [],
     colors: [],
-    allCategories: [],
-    allTags: [],
+    categories: [],
+    tags: [],
     filteredProducts: [],
 } as ProductState;
 
@@ -125,7 +125,7 @@ const shopSlice = createSlice({
         });
 
         builder.addCase(getAllTags.fulfilled, (state, action) => {
-            state.allTags = action.payload;
+            state.tags = action.payload;
             state.loading = 'succeeded';
         });
         builder.addCase(getAllTags.pending, (state) => {
@@ -136,7 +136,7 @@ const shopSlice = createSlice({
         });
 
         builder.addCase(getAllCategories.fulfilled, (state, action) => {
-            state.allCategories = action.payload;
+            state.categories = action.payload;
             state.loading = 'succeeded';
         });
         builder.addCase(getAllCategories.pending, (state) => {

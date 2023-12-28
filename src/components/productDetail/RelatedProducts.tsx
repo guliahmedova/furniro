@@ -2,15 +2,16 @@ import ProductCard from "../common/ProductCard";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../redux/app/store";
 import { useEffect, useState } from "react";
-import { getRelatedProducts } from "../../redux/features/productSlice";
+import { getRelatedProducts } from "../../redux/features/productDetailSlice";
 import { ProductTypes } from "../../models/productTypes";
 import { useParams } from "react-router-dom";
 
 const RelatedProducts = () => {
     const dispatch = useAppDispatch();
-    const totalProductCount = useSelector((state: RootState) => state.product.totalProductCount);
     const [showMore, setShowMore] = useState(4);
-    const relatedProducts = useSelector((state: RootState) => state.product.relatedProducts);
+    
+    const totalProductCount = useSelector((state: RootState) => state.product.totalProductCount);
+    const relatedProducts = useSelector((state: RootState) => state.productDetail.relatedProducts);
 
     const { productId } = useParams();
 

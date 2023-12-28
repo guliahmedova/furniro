@@ -9,17 +9,15 @@ import { getBlogCategories, getBlogs, getRecentBlogs } from '../../redux/feature
 import { Pagination } from '../common/index';
 
 const BlogSection = () => {
-    const blogs = useSelector((state: RootState) => state.blog.blogs);
+    const {blogs, categories, recentBlogs, totalCount} = useSelector((state: RootState) => state.blog);
+
     const currentpage = useSelector((state: RootState) => state.pagination.currentPage);
-    const categories = useSelector((state: RootState) => state.blog.categories);
-    const recentBlogs = useSelector((state: RootState) => state.blog.recentBlogs);
     const [searchText, setSearchText] = useState('');
 
     const [categoryID, setCategoryID] = useState(0);
 
     const dispatch = useAppDispatch();
 
-    const totalCount = useSelector((state: RootState) => state.blog.totalCount);
     const perPage = 8;
 
     useEffect(() => {

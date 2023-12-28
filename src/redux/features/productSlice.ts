@@ -6,58 +6,31 @@ import { ProductTypes } from '../../models/productTypes';
 const baseurl = 'http://immutable858-001-site1.atempurl.com/api/UserProduct/';
 
 interface ProductState {
-    entities: ProductTypes[]
+    products: ProductTypes[]
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
-    product: ProductTypes,
     totalProductCount: number,
     newProducts: ProductTypes[],
-    productDescriptions: DescriptionType,
-    productID: number,
-    relatedProducts: ProductTypes[],
+    productID: number
 };
 
 export const getProducts = createAsyncThunk(
-    'getProducts',
+    'products/getProducts',
     async (page: number) => {
         const response = await axios.get(`${baseurl}Products?ShowMore.TakeProduct=${page}`);
         return (await response.data);
     }
 );
 
-export const getProductById = createAsyncThunk(
-    'productGetById',
-    async ({ productID, sizeID }: { productID: number, sizeID: number }) => {
-        const response = await axios.get(`${baseurl}getById/ProductPage?Id=${productID}&SizeId=${sizeID}`);
-        return response.data;
-    }
-);
-
 export const getNewProducts = createAsyncThunk(
-    'getNewProducts',
+    'products/getNewProducts',
     async (count: number) => {
         const response = await axios.get(`${baseurl}NewProducts?ShowMore.TakeProduct=${count}`);
         return (await response.data);
     }
 );
 
-export const getProductDescriptionById = createAsyncThunk(
-    'getProductDescriptionById',
-    async (productId: string) => {
-        const response = await axios.get(`${baseurl}getById/Description?Id=${productId}`);
-        return (await response.data);
-    }
-);
-
-export const getRelatedProducts = createAsyncThunk(
-    'getRelatedProducts',
-    async ({ productId, take }: { productId: string, take: number }) => {
-        const response = await axios.get(`${baseurl}RelatedProducts?ShowMore.TakeProduct=${take}&MainProductId=${productId}`);
-        return (await response.data);
-    }
-);
-
 const initialState = {
-    entities: [],
+    products: [],
     loading: 'idle',
     product: {} as ProductTypes,
     totalProductCount: 0,
@@ -77,7 +50,7 @@ const productSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getProducts.fulfilled, (state, action) => {
-            state.entities = action.payload[0].products;
+            state.products = action.payload[0].products;
             state.totalProductCount = action.payload[0].totalProductCount;
             state.loading = 'succeeded';
         });
@@ -96,39 +69,6 @@ const productSlice = createSlice({
             state.loading = 'pending'
         });
         builder.addCase(getNewProducts.rejected, (state) => {
-            state.loading = 'failed'
-        });
-
-        builder.addCase(getProductById.fulfilled, (state, action) => {
-            state.product = action.payload;
-            state.loading = 'succeeded';
-        });
-        builder.addCase(getProductById.pending, (state) => {
-            state.loading = 'pending'
-        });
-        builder.addCase(getProductById.rejected, (state) => {
-            state.loading = 'failed'
-        });
-
-        builder.addCase(getProductDescriptionById.fulfilled, (state, action) => {
-            state.productDescriptions = action.payload;
-            state.loading = 'succeeded';
-        });
-        builder.addCase(getProductDescriptionById.pending, (state) => {
-            state.loading = 'pending'
-        });
-        builder.addCase(getProductDescriptionById.rejected, (state) => {
-            state.loading = 'failed'
-        });
-
-        builder.addCase(getRelatedProducts.fulfilled, (state, action) => {
-            state.relatedProducts = action.payload;
-            state.loading = 'succeeded';
-        });
-        builder.addCase(getRelatedProducts.pending, (state) => {
-            state.loading = 'pending'
-        });
-        builder.addCase(getRelatedProducts.rejected, (state) => {
             state.loading = 'failed'
         });
     },

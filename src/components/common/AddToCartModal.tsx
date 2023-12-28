@@ -10,7 +10,7 @@ interface AddToCartModalProps {
 };
 
 const AddToCartModal: FC<AddToCartModalProps> = ({ children, isModalOpen, handleCLoseBtnClick }) => {
-    const productByIDLoading = useSelector((state: RootState) => state.product.loading);
+    const productByIDLoading = useSelector((state: RootState) => state.productDetail.loading);
 
     const modalRef = useRef<HTMLDivElement>(null);
 

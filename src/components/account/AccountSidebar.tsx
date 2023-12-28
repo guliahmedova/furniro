@@ -5,6 +5,7 @@ const AccountSidebar = () => {
 
     const removeToken = () => {
         localStorage.removeItem("userToken");
+        localStorage.removeItem('userId');
         navigate('/login');
     };
 

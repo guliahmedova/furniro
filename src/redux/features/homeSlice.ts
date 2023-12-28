@@ -10,7 +10,7 @@ interface HomeState {
 };
 
 export const getGridImages = createAsyncThunk(
-    'getGridImages',
+    'home/getGridImages',
     async () => {
         const response = await axios.get(`${baseurl}Home`);
         return (await response.data);

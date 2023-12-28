@@ -10,7 +10,7 @@ const FuniroFurniture = () => {
 
     useEffect(() => {
         dispatch(getGridImages());
-    }, [dispatch])
+    }, [dispatch]);
 
     return (
         <section className="w-full mb-[50px] h-full">

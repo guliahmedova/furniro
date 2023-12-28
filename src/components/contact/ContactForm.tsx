@@ -52,11 +52,7 @@ const ContactForm = () => {
         dispatch(getContactDatas());
     }, [dispatch]);
 
-    const mobile = useSelector((state: RootState) => state.contact.mobile);
-    const hotline = useSelector((state: RootState) => state.contact.hotline);
-    const address = useSelector((state: RootState) => state.contact.address);
-    const weekdayWorkingTime = useSelector((state: RootState) => state.contact.weekdayWorkingTime);
-    const weekendWorkingTime = useSelector((state: RootState) => state.contact.weekendWorkingTime);
+    const {mobile, hotline, address, weekdayWorkingTime, weekendWorkingTime} = useSelector((state: RootState) => state.contact);
 
     return (
         <section>

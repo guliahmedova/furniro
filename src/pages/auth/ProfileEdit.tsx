@@ -7,21 +7,18 @@ import { RegisterYup } from "./RegisterYup";
 
 const ProfileEdit = () => {
     const dispatch = useAppDispatch();
-    const username = useSelector((state: RootState) => state.auth.userName);
-    const firstname = useSelector((state: RootState) => state.auth.firstName);
-    const lastname = useSelector((state: RootState) => state.auth.lastName);
-    const email = useSelector((state: RootState) => state.auth.email);
+    const { userName, lastName, firstName, email } = useSelector((state: RootState) => state.auth);
 
     // redux gelecek bu deyer
-    const userId = localStorage.getItem('UserId');
+    const userId = localStorage.getItem('userId');
 
     const { handleChange, values, handleSubmit, errors } = useFormik({
         initialValues: {
             id: userId && parseInt(userId),
             email: email && email,
-            userName: username && username,
-            firstName: firstname && firstname,
-            lastName: lastname && lastname,
+            userName: userName && userName,
+            firstName: firstName && firstName,
+            lastName: lastName && lastName,
         },
         validationSchema: RegisterYup,
         onSubmit: (values) => {
@@ -42,7 +39,7 @@ const ProfileEdit = () => {
             email: values.email,
         }))
     };
-    
+
     return (
         <div className="w-[85%] mx-auto py-10">
             <section className="w-full">

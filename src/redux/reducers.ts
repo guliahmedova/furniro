@@ -9,6 +9,8 @@ import contactReducer from '../redux/features/contactSlice';
 import authReducer from '../redux/features/authSlice';
 import shopReducer from '../redux/features/shopSlice';
 import checkoutReducer from '../redux/features/checkoutSlice';
+import productDetailReducer from '../redux/features/productDetailSlice';
+import cartReducer from '../redux/features/cartSlice';
 
 export const rootReducer = combineReducers({
     wishlist: wishlistReducer,
@@ -20,5 +22,7 @@ export const rootReducer = combineReducers({
     contact: contactReducer,
     auth: authReducer,
     shop: shopReducer,
-    checkout: checkoutReducer
+    checkout: checkoutReducer,
+    productDetail: productDetailReducer,
+    cart: cartReducer
 });

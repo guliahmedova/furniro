@@ -19,7 +19,7 @@ interface AuthState {
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
 };
 
-export const userRegister = createAsyncThunk('userRegister', async (body: AppUserType, { rejectWithValue }) => {
+export const userRegister = createAsyncThunk('auth/userRegister', async (body: AppUserType, { rejectWithValue }) => {
     try {
         const response = await axios.post(`${baseurl}CreateUser`, body);
         return response.data;
@@ -33,19 +33,19 @@ export const userRegister = createAsyncThunk('userRegister', async (body: AppUse
 });
 
 export const userLogin = createAsyncThunk(
-    'userLogin',
+    'auth/userLogin',
     async (body: LoginType) => {
         const response = await axios.post(`${baseurl}Login`, body);
         const token = response.data.jwtToken;
         const userId = response.data.userId;
-        localStorage.setItem('UserId', JSON.stringify(userId));
+        localStorage.setItem('userId', JSON.stringify(userId));
         localStorage.setItem('userToken', JSON.stringify(token));
         return (await response.data);
     }
 );
 
 export const updateUser = createAsyncThunk(
-    'updateUser',
+    'auth/updateUser',
     async (body: AppUserType) => {
         const response = await axios.put(`${baseurl}UpdateUser`, body);
         return (await response.data);
@@ -53,7 +53,7 @@ export const updateUser = createAsyncThunk(
 );
 
 export const getUserById = createAsyncThunk(
-    'getUserById',
+    'auth/getUserById',
     async (userId: number) => {
         const response = await axios.get(`${baseurl}${userId}`);
         return (await response.data);

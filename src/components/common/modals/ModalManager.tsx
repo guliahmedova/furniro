@@ -1,5 +1,5 @@
 import { useModal } from "../../../contexts/ModalContext";
-import Modal from './Modal';
+import ShoppinModal from './ShoppinModal';
 import FilterModal from "../FilterModal";
 
 interface IModal {
@@ -7,7 +7,7 @@ interface IModal {
 };
 
 const ModalLookUp: IModal = {
-    ShoppingModal: Modal,
+    ShoppingModal: ShoppinModal,
     FilterPopup: FilterModal
 };
 

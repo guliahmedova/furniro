@@ -30,10 +30,7 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor
     const totalProduct = useSelector((state: RootState) => state.product.totalProductCount);
     const [showFiltersMenu, setShowFiltersMenu] = useState(false);
 
-    const sizes = useSelector((state: RootState) => state.shop.sizes);
-    const colors = useSelector((state: RootState    ) => state.shop.colors);
-    const tags = useSelector((state: RootState) => state.shop.allTags);
-    const categories = useSelector((state: RootState) => state.shop.allCategories);
+    const {sizes, colors, tags, categories} = useSelector((state: RootState) => state.shop);
 
     const sizeOptions = useMemo(() => {
         return sizes?.map((size) => ({

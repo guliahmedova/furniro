@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import arrow from '../../assets/images//heroArrow.svg';
 import facebook from '../../assets/images/facebook.svg';
 import halfStar from '../../assets/images/halfStar.svg';
@@ -9,19 +9,20 @@ import star from '../../assets/images/star.svg';
 import twitter from '../../assets/images/twitter.svg';
 import { ProductTypes } from "../../models/productTypes";
 import { RootState, useAppDispatch } from "../../redux/app/store";
-import { getProductById } from "../../redux/features/productSlice";
+import { getProductById } from "../../redux/features/productDetailSlice";
 const stars = [star, star, star, star, halfStar];
 
 const Details = () => {
+  const userId = localStorage.getItem('userId');
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
 
   const [productCount, setProductCount] = useState(0);
-  const product: ProductTypes = useSelector((state: RootState) => state.product.product);
+  const product: ProductTypes = useSelector((state: RootState) => state.productDetail.product);
 
   const [size, setSize] = useState(0);
-
   const [color, setColor] = useState(0);
-
   const [selectedImg, setSelectedImg] = useState(0);
 
   const { productId } = useParams();
@@ -55,6 +56,14 @@ const Details = () => {
     if (productCount > 0) {
       setProductCount(prevState => prevState - 1);
     };
+  };
+
+  const handleAddToCartBtn = ()=>{
+    if (userId && userId !== 'undefined') {
+      console.log('Login');
+    }else{
+      navigate('/login');
+    }
   };
 
   return (
@@ -123,7 +132,7 @@ const Details = () => {
                 <span className="font-medium">{productCount}</span>
                 <button className="font-medium text-xl" onClick={increaseProductCount}>+</button>
               </div>
-              <button className="xl:w-[35%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out capitalize">Add to cart</button>
+              <button onClick={handleAddToCartBtn} className="xl:w-[35%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out capitalize">Add to cart</button>
               <button className="xl:w-[35%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out">+ Compare</button>
             </div>
 

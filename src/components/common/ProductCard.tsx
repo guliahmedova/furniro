@@ -1,6 +1,6 @@
 import React, { FC, memo, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import compare from '../../assets/images/compare.svg';
 import errorImg from '../../assets/images/errorImage.png';
 import goldheart from '../../assets/images/goldheart.svg';
@@ -9,7 +9,9 @@ import shopIcon from '../../assets/images/shoppingCart.svg';
 import heart from '../../assets/images/whiteheart.svg';
 import { ProductTypes } from '../../models/productTypes';
 import { RootState, useAppDispatch } from '../../redux/app/store';
-import { getProductById, getProductIDByCLick } from '../../redux/features/productSlice';
+import { addToCart } from '../../redux/features/cartSlice';
+import { getProductById } from '../../redux/features/productDetailSlice';
+import { getProductIDByCLick } from '../../redux/features/productSlice';
 import { addToWishlist, removeFromWishlist } from '../../redux/features/wishlistSlice';
 import AddToCartModal from './AddToCartModal';
 
@@ -19,11 +21,13 @@ interface ProductCardProps {
 };
 
 const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
+  const userId = localStorage.getItem('userId');
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isModalOpan, setIsModalOpen] = useState(false);
-  const productById: ProductTypes = useSelector((state: RootState) => state?.product?.product);
-  const [activeColor, setActiveColor] = useState("");
-  const [activeSize, setActiveSize] = useState("");
+  const productById: ProductTypes = useSelector((state: RootState) => state?.productDetail?.product);
+  const [color, setColor] = useState(0);
+  const [size, setSize] = useState(0);
 
   const isLike = useSelector((state: RootState) => (
     state.wishlist.product.some((favItem) => favItem?.id === product?.id)
@@ -43,7 +47,11 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
   }, []);
 
   const handleAddToCartModalClick = () => {
-    setIsModalOpen(!isModalOpan);
+    if (userId && userId !== 'undefined') {
+      setIsModalOpen(!isModalOpan);
+    } else {
+      navigate('/login');
+    }
   };
 
   const getImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -52,6 +60,17 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
 
   const getProductIDByClickEvent = (id: number) => {
     dispatch(getProductIDByCLick(id));
+  };
+
+  const handleAddToCartBtn = () => {
+    if (userId && productById?.colors?.[color].id) {
+      dispatch(addToCart({
+        productId: product?.id,
+        colorId: productById?.colors?.[color].id,
+        userId: parseInt(userId)
+      }));
+      setIsModalOpen(false);
+    }
   };
 
   return (
@@ -148,16 +167,16 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
           <div className='mt-6'>
             <span className='font-medium uppercase text-sm'>color</span>
             <div className='mt-2 flex gap-2'>
-              {productById?.colors?.map((item) => (
+              {productById?.colors?.map((item, index) => (
                 <div key={item.id}
                   style={{ backgroundColor: item.colorHexCode }}
-                  className={`w-6 h-6 rounded-full block text-center text-white ${item.colorHexCode === activeColor ? 'border border-blue-500 cursor-default' : 'cursor-pointer'}`}
+                  className={`w-6 h-6 rounded-full block text-center text-white ${index === color ? 'border border-blue-500 cursor-default' : 'cursor-pointer'}`}
                   onClick={(e) => {
-                    setActiveColor(item.colorHexCode);
                     e.preventDefault();
+                    setColor(index);
                     e.stopPropagation();
                   }}>
-                  {item.colorHexCode === activeColor && (<span>&#10003;</span>)}
+                  {index === color && (<span>&#10003;</span>)}
                 </div>
               ))}
             </div>
@@ -166,13 +185,13 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
           <div className='mt-6'>
             <span className='font-medium uppercase text-sm'>size</span>
             <div className='mt-2 flex gap-2'>
-              {productById?.sizes?.map((item) => (
+              {productById?.sizes?.map((item, index) => (
                 <span key={item.id}
-                  className={`w-6 h-6 bg-[#B88E2F] rounded-full text-white select-none text-[10px] uppercase flex justify-center items-center ${item.sizeName === activeSize ? 'border border-blue-500 cursor-default' : 'cursor-pointer'}`}
+                  className={`w-6 h-6 bg-[#B88E2F] rounded-full text-white select-none text-[10px] uppercase flex justify-center items-center ${index === size ? 'border border-blue-500 cursor-default' : 'cursor-pointer'}`}
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    setActiveSize(item.sizeName);
+                    setSize(index);
                   }}
                 >{item?.sizeName}</span>
               ))}
@@ -186,7 +205,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
             <span className="font-medium">0</span>
             <button className="font-medium text-xl" >+</button>
           </div>
-          <button className='bg-[#B88E2F] w-5/12 rounded-md text-white uppercase font-medium'>add to cart</button>
+          <button onClick={handleAddToCartBtn} className='bg-[#B88E2F] w-5/12 rounded-md text-white uppercase font-medium'>add to cart</button>
         </div>
       </AddToCartModal>
     </>

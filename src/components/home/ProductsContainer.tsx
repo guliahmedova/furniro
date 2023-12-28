@@ -7,8 +7,7 @@ import { ProductCard } from "../common/index";
 
 const ProductsContainer = () => {
     const dispatch = useAppDispatch();
-    const products: ProductTypes[] = useSelector((state: RootState) => state.product.entities);
-    const totalProductCount = useSelector((state: RootState) => state.product.totalProductCount);
+    const { totalProductCount, products } = useSelector((state: RootState) => state.product);
     const [showMore, setShowMore] = useState(8);
 
     useEffect(() => {
