@@ -52,7 +52,7 @@ const router = createBrowserRouter(createRoutesFromElements(
 ));
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <Suspense fallback={<Spinner />}>
+  <Suspense fallback={<Spinner />}> 
     <PersistGate loading={null} persistor={persistor}>
       <React.StrictMode>
         <Provider store={store}>

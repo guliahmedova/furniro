@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { validate } from './formValidate';
 import blackCircle from '../../assets/images/blackCircle.svg';
 import emptyCircle from '../../assets/images/emptyCircle.svg';
+import { RootState, useAppDispatch } from '../../redux/app/store';
+import { getAllCountries, getAllProvinces } from '../../redux/features/checkoutSlice';
+import { useSelector } from 'react-redux';
 
 const CheckoutForm = () => {
+    const dispatch = useAppDispatch();
+
     const { values, errors, handleChange, handleSubmit } = useFormik({
         initialValues: {
             firstName: '',
@@ -24,6 +29,13 @@ const CheckoutForm = () => {
             console.log(values);
         },
     });
+
+    const { countries, provinces } = useSelector((state: RootState) => state.checkout);
+
+    useEffect(() => {
+        dispatch(getAllCountries());
+        dispatch(getAllProvinces());
+    }, [dispatch]);
 
     const [accordion, setAccordion] = useState(false);
 
@@ -55,9 +67,9 @@ const CheckoutForm = () => {
                         <div className="mb-9 relative">
                             <label className="font-medium text-[#000000] leading-6 mb-[22px] block" htmlFor="countryRegion">Country / Region</label>
                             <select name="country" value={values.country} onChange={handleChange} id="countryRegion" className="border-2 appearance-none border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]">
-                                <option value="Example1" defaultChecked className="text-[#9F9F9F]">Sri Lanka</option>
-                                <option value="Example2">Example 2</option>
-                                <option value="Example3">Example 3</option>
+                                {countries?.map((country) => (
+                                    <option key={country.id} value={country.countryName}>{country.countryName}</option>
+                                ))}
                             </select>
                             <div className="absolute inset-y-0 right-4 top-12 flex items-center px-3 pointer-events-none">
                                 <svg className="w-6 h-6 text-black" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -82,9 +94,9 @@ const CheckoutForm = () => {
                         <div className="mb-9 relative">
                             <label className="font-medium text-[#000000] leading-6 mb-[22px] block" htmlFor="Province">Province</label>
                             <select name="province" value={values.province} onChange={handleChange} id="Province" className="border-2 appearance-none border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]">
-                                <option value="Example1" defaultChecked >Western Province</option>
-                                <option value="Example2">Example 2</option>
-                                <option value="Example3">Example 3</option>
+                               {provinces?.map((item) => (
+                                <option key={item.id} value={item.provinceName}>{item.provinceName}</option>
+                               ))}
                             </select>
                             <div className="absolute inset-y-0 right-4 top-12 flex items-center px-3 pointer-events-none">
                                 <svg className="w-6 h-6 text-black" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">

@@ -15,7 +15,7 @@ interface AuthState {
     firstName: string,
     lastName: string,
     email: string,
-    userId: number,
+    userId: number ,
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
 };
 
@@ -37,6 +37,8 @@ export const userLogin = createAsyncThunk(
     async (body: LoginType) => {
         const response = await axios.post(`${baseurl}Login`, body);
         const token = response.data.jwtToken;
+        const userId = response.data.userId;
+        localStorage.setItem('UserId', JSON.stringify(userId));
         localStorage.setItem('userToken', JSON.stringify(token));
         return (await response.data);
     }
@@ -96,6 +98,7 @@ const authSlice = createSlice({
         builder.addCase(userLogin.fulfilled, (state, action) => {
             state.isSuccess = true;
             state.loading = 'succeeded';
+            state.userId = action.payload.userId;
             state.message = action.payload.message;
             state.jwtToken = action.payload.jwtToken;
         });

@@ -1,65 +1,101 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, memo, useCallback, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Select, { ActionMeta } from 'react-select';
 import makeAnimated from 'react-select/animated';
 import filterIcon from '../../assets/images/filter.svg';
 import gtidIcon from '../../assets/images/grid.svg';
 import viewIcon from '../../assets/images/viewList.svg';
-import { RootState, useAppDispatch } from '../../redux/app/store';
-import { getAllColors, getAllSizes, getColor, getSize } from '../../redux/features/productSlice';
 import { Option } from '../../models/OptionType';
+import { RootState } from '../../redux/app/store';
 const animatedComponents = makeAnimated();
 
 interface FilterProps {
     changeGridClass: (gridType: string) => void;
-    gridClass: string
+    setSize?: React.Dispatch<React.SetStateAction<Option[]>> | undefined;
+    setColor?: React.Dispatch<React.SetStateAction<string[]>> | undefined;
+    setTag?: React.Dispatch<React.SetStateAction<Option[]>> | undefined;
+    setCategory?: React.Dispatch<React.SetStateAction<Option[]>> | undefined;
+    setMinPrice?: React.Dispatch<React.SetStateAction<number>> | undefined;
+    setMaxPrice?: React.Dispatch<React.SetStateAction<number>> | undefined;
+    setShow?: React.Dispatch<React.SetStateAction<number>> | undefined;
+    setSortBy?: React.Dispatch<React.SetStateAction<string>> | undefined;
+    gridClass: string,
+    minPrice?: number;
+    maxPrice?: number;
+    show?: number;
+    sortBy?: string;
 };
 
-const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
-    const dispatch = useAppDispatch();
-
+const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor, setTag, setCategory, setMaxPrice, setMinPrice, setShow, setSortBy, minPrice, maxPrice, show, sortBy }) => {
     const totalProduct = useSelector((state: RootState) => state.product.totalProductCount);
-    const [showFiltersMenu, setShowFiltersMenu] = useState(true);
-    const [size, setSize] = useState<Option[]>([]);
-    const [color, setColor] = useState<Option[]>([]);
-    const [tag, setTag] = useState<Option[]>([]);
-    const [minPrice, setMinPrice] = useState(0);
-    const [maxPrice, setMaxPrice] = useState(0);
-    const [show, setShow] = useState(16);
-    const [sortBy, setSortBy] = useState('nameasc');
+    const [showFiltersMenu, setShowFiltersMenu] = useState(false);
 
-    const sizes = useSelector((state: RootState) => state.product.sizes);
-    const colors = useSelector((state: RootState) => state.product.colors);
+    const sizes = useSelector((state: RootState) => state.shop.sizes);
+    const colors = useSelector((state: RootState    ) => state.shop.colors);
+    const tags = useSelector((state: RootState) => state.shop.allTags);
+    const categories = useSelector((state: RootState) => state.shop.allCategories);
 
-    //category names , tags !!!!!!!!!!!
+    const sizeOptions = useMemo(() => {
+        return sizes?.map((size) => ({
+            value: size.sizeName,
+            label: size.sizeName
+        }));
+    }, [sizes]);
 
-    useEffect(() => {
-        dispatch(getAllSizes());
-        dispatch(getAllColors());
-    }, [dispatch]);
+    const colorOptions = useMemo(() => {
+        return colors?.map((color) => ({
+            value: color.colorHexCode,
+            label: (
+                <span
+                    style={{ backgroundColor: `${color.colorHexCode}` }}
+                    className='w-auto block h-6 rounded-full shadow-2xl px-5'
+                ></span>
+            )
+        }));
+    }, [colors]);
 
-    const sizeOptions = sizes?.map((size) => {
-        return { value: size.sizeName, label: size.sizeName };
-    });
+    const tagOptions = useMemo(() => {
+        return tags?.map((tag) => ({
+            value: tag.tagName,
+            label: tag.tagName
+        }))
+    }, [tags]);
 
-    const colorOptions = colors?.map((color) => {
-        return { value: color.colorHexCode, label: color.colorHexCode }
-    });
+    const categoriesOptions = useMemo(() => {
+        return categories?.map((category) => ({
+            value: category.categoryName,
+            label: category.categoryName
+        }));
+    }, [categories]);
 
-    const handleChangeSize = (option: readonly Option[], actionMeta: ActionMeta<Option>) => {
+    const handleChangeSize = useCallback((option: readonly Option[], actionMeta: ActionMeta<Option>) => {
         const mutableOption = [...option];
-        setSize(mutableOption);
-    };
+        if (setSize) {
+            setSize(mutableOption);
+        };
+    }, []);
 
-    const handleChangeColor = (option: readonly Option[], actionMeta: ActionMeta<Option>) => {
+    const handleChangeColor = useCallback((option: readonly Option[], actionMeta: ActionMeta<Option>) => {
         const mutableOption = [...option];
-        setColor(mutableOption);
-    };
+        const colorValues = mutableOption.map((item) => item.value);
+        if (setColor) {
+            setColor(colorValues);
+        }
+    }, []);
 
-    useEffect(() => {
-        dispatch(getColor(color));
-        dispatch(getSize(size));
-    }, [dispatch, color, size]);
+    const handleChangeTag = useCallback((option: readonly Option[], actionMeta: ActionMeta<Option>) => {
+        const mutableOption = [...option];
+        if (setTag) {
+            setTag(mutableOption);
+        }
+    }, []);
+
+    const handleChangeCategory = useCallback((option: readonly Option[], actionMeta: ActionMeta<Option>) => {
+        const mutableOption = [...option];
+        if (setCategory) {
+            setCategory(mutableOption);
+        }
+    }, []);
 
     return (
         <section className='bg-[#F9F1E7]'>
@@ -79,7 +115,7 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
                 <div className='flex items-center justify-center gap-7 lg:mt-0 mt-6'>
                     <div className='flex items-center lg:gap-4 gap-3'>
                         <span className='lg:text-xl text-sm'>Show</span>
-                        <select name="show" value={show} onChange={(e) => setShow(parseInt(e.target.value))} id="showBy" className='w-[55px] h-[55px] text-center appearance-none border-0 text-[#9F9F9F] lg:text-xl outline-0'>
+                        <select name="show" value={show} onChange={(e) => setShow && setShow(parseInt(e.target.value))} id="showBy" className='w-[55px] h-[55px] text-center appearance-none border-0 text-[#9F9F9F] lg:text-xl outline-0'>
                             <option value="16" defaultChecked>16</option>
                             <option value="20">20</option>
                             <option value="24">24</option>
@@ -88,35 +124,37 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
                     </div>
                     <div className='flex items-center lg:gap-4 gap-3'>
                         <span className='lg:text-xl text-sm'>Sort by</span>
-                        <select name="sortBy" id="sortBy" value={sortBy} onChange={(e) => setSortBy(e.target.value)} className='lg:w-[188px] h-[55px] px-7 outline-0 appearance-none border-0 text-[#9F9F9F] lg:text-xl'>
-                            <option value="nameasc" defaultChecked>nameasc</option>
-                            <option value="namedesc">namedesc</option>
-                            <option value="priceasc">priceasc</option>
-                            <option value="pricedesc">pricedesc</option>
+                        <select name="sortBy" id="sortBy" value={sortBy} onChange={(e) => setSortBy && setSortBy(e.target.value)} className='lg:w-[188px] h-[55px] px-7 outline-0 appearance-none border-0 text-[#9F9F9F] lg:text-xl'>
+                            <option value="nameasc" defaultChecked>A-Z</option>
+                            <option value="namedesc">Z-A</option>
+                            <option value="priceasc">Low To High</option>
+                            <option value="pricedesc">High To Low</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <div className={`w-[85%] mx-auto py-7 gap-10 flex-wrap ease-linear duration-500 ${showFiltersMenu ? 'flex' : 'hidden'}`}>
-                <div className='xl:w-auto w-full'>
+            <div className={`w-[85%] mx-auto py-7 flex-wrap ease-linea items-centerr gap-1 justify-between duration-500 ${showFiltersMenu ? 'flex' : 'hidden'}`}>
+                <div className='xl:w-2/12 w-full'>
                     <span className='font-medium capitalize text-gray-500 mb-2 block text-sm'>Category Names</span>
                     <Select
                         closeMenuOnSelect={false}
                         components={animatedComponents}
                         isMulti={true}
-                        options={sizeOptions} />
+                        onChange={handleChangeCategory}
+                        options={categoriesOptions} />
                 </div>
 
-                <div className='xl:w-auto w-full'>
+                <div className='xl:w-2/12 w-full'>
                     <span className='font-medium capitalize text-gray-500 mb-2 block text-sm'>Tags</span>
                     <Select
                         closeMenuOnSelect={false}
                         components={animatedComponents}
                         isMulti={true}
-                        options={sizeOptions} />
+                        onChange={handleChangeTag}
+                        options={tagOptions} />
                 </div>
 
-                <div className='xl:w-auto w-full'>
+                <div className='xl:w-2/12 w-full'>
                     <span className='font-medium capitalize text-gray-500 mb-2 block text-sm'>Sizes</span>
                     <Select
                         closeMenuOnSelect={false}
@@ -126,7 +164,7 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
                         options={sizeOptions} />
                 </div>
 
-                <div className='xl:w-auto w-full'>
+                <div className='xl:w-2/12 w-full'>
                     <span className='font-medium capitalize text-gray-500 mb-2 block text-sm'>Colors</span>
                     <Select
                         closeMenuOnSelect={false}
@@ -136,18 +174,32 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass }) => {
                         options={colorOptions} />
                 </div>
 
-                <div className='xl:w-auto w-full'>
+                <div className='xl:w-1/12 w-full'>
                     <span className='font-medium capitalize text-gray-500 mb-2 block text-sm'>Min price</span>
-                    <input type="number" className='p-1.5 outline-none' min={0} value={minPrice} name='minPrice' onChange={e => setMinPrice(parseInt(e.target.value))} />
+                    <input type="number" className='p-1.5 outline-none w-full' value={minPrice} name='minPrice' onChange={(e) => {
+                        if (parseInt(e.target.value) > 0) {
+                            setMinPrice && setMinPrice(parseInt(e.target.value));
+                        }
+                    }} />
                 </div>
 
-                <div className='xl:w-auto w-full'>
+                <div className='xl:w-1/12 w-full'>
                     <span className='font-medium capitalize text-gray-500 mb-2 block text-sm'>Max price</span>
-                    <input type="text" className='p-1.5 outline-none' min={0} value={maxPrice} name='maxPrice' onChange={e => setMaxPrice(parseInt(e.target.value))} />
+                    <input type="number" className='p-1.5 outline-none w-full' value={maxPrice} name='maxPrice' onChange={(e) => {
+                        if (parseInt(e.target.value) < 5000) {
+                            setMaxPrice && setMaxPrice(parseInt(e.target.value));
+                        }
+                    }} />
                 </div>
+
+                <div className='flex items-center gap-1.5 '>
+                    <label htmlFor="isNew" className='font-medium capitalize text-gray-500 text-sm'>New</label>
+                    <input type="checkbox" id='isNew' />
+                </div>
+
             </div>
         </section>
     )
 };
 
-export default Filter;
+export default memo(Filter);

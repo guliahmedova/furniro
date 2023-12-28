@@ -7,6 +7,8 @@ import homeReducer from '../redux/features/homeSlice';
 import blogReducer from '../redux/features/blogSlice';
 import contactReducer from '../redux/features/contactSlice';
 import authReducer from '../redux/features/authSlice';
+import shopReducer from '../redux/features/shopSlice';
+import checkoutReducer from '../redux/features/checkoutSlice';
 
 export const rootReducer = combineReducers({
     wishlist: wishlistReducer,
@@ -16,5 +18,7 @@ export const rootReducer = combineReducers({
     home: homeReducer,
     blog: blogReducer,
     contact: contactReducer,
-    auth: authReducer
+    auth: authReducer,
+    shop: shopReducer,
+    checkout: checkoutReducer
 });

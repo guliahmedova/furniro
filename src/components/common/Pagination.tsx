@@ -11,23 +11,23 @@ const Pagination: FC<PaginationProps> = ({ page, total }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const dispatch = useAppDispatch();
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(onClickCurrentPage(currentPage));
-    },[dispatch, currentPage])
+    }, [dispatch, currentPage, total, page]);
 
-    const onNavigatePrev = ()=>{
+    const onNavigatePrev = () => {
         if (currentPage > 0) {
             setCurrentPage(prevState => prevState - 1);
         }
     };
 
-    const onNavigateNext = ()=>{
+    const onNavigateNext = () => {
         setCurrentPage(prevState => prevState + 1);
-    };  
+    };
 
     const dotsCount = Math.ceil(total / page);
-    let dots = [];
 
+    let dots = [];
     for (let index = 0; index < dotsCount; index++) {
         dots.push(<li key={index} onClick={(e) => {
             e.preventDefault();
@@ -42,7 +42,7 @@ const Pagination: FC<PaginationProps> = ({ page, total }) => {
     };
 
     return (
-        <div className="flex justify-center mt-[70px]">
+        <div className={`justify-center mt-[70px] ${dotsCount > 1 ? 'flex' : 'hidden'}`}>
             <nav aria-label="Page navigation example mx-auto block">
                 <ul className={`flex items-center xl:gap-9 gap-1 text-base h-14`}>
                     {currentPage !== 1 && (

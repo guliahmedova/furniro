@@ -17,12 +17,10 @@ const Search = () => {
         dispatch(searchProducts({ prompt: searchText, take: showMore }));
     }, [dispatch, searchText]);
 
-
     const handleShowMoreClick = () => {
         if (totalCount > showMore) {
             setShowMore(prevState => prevState + 8);
         }
-        console.log(showMore);
     };
 
     return (

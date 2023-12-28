@@ -1,12 +1,14 @@
 import { useFormik } from 'formik';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import address from '../../assets/images/address.svg';
+import addressIcon from '../../assets/images/address.svg';
 import phone from '../../assets/images/phone.svg';
 import workingTime from '../../assets/images/workingTime.svg';
-import { useAppDispatch } from '../../redux/app/store';
-import { sendContactMessage } from '../../redux/features/contactSlice';
+import { RootState, useAppDispatch } from '../../redux/app/store';
+import { getContactDatas, sendContactMessage } from '../../redux/features/contactSlice';
 import { validate } from './contactFormValidate';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 const MySwal = withReactContent(Swal);
 
 const ContactForm = () => {
@@ -30,12 +32,12 @@ const ContactForm = () => {
                 timer: 1500,
                 didOpen: () => {
                     MySwal.showLoading(),
-                    dispatch(sendContactMessage({
-                        name: values.yourName,
-                        email: values.email,
-                        subject: values.subject,
-                        message: values.message
-                    }));
+                        dispatch(sendContactMessage({
+                            name: values.yourName,
+                            email: values.email,
+                            subject: values.subject,
+                            message: values.message
+                        }));
                 },
 
             }).then((confirm) => {
@@ -46,7 +48,15 @@ const ContactForm = () => {
         },
     });
 
-    // const contactMessage = useSelector((state: RootState) => state.contact.message);
+    useEffect(() => {
+        dispatch(getContactDatas());
+    }, [dispatch]);
+
+    const mobile = useSelector((state: RootState) => state.contact.mobile);
+    const hotline = useSelector((state: RootState) => state.contact.hotline);
+    const address = useSelector((state: RootState) => state.contact.address);
+    const weekdayWorkingTime = useSelector((state: RootState) => state.contact.weekdayWorkingTime);
+    const weekendWorkingTime = useSelector((state: RootState) => state.contact.weekendWorkingTime);
 
     return (
         <section>
@@ -59,26 +69,26 @@ const ContactForm = () => {
                 <div className='flex lg:justify-between lg:mt-[82px] lg:flex-row flex-col lg:mb-0 mt-12'>
                     <div className='lg:p-10 flex flex-col lg:gap-[43px] lg:w-6/12 px-3 gap-6'>
                         <div className='flex gap-[30px]'>
-                            <img src={address} alt="address-icon" />
+                            <img src={addressIcon} alt="address-icon" />
                             <div>
                                 <span className='text-[24px] font-medium'>Address</span>
-                                <p className='font-normal text-[#000000] lg:max-w-[212px] tracking-wider leading-[24px]'>236 5th SE Avenue, New York NY10000, United States</p>
+                                <p className='font-normal text-[#000000] lg:max-w-[212px] tracking-wider leading-[24px]'>{address}</p>
                             </div>
                         </div>
                         <div className='flex gap-[30px]'>
                             <img src={phone} alt="phone-icon" />
                             <div>
                                 <span className='text-[24px] font-medium'>Phone</span>
-                                <p className='font-normal text-[#000000] lg:max-w-[212px] tracking-wider leading-[24px]'>Mobile: +(84) 546-6789</p>
-                                <p className='font-normal text-[#000000] lg:max-w-[212px] tracking-wider leading-[24px]'>Hotline: +(84) 456-6789</p>
+                                <p className='font-normal text-[#000000] lg:max-w-[212px] tracking-wider leading-[24px]'>Mobile: {mobile}</p>
+                                <p className='font-normal text-[#000000] lg:max-w-[212px] tracking-wider leading-[24px]'>Hotline: {hotline}</p>
                             </div>
                         </div>
                         <div className='flex gap-[30px]'>
                             <img src={workingTime} alt="time-icon" />
                             <div>
                                 <span className='text-[24px] font-medium'>Working Time</span>
-                                <p className='font-normal text-[#000000] lg:max-w-[212px] tracking-wider leading-[24px]'>Monday-Friday: 9:00 - 22:00</p>
-                                <p className='font-normal text-[#000000] lg:max-w-[212px] tracking-wider leading-[24px]'>Saturday-Sunday: 9:00 - 21:00</p>
+                                <p className='font-normal text-[#000000] lg:max-w-[212px] tracking-wider leading-[24px]'>{weekdayWorkingTime}</p>
+                                <p className='font-normal text-[#000000] lg:max-w-[212px] tracking-wider leading-[24px]'>{weekendWorkingTime}</p>
                             </div>
                         </div>
                     </div>

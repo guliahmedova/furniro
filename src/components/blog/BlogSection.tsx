@@ -15,14 +15,16 @@ const BlogSection = () => {
     const recentBlogs = useSelector((state: RootState) => state.blog.recentBlogs);
     const [searchText, setSearchText] = useState('');
 
+    const [categoryID, setCategoryID] = useState(0);
+
     const dispatch = useAppDispatch();
 
     const totalCount = useSelector((state: RootState) => state.blog.totalCount);
     const perPage = 8;
 
     useEffect(() => {
-        dispatch(getBlogs({ page: currentpage, take: perPage, prompt: searchText, categoryId: 0 }));
-    }, [dispatch, currentpage, searchText]);
+        dispatch(getBlogs({ page: currentpage, take: perPage, prompt: searchText, categoryId: categoryID }));
+    }, [dispatch, currentpage, searchText, categoryID]);
 
     useEffect(() => {
         dispatch(getBlogCategories());
@@ -69,7 +71,7 @@ const BlogSection = () => {
                         <h1 className='text-black font-medium text-2xl mb-8'>Categories</h1>
                         <div className='overflow-y-scroll h-80 | categories px-2'>
                             {categories?.map(item => (
-                                <div key={item?.id} className='flex justify-between mb-10'>
+                                <div key={item?.id} className='flex justify-between mb-10 cursor-pointer' onClick={()=> setCategoryID(item.id)}>
                                     <span className='text-[#9F9F9F]'>{item?.categoryName}</span>
                                     <span className='text-[#9F9F9F]'>{item?.blogCount}</span>
                                 </div>

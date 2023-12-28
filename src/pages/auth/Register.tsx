@@ -27,11 +27,11 @@ const Register = () => {
     validationSchema: RegisterYup,
     onSubmit: (values) => {
       dispatch(userRegister({
-        userName: values.userName,
-        firstName: values.firstName,
-        lastName: values.lastName,
-        email: values.email,
-        password: values.password,
+        userName: values.userName || '',
+        firstName: values.firstName || '',
+        lastName: values.lastName || '',
+        email: values.email || '',
+        password: values.password || '',
         roleId: 2,
         isActive: true
       })).then((confirm) => {

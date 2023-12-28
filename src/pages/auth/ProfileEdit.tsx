@@ -1,9 +1,9 @@
 import { useFormik } from 'formik';
+import { useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../redux/app/store";
-import { getUserById, updateUser } from "../../redux/features/authSlice";
+import { updateUser } from "../../redux/features/authSlice";
 import { RegisterYup } from "./RegisterYup";
-import { useEffect } from 'react';
 
 const ProfileEdit = () => {
     const dispatch = useAppDispatch();
@@ -13,11 +13,11 @@ const ProfileEdit = () => {
     const email = useSelector((state: RootState) => state.auth.email);
 
     // redux gelecek bu deyer
-    const userID = 12;
+    const userId = localStorage.getItem('UserId');
 
     const { handleChange, values, handleSubmit, errors } = useFormik({
         initialValues: {
-            id: userID,
+            id: userId && parseInt(userId),
             email: email && email,
             userName: username && username,
             firstName: firstname && firstname,
@@ -30,19 +30,19 @@ const ProfileEdit = () => {
     });
 
     useEffect(() => {
-        dispatch(getUserById(userID));
-    }, [dispatch, userID, values]);
+        // dispatch(getUserById(values.id));
+    }, [dispatch, values]);
 
     const handleBtnClick = () => {
         dispatch(updateUser({
-            id: values.id,
+            // id: values.id,
             userName: values.userName,
             firstName: values.firstName,
             lastName: values.lastName,
             email: values.email,
         }))
     };
-
+    
     return (
         <div className="w-[85%] mx-auto py-10">
             <section className="w-full">
