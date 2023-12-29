@@ -1,4 +1,4 @@
-import { CheckoutFormTypes } from '../../models/checkoutFormTypes';
+import { CheckoutFormTypes } from '../../models/CheckoutTypes';
 
 export const validate = (values: CheckoutFormTypes) => {
     const errors: Partial<CheckoutFormTypes> = {};

@@ -55,7 +55,7 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor
         return tags?.map((tag) => ({
             value: tag.tagName,
             label: tag.tagName
-        }))
+        }));
     }, [tags]);
 
     const categoriesOptions = useMemo(() => {

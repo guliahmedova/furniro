@@ -15,8 +15,8 @@ interface ProductState {
 
 export const getProducts = createAsyncThunk(
     'products/getProducts',
-    async (page: number) => {
-        const response = await axios.get(`${baseurl}Products?ShowMore.TakeProduct=${page}`);
+    async (take: number) => {
+        const response = await axios.get(`${baseurl}Products?ShowMore.Take=${take}`);
         return (await response.data);
     }
 );

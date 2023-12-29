@@ -4,11 +4,13 @@ import { validate } from './formValidate';
 import blackCircle from '../../assets/images/blackCircle.svg';
 import emptyCircle from '../../assets/images/emptyCircle.svg';
 import { RootState, useAppDispatch } from '../../redux/app/store';
-import { getAllCountries, getAllProvinces } from '../../redux/features/checkoutSlice';
+import { addCheckout, clearCart, getAllCountries, getAllProvinces } from '../../redux/features/checkoutSlice';
 import { useSelector } from 'react-redux';
 
 const CheckoutForm = () => {
     const dispatch = useAppDispatch();
+
+    const userId = localStorage.getItem('userId');
 
     const { values, errors, handleChange, handleSubmit } = useFormik({
         initialValues: {
@@ -39,6 +41,30 @@ const CheckoutForm = () => {
 
     const [accordion, setAccordion] = useState(false);
 
+    const countryId = parseInt(values.country);
+    const provinceId = parseInt(values.province);
+    const userId_Int = userId && parseInt(userId);
+
+    const handlePlaceOrderBtn = () => {
+        if (userId_Int) {
+            dispatch(addCheckout({
+                appUserId: userId_Int,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                companyName: values.companyName,
+                countryId: countryId,
+                streetAddress: values.streetAddress,
+                city: values.town,
+                provinceId: provinceId,
+                zipcode: values.zipCode,
+                phone: values.phone,
+                emailAddress: values.emailAddress,
+                additionalInfo: values.note
+            }));
+            dispatch(clearCart(userId_Int));
+        }
+    };
+
     return (
         <section className="mt-[63px] mb-[123px]">
             <div className="xl:w-[85%] w-[95%] mx-auto flex lg:flex-row flex-col lg:px-0 px-3">
@@ -68,7 +94,7 @@ const CheckoutForm = () => {
                             <label className="font-medium text-[#000000] leading-6 mb-[22px] block" htmlFor="countryRegion">Country / Region</label>
                             <select name="country" value={values.country} onChange={handleChange} id="countryRegion" className="border-2 appearance-none border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]">
                                 {countries?.map((country) => (
-                                    <option key={country.id} value={country.countryName}>{country.countryName}</option>
+                                    <option key={country.id} value={country.id}>{country.countryName}</option>
                                 ))}
                             </select>
                             <div className="absolute inset-y-0 right-4 top-12 flex items-center px-3 pointer-events-none">
@@ -94,9 +120,9 @@ const CheckoutForm = () => {
                         <div className="mb-9 relative">
                             <label className="font-medium text-[#000000] leading-6 mb-[22px] block" htmlFor="Province">Province</label>
                             <select name="province" value={values.province} onChange={handleChange} id="Province" className="border-2 appearance-none border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]">
-                               {provinces?.map((item) => (
-                                <option key={item.id} value={item.provinceName}>{item.provinceName}</option>
-                               ))}
+                                {provinces?.map((item) => (
+                                    <option key={item.id} value={item.id}>{item.provinceName}</option>
+                                ))}
                             </select>
                             <div className="absolute inset-y-0 right-4 top-12 flex items-center px-3 pointer-events-none">
                                 <svg className="w-6 h-6 text-black" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -114,7 +140,7 @@ const CheckoutForm = () => {
 
                         <div className="mb-9">
                             <label className="font-medium text-[#000000] leading-6 mb-[22px] block" htmlFor="Phone">Phone</label>
-                            <input type="number" name='phone' value={values.phone} onChange={handleChange} className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="Phone" />
+                            <input type="text" name='phone' value={values.phone} onChange={handleChange} className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" id="Phone" />
                             {errors.phone ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.phone}</div> : null}
                         </div>
 
@@ -175,7 +201,7 @@ const CheckoutForm = () => {
                             )
                         }
                     </div>
-                    <button className='text-black text-xl mt-12 border-2 border-black rounded-[15px] py-[17px] w-[318px] mx-auto block hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out'>Place order</button>
+                    <button onClick={handlePlaceOrderBtn} className='text-black text-xl mt-12 border-2 border-black rounded-[15px] py-[17px] w-[318px] mx-auto block hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out'>Place order</button>
                 </div>
             </div>
         </section>
