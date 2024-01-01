@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { AppUserType } from '../../models/AppUserType';
+import { ChangePasswordType } from '../../models/ChangePasswordType';
 import { LoginType } from '../../models/LoginType';
 
 const baseurl = 'http://immutable858-001-site1.atempurl.com/api/ApplicationUser/';
 
 interface AuthState {
     error: string,
+    changepErr: string,
     isSuccess: boolean,
     message: string,
     jwtToken: string,
@@ -15,7 +17,7 @@ interface AuthState {
     firstName: string,
     lastName: string,
     email: string,
-    userId: number ,
+    userId: number,
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
 };
 
@@ -65,6 +67,18 @@ export const deleteAccount = createAsyncThunk(
     async (username: string) => {
         const response = await axios.put(`${baseurl}DeleteUser`, username);
         return (await response.data);
+    }
+);
+
+export const changePassword = createAsyncThunk(
+    'auth/changePassword',
+    async (body: ChangePasswordType, { rejectWithValue }) => {
+        try {
+            const response = await axios.put(`${baseurl}ChangePassword`, body);
+            return (await response.data);
+        } catch (error: any) {
+            return rejectWithValue(error.response.data.Message);
+        }
     }
 );
 
@@ -150,6 +164,25 @@ const authSlice = createSlice({
         });
         builder.addCase(deleteAccount.rejected, (state) => {
             state.loading = 'failed';
+        });
+
+        builder.addCase(changePassword.pending, (state) => {
+            state.loading = 'pending';
+        });
+        builder.addCase(changePassword.fulfilled, (state, action) => {
+            state.loading = 'succeeded';
+            state.isSuccess = true;
+            state.error = '';
+            state.message = action.payload?.message;
+        });
+        builder.addCase(changePassword.rejected, (state, action) => {
+            state.loading = 'failed';
+            state.isSuccess = false;
+            if (action.error) {
+                state.changepErr = action.payload as string;
+            } else {
+                state.changepErr = 'An unknown error occurred';
+            }
         });
     }
 });

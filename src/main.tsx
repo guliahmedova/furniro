@@ -7,7 +7,7 @@ import App from './App.tsx';
 import Spinner from './components/common/Spinner.tsx';
 import { ModalProvider } from './contexts/ModalContext.tsx';
 import './index.css';
-import ForgotPassword from './pages/auth/ForgotPassword.tsx';
+import ForgotPassword from './pages/auth/ChangePassword.tsx';
 import ProfileEdit from './pages/auth/ProfileEdit.tsx';
 import { persistor, store } from './redux/app/store.ts';
 

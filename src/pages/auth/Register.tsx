@@ -51,7 +51,7 @@ const Register = () => {
     <section className="bg-primary-hero-image w-full h-screen bg-cover bg-fixed bg-center bg-no-repeat md:bg-top">
       <div className='h-full xl:w-[60%] flex flex-col justify-center items-center mx-auto px-4'>
         <h1 className='xl:text-xl md:text-lg text-sm font-bold mb-2 capitalize'>Create an Account </h1>
-        <span className='text-sm font-bold text-red-500 bg-[#e3e3e3] border border-gray-400'>{error && error} </span>
+        <span className='text-sm font-bold text-red-500 bg-[#e3e3e3]'>{error && error} </span>
         <form className="flex xl:justify-between xl:flex-row flex-col xl:gap-10 w-full xl:mt-0 mt-5 p-6 bg-[#e3e3e3] border border-gray-400 rounded-lg" onSubmit={handleSubmit}>
           <div className="xl:w-6/12 w-full flex flex-col gap-3">
             <div>

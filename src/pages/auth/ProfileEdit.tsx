@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../redux/app/store";
 import { getUserById, updateUser } from "../../redux/features/authSlice";
@@ -10,9 +10,14 @@ const ProfileEdit = () => {
     const { userName, lastName, firstName, email } = useSelector((state: RootState) => state.auth);
     const userId = localStorage.getItem('userId');
 
+    const userID_Int = useMemo(() => {
+        if (userId) {
+            return parseInt(userId);
+        };
+    }, [userId]);
+
     const { handleChange, values, handleSubmit, errors } = useFormik({
         initialValues: {
-            id: userId && parseInt(userId),
             email: email && email,
             userName: userName && userName,
             firstName: firstName && firstName,
@@ -25,22 +30,22 @@ const ProfileEdit = () => {
     });
 
     useEffect(() => {
-        if (values.id) {
-            dispatch(getUserById(values.id));
+        if (userID_Int) {
+            dispatch(getUserById(userID_Int));
         }
     }, [dispatch, values]);
 
-    const handleBtnClick = () => {
-        if (values.id) {
+    const handleBtnClick = useCallback(() => {
+        if (userID_Int) {
             dispatch(updateUser({
-                id: values.id,
+                id: userID_Int,
                 userName: values.userName,
                 firstName: values.firstName,
                 lastName: values.lastName,
                 email: values.email,
             }))
         }
-    };
+    }, []);
 
     return (
         <div className="w-[85%] mx-auto py-10">
