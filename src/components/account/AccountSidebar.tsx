@@ -14,10 +14,13 @@ const AccountSidebar = () => {
     };
 
     const username = useSelector((state: RootState) => state.auth.userName);
-
-    const deleteAccountClickHandler  = () => {
-        if (username.length > 0 ) {
+    
+    const deleteAccountClickHandler = () => {
+        if (username.length > 0) {
             dispatch(deleteAccount(username));
+            localStorage.removeItem("userToken");
+            localStorage.removeItem('userId');
+            navigate('/register');
         }
     };
 

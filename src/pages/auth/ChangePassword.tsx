@@ -1,11 +1,12 @@
 import { useFormik } from 'formik';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { ChangePasswordYup } from './ChangePasswordYup';
+import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../redux/app/store';
 import { changePassword } from '../../redux/features/authSlice';
+import { ChangePasswordYup } from './ChangePasswordYup';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { useSelector } from 'react-redux';
+
 const MySwal = withReactContent(Swal);
 
 const ChangePassword = () => {
@@ -47,7 +48,17 @@ const ChangePassword = () => {
         currentPassword: values.currentPassword,
         newPassword: values.newPassword,
         repeatNewPassword: values.repeatNewPassword
-      }));
+      })).then((confirm) => {
+        if (confirm?.payload?.isSuccess) {
+          MySwal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your password has been updated successfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      })
     }
   }, [userID_Int, values, errorMsg, isSuccess]);
 

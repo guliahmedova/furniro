@@ -1,9 +1,13 @@
 import { useFormik } from 'formik';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from "react-redux";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import { RootState, useAppDispatch } from "../../redux/app/store";
 import { getUserById, updateUser } from "../../redux/features/authSlice";
 import { RegisterYup } from "./RegisterYup";
+
+const MySwal = withReactContent(Swal);
 
 const ProfileEdit = () => {
     const dispatch = useAppDispatch();
@@ -16,7 +20,7 @@ const ProfileEdit = () => {
         };
     }, [userId]);
 
-    const { handleChange, values, handleSubmit, errors } = useFormik({
+    const { handleChange, values, handleSubmit, errors, setValues } = useFormik({
         initialValues: {
             email: email && email,
             userName: userName && userName,
@@ -24,16 +28,25 @@ const ProfileEdit = () => {
             lastName: lastName && lastName,
         },
         validationSchema: RegisterYup,
-        onSubmit: (values) => {
-            console.log(values);
-        }
+        onSubmit: () => { }
     });
+
+    useEffect(() => {
+        if (userName && lastName && firstName && email) {
+            setValues({
+                email,
+                userName,
+                firstName,
+                lastName,
+            });
+        }
+    }, [userName, lastName, firstName, email, setValues]);
 
     useEffect(() => {
         if (userID_Int) {
             dispatch(getUserById(userID_Int));
         }
-    }, [dispatch, values]);
+    }, [dispatch, values, userID_Int]);
 
     const handleBtnClick = useCallback(() => {
         if (userID_Int) {
@@ -43,9 +56,21 @@ const ProfileEdit = () => {
                 firstName: values.firstName,
                 lastName: values.lastName,
                 email: values.email,
-            }))
+            })).then((confirm) => {
+                if (confirm?.payload) {
+                    MySwal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your profile has been updated successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            }).catch((error) => {
+                console.error(error);
+            })
         }
-    }, []);
+    }, [values]);
 
     return (
         <div className="w-[85%] mx-auto py-10">

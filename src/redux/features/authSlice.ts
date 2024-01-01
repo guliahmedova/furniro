@@ -134,6 +134,7 @@ const authSlice = createSlice({
         });
         builder.addCase(updateUser.fulfilled, (state) => {
             state.loading = 'succeeded';
+            state.isSuccess = true;
         });
         builder.addCase(updateUser.rejected, (state) => {
             state.loading = 'failed';
@@ -146,6 +147,7 @@ const authSlice = createSlice({
         builder.addCase(getUserById.fulfilled, (state, action) => {
             state.loading = 'succeeded';
             state.userName = action.payload.userName;
+            localStorage.setItem("userName", state.userName);
             state.firstName = action.payload.firstName;
             state.lastName = action.payload.lastName;
             state.email = action.payload.email;
