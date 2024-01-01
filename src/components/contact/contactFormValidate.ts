@@ -1,4 +1,4 @@
-import { ContactFormTypes } from "../../models/contactFormTypes";
+import { ContactFormTypes } from "../../models/ContactFormTypes";
 
 export const validate = (values: ContactFormTypes) => {
     const errors: Partial<ContactFormTypes> = {};

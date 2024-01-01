@@ -4,12 +4,14 @@ import { ProductTypes } from '../../models/productTypes';
 import { RootState } from '../app/store';
 
 interface ProductState {
-    product: ProductTypes[];
+    product: ProductTypes[],
+    favorites: [],
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
 }
 
 const initialState: ProductState = {
     product: [],
+    favorites: [],
     loading: 'idle'
 };
 

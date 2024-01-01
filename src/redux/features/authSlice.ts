@@ -60,6 +60,14 @@ export const getUserById = createAsyncThunk(
     }
 );
 
+export const deleteAccount = createAsyncThunk(
+    'auth/deleteAccount',
+    async (username: string) => {
+        const response = await axios.put(`${baseurl}DeleteUser`, username);
+        return (await response.data);
+    }
+);
+
 const initialState = {
     error: '',
     isSuccess: false,
@@ -129,6 +137,18 @@ const authSlice = createSlice({
             state.email = action.payload.email;
         });
         builder.addCase(getUserById.rejected, (state) => {
+            state.loading = 'failed';
+        });
+
+        builder.addCase(deleteAccount.pending, (state) => {
+            state.loading = 'pending';
+        });
+        builder.addCase(deleteAccount.fulfilled, (state, action) => {
+            state.loading = 'succeeded';
+            state.isSuccess = true;
+            state.message = action.payload.message;
+        });
+        builder.addCase(deleteAccount.rejected, (state) => {
             state.loading = 'failed';
         });
     }

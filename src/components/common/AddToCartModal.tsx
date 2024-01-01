@@ -1,6 +1,6 @@
 import { FC, ReactNode, useRef } from "react";
-import closeIcon from '../../assets/images/closeModal.svg';
 import { useSelector } from "react-redux";
+import closeIcon from '../../assets/images/closeModal.svg';
 import { RootState } from "../../redux/app/store";
 
 interface AddToCartModalProps {
@@ -11,9 +11,9 @@ interface AddToCartModalProps {
 
 const AddToCartModal: FC<AddToCartModalProps> = ({ children, isModalOpen, handleCLoseBtnClick }) => {
     const productByIDLoading = useSelector((state: RootState) => state.productDetail.loading);
-
+    
     const modalRef = useRef<HTMLDivElement>(null);
-
+    
     const handleOutsideClick = (e: React.MouseEvent<HTMLElement>) => {
         if (modalRef.current && !modalRef?.current?.contains(e.target as Node)) {
             handleCLoseBtnClick();

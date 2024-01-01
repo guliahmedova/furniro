@@ -31,7 +31,7 @@ export const getProductDescriptionById = createAsyncThunk(
 export const getRelatedProducts = createAsyncThunk(
     'productDetail/getRelatedProducts',
     async ({ productId, take }: { productId: string, take: number }) => {
-        const response = await axios.get(`${baseurl}UserProduct/RelatedProducts?ShowMore.TakeProduct=${take}&MainProductId=${productId}`);
+        const response = await axios.get(`${baseurl}UserProduct/RelatedProducts?ShowMore.Take=${take}&MainProductId=${productId}`);
         return (await response.data);
     }
 );

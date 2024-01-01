@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { validate } from './formValidate';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import blackCircle from '../../assets/images/blackCircle.svg';
 import emptyCircle from '../../assets/images/emptyCircle.svg';
 import { RootState, useAppDispatch } from '../../redux/app/store';
-import { addCheckout, clearCart, getAllCountries, getAllProvinces } from '../../redux/features/checkoutSlice';
-import { useSelector } from 'react-redux';
+import { addCheckout, getAllCountries, getAllProvinces } from '../../redux/features/checkoutSlice';
+import { validate } from './formValidate';
 
 const CheckoutForm = () => {
     const dispatch = useAppDispatch();
@@ -61,7 +61,6 @@ const CheckoutForm = () => {
                 emailAddress: values.emailAddress,
                 additionalInfo: values.note
             }));
-            dispatch(clearCart(userId_Int));
         }
     };
 

@@ -28,6 +28,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
   const productById: ProductTypes = useSelector((state: RootState) => state?.productDetail?.product);
   const [color, setColor] = useState(0);
   const [size, setSize] = useState(0);
+  const [productCount, setProductCount] = useState(0);
 
   const isLike = useSelector((state: RootState) => (
     state.wishlist.product.some((favItem) => favItem?.id === product?.id)
@@ -71,6 +72,16 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
       }));
       setIsModalOpen(false);
     }
+  };
+
+  const increaseProductCount = () => {
+      setProductCount(prevState => prevState + 1);
+  };
+
+  const decreaseProductCount = () => {
+      if (productCount > 0) {
+          setProductCount(prevState => prevState - 1);
+      };
   };
 
   return (
@@ -201,9 +212,9 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
 
         <div className='mt-2 flex gap-2 justify-end'>
           <div className="flex items-center justify-between border border-gray-500 rounded-lg w-[20%] p-2">
-            <button className="font-medium text-xl" >-</button>
-            <span className="font-medium">0</span>
-            <button className="font-medium text-xl" >+</button>
+            <button className="font-medium text-xl" onClick={decreaseProductCount} >-</button>
+            <span className="font-medium">{productCount}</span>
+            <button className="font-medium text-xl" onClick={increaseProductCount} >+</button>
           </div>
           <button onClick={handleAddToCartBtn} className='bg-[#B88E2F] w-5/12 rounded-md text-white uppercase font-medium'>add to cart</button>
         </div>

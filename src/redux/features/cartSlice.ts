@@ -45,6 +45,14 @@ export const removeCartItem = createAsyncThunk(
     }
 );
 
+export const clearCart = createAsyncThunk(
+    'checkout/clearCart',
+    async (appUserId: number) => {
+        const response = await axios.post(`${baseurl}ClearCart`, appUserId);
+        return (await response.data);
+    }
+);
+
 const initialState = {
     loading: 'idle',
     success: false,
@@ -94,6 +102,17 @@ const cartSlice = createSlice({
         });
         builder.addCase(removeCartItem.rejected, (state) => {
             state.loading = 'failed'
+        });
+
+        builder.addCase(clearCart.pending, (state) => {
+            state.loading = 'pending';
+        });
+        builder.addCase(clearCart.fulfilled, (state, action) => {
+            state.loading = 'succeeded';
+            state.message = action.payload;
+        });
+        builder.addCase(clearCart.rejected, (state) => {
+            state.loading = 'failed';
         });
     }
 });

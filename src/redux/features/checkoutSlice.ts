@@ -11,7 +11,6 @@ interface CheckoutState {
     provinces: ProvinceType[]
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
     isSuccess: boolean,
-    message: string
 };
 
 export const getAllCountries = createAsyncThunk(
@@ -38,20 +37,11 @@ export const addCheckout = createAsyncThunk(
     }
 );
 
-export const clearCart = createAsyncThunk(
-    'checkout/clearCart',
-    async (appUserId: number) => {
-        const response = await axios.post(`${baseUrl}ClearCart`, appUserId);
-        return (await response.data);
-    }
-);
-
 const initialState = {
     loading: 'idle',
     countries: [],
     provinces: [],
     isSuccess: false,
-    message: ''
 } as CheckoutState;
 
 const checkoutSlice = createSlice({
@@ -91,17 +81,6 @@ const checkoutSlice = createSlice({
         builder.addCase(addCheckout.rejected, (state) => {
             state.loading = 'failed';
             state.isSuccess = false;
-        });
-
-        builder.addCase(clearCart.pending, (state) => {
-            state.loading = 'pending';
-        });
-        builder.addCase(clearCart.fulfilled, (state, action) => {
-            state.loading = 'succeeded';
-            state.message = action.payload;
-        });
-        builder.addCase(clearCart.rejected, (state) => {
-            state.loading = 'failed';
         });
     }
 });

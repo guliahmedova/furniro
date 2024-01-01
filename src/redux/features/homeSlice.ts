@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { GridImageType } from '../../models/gridImageType';
+import { GridImageType } from '../../models/GridImageType';
 
 const baseurl = 'http://immutable858-001-site1.atempurl.com/api/';
 

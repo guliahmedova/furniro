@@ -10,6 +10,7 @@ import twitter from '../../assets/images/twitter.svg';
 import { ProductTypes } from "../../models/productTypes";
 import { RootState, useAppDispatch } from "../../redux/app/store";
 import { getProductById } from "../../redux/features/productDetailSlice";
+import { addToCart } from "../../redux/features/cartSlice";
 const stars = [star, star, star, star, halfStar];
 
 const Details = () => {
@@ -58,10 +59,14 @@ const Details = () => {
     };
   };
 
-  const handleAddToCartBtn = ()=>{
+  const handleAddToCartBtn = (productId: number, colorId: number) => {
     if (userId && userId !== 'undefined') {
-      console.log('Login');
-    }else{
+      dispatch(addToCart({
+        productId: productId,
+        colorId: colorId,
+        userId: parseInt(userId)
+      }))
+    } else {
       navigate('/login');
     }
   };
@@ -132,7 +137,11 @@ const Details = () => {
                 <span className="font-medium">{productCount}</span>
                 <button className="font-medium text-xl" onClick={increaseProductCount}>+</button>
               </div>
-              <button onClick={handleAddToCartBtn} className="xl:w-[35%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out capitalize">Add to cart</button>
+              <button onClick={() => handleAddToCartBtn(
+                 product.id,
+                 product?.colors?.[color].id
+              )}
+                className="xl:w-[35%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out capitalize">Add to cart</button>
               <button className="xl:w-[35%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out">+ Compare</button>
             </div>
 

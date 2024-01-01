@@ -2,16 +2,17 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import deleteIcon from '../../assets/images/deleteIcon.svg';
 import { RootState, useAppDispatch } from '../../redux/app/store';
-import { getAllCartItemsByUserId, removeCartItem } from '../../redux/features/cartSlice';
+import { clearCart, getAllCartItemsByUserId, removeCartItem } from '../../redux/features/cartSlice';
 
 const CartTotals = () => {
     const dispatch = useAppDispatch();
     const userId = localStorage.getItem('userId');
     const cartItems = useSelector((state: RootState) => state.cart.getAllCartItems);
+    const userId_Int = userId && parseInt(userId);
 
     useEffect(() => {
-        if (userId) {
-            dispatch(getAllCartItemsByUserId(parseInt(userId)));
+        if (userId_Int) {
+            dispatch(getAllCartItemsByUserId(userId_Int));
         }
     }, [dispatch, cartItems.length]);
 
@@ -22,6 +23,12 @@ const CartTotals = () => {
                 productId: productId,
                 colorId: colorId
             }))
+        }
+    };
+
+    const clearCartBtnClickHandler = () => {
+        if (userId_Int) {
+            dispatch(clearCart(userId_Int));
         }
     };
 
@@ -57,13 +64,14 @@ const CartTotals = () => {
                                             <td className='text-black font-medium text-base'>Rs. {item.subtotal}</td>
                                             {/* <td><span className='w-6 h-6 bg-[#B88E2F] text-[12px] select-none rounded-md py-1 px-3 flex items-center justify-center uppercase text-white mx-auto'>xl</span></td> */}
                                             <td><span style={{ backgroundColor: `${item.productImages.colorHexCode}` }} className='block w-6 h-6 rounded-full mx-auto'></span></td>
-                                            <td><button onClick={()=>removeCartItemBtnClickHanler(item.productImages.id, item.productId)} className='block mx-auto'><img src={deleteIcon} alt="" /></button></td>
+                                            <td><button onClick={() => removeCartItemBtnClickHanler(item.productImages.id, item.productId)} className='block mx-auto'><img src={deleteIcon} alt="" /></button></td>
                                         </tr>
                                     )
                                 })
                             ))}
                         </tbody>
                     </table>
+                    <button onClick={clearCartBtnClickHandler} className="text-[#000000] border-2 mt-10 border-[#000000] py-[14px] text-[20px] leading-7 rounded-lg w-4/12 block mx-auto hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out">Remove All Items</button>
                 </div>
 
                 <div className="bg-[#F9F1E7] xl:w-fit rounded-sm lg:px-20 lg:pb-[80px] px-6 pb-6 max-h-[390px]">

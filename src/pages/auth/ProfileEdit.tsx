@@ -2,14 +2,12 @@ import { useFormik } from 'formik';
 import { useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../redux/app/store";
-import { updateUser } from "../../redux/features/authSlice";
+import { getUserById, updateUser } from "../../redux/features/authSlice";
 import { RegisterYup } from "./RegisterYup";
 
 const ProfileEdit = () => {
     const dispatch = useAppDispatch();
     const { userName, lastName, firstName, email } = useSelector((state: RootState) => state.auth);
-
-    // redux gelecek bu deyer
     const userId = localStorage.getItem('userId');
 
     const { handleChange, values, handleSubmit, errors } = useFormik({
@@ -27,17 +25,21 @@ const ProfileEdit = () => {
     });
 
     useEffect(() => {
-        // dispatch(getUserById(values.id));
+        if (values.id) {
+            dispatch(getUserById(values.id));
+        }
     }, [dispatch, values]);
 
     const handleBtnClick = () => {
-        dispatch(updateUser({
-            // id: values.id,
-            userName: values.userName,
-            firstName: values.firstName,
-            lastName: values.lastName,
-            email: values.email,
-        }))
+        if (values.id) {
+            dispatch(updateUser({
+                id: values.id,
+                userName: values.userName,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                email: values.email,
+            }))
+        }
     };
 
     return (

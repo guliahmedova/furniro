@@ -6,6 +6,9 @@ import { LoginYup } from './LoginYup';
 import { useState } from 'react';
 import closeEye from '../../assets/images/close-eye.svg';
 import openEye from '../../assets/images/open-eye.svg';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal);
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -32,6 +35,13 @@ const Login = () => {
           navigate('/');
           setError('');
           resetForm();
+          MySwal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "You have successfully logged in",
+            showConfirmButton: false,
+            timer: 1500
+          });
         }
       })
     }
