@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import arrow from '../../assets/images//heroArrow.svg';
@@ -15,17 +15,22 @@ const stars = [star, star, star, star, halfStar];
 
 const Details = () => {
   const userId = localStorage.getItem('userId');
-  const navigate = useNavigate();
+  const userId_Int = useMemo(() => {
+    if (userId) {
+      return parseInt(userId);
+    };
+  }, [userId]);
 
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [productCount, setProductCount] = useState(0);
+  const [productCount, setProductCount] = useState(1);
+  const [productCountMsg, setProductCountMsg] = useState('');
   const product: ProductTypes = useSelector((state: RootState) => state.productDetail.product);
 
   const [size, setSize] = useState(0);
   const [color, setColor] = useState(0);
   const [selectedImg, setSelectedImg] = useState(0);
-
   const { productId } = useParams();
 
   useEffect(() => {
@@ -50,21 +55,28 @@ const Details = () => {
   };
 
   const increaseProductCount = () => {
-    setProductCount(prevState => prevState + 1);
+    if (productCount < 10) {
+      setProductCount(prevState => prevState + 1);
+      setProductCountMsg('');
+    } else {
+      setProductCountMsg('You can only add 10 products at once!');
+    }
   };
 
   const decreaseProductCount = () => {
     if (productCount > 0) {
+      setProductCountMsg('');
       setProductCount(prevState => prevState - 1);
     };
   };
 
   const handleAddToCartBtn = (productId: number, colorId: number) => {
-    if (userId && userId !== 'undefined') {
+    if (userId_Int) {
       dispatch(addToCart({
         productId: productId,
         colorId: colorId,
-        userId: parseInt(userId)
+        userId: userId_Int,
+        count: productCount
       }))
     } else {
       navigate('/login');
@@ -131,6 +143,9 @@ const Details = () => {
               </div>
             </div>
 
+            {productCountMsg.length > 0 && (
+              <span className='text-sm text-red-600 mb-1.5 font-medium text-left block p-1.5 bg-red-100'>{productCountMsg}</span>
+            )}
             <div className="flex lg:flex-row flex-col gap-4 mb-[60px]">
               <div className="flex items-center justify-between px-3 border-2 border-[#9F9F9F] rounded-lg lg:w-[30%] mx-auto w-[60%] h-16">
                 <button className="font-medium text-xl" onClick={decreaseProductCount}>-</button>
@@ -138,8 +153,8 @@ const Details = () => {
                 <button className="font-medium text-xl" onClick={increaseProductCount}>+</button>
               </div>
               <button onClick={() => handleAddToCartBtn(
-                 product.id,
-                 product?.colors?.[color].id
+                product.id,
+                product?.colors?.[color].id
               )}
                 className="xl:w-[35%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out capitalize">Add to cart</button>
               <button className="xl:w-[35%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out">+ Compare</button>

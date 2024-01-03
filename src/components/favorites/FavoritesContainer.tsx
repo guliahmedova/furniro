@@ -1,18 +1,19 @@
-import { Pagination, ProductCard } from '../common/index';
 import { useSelector } from "react-redux";
-import { ProductTypes } from "../../models/productTypes";
-import { RootState } from "../../redux/app/store";
 import { Link } from "react-router-dom";
 import favHeart from '../../assets/images/favorite-heart.svg';
+import { ProductTypes } from "../../models/productTypes";
+import { RootState } from "../../redux/app/store";
+import { Pagination, ProductCard } from '../common/index';
+import { useMemo } from "react";
 
 const FavoritesContainer = () => {
-    const { product, loading } = useSelector((state: RootState) => state.wishlist);
-    const currentPage = useSelector((state: RootState) => state.pagination.currentPage);
-
+    const { product } = useSelector((state: RootState) => state.wishlist);
     const perPage = 8;
 
-    // totalCount redux-dan gelecek
-    const totalCount = 48;
+    // totalCount api-dan gelmelidir
+    const totalCount = useMemo(() => {
+        return product?.length;
+    }, [product]);
 
     return (
         <section className="bg-white">

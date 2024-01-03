@@ -31,9 +31,14 @@ export const getAllProvinces = createAsyncThunk(
 
 export const addCheckout = createAsyncThunk(
     'checkout/addCheckout',
-    async (checkoutData: CheckoutType) => {
-        const response = await axios.post(`${baseUrl}Checkout/ClearCart`, checkoutData);
-        return (await response.data);
+    async (checkoutData: CheckoutType, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(`${baseUrl}Checkout`, checkoutData);
+            return (await response.data);
+        } catch (error: any) {
+            console.log('error in checkoutslice: ', error.message);
+            return rejectWithValue(error.message);
+        }
     }
 );
 

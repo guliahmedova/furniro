@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ContactType } from '../../models/ContactTypr';
+const token = localStorage.getItem('userToken');
 
 const baseUrl = 'http://immutable858-001-site1.atempurl.com/api/';
 
 interface ContactState {
     message: string,
+    error: string,
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
     id: number,
     mobile: string,
@@ -17,9 +19,18 @@ interface ContactState {
 
 export const sendContactMessage = createAsyncThunk(
     'contact/sendContactMessage',
-    async (contactData: ContactType) => {
-        const response = await axios.post(`${baseUrl}ContactMessage`, contactData);
-        return (await response.data);
+    async (contactData: ContactType, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(`${baseUrl}ContactMessage`, contactData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+            return (await response.data);
+        } catch (error) {
+            return rejectWithValue(error);
+        }
     }
 );
 
@@ -33,13 +44,14 @@ export const getContactDatas = createAsyncThunk(
 
 const initialState = {
     message: '',
-    loading: 'idle', 
+    loading: 'idle',
     id: 0,
     mobile: '',
     hotline: '',
     address: '',
     weekdayWorkingTime: '',
-    weekendWorkingTime: ''
+    weekendWorkingTime: '',
+    error: ''
 } as ContactState;
 
 const contactSlice = createSlice({
@@ -52,12 +64,16 @@ const contactSlice = createSlice({
             state.loading = 'succeeded';
         });
         builder.addCase(sendContactMessage.pending, (state) => {
-            state.loading = 'pending'
+            state.loading = 'pending';
         });
-        builder.addCase(sendContactMessage.rejected, (state) => {
-            state.loading = 'failed'
+        builder.addCase(sendContactMessage.rejected, (state, action) => {
+            state.loading = 'failed';
+            if (action.error) {
+                state.error = action.payload as string;
+            } else {
+                state.error = 'An unknown error occurred';
+            }
         });
-
 
         builder.addCase(getContactDatas.fulfilled, (state, action) => {
             state.id = action.payload?.[0].id;

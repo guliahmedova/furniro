@@ -28,7 +28,8 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
   const productById: ProductTypes = useSelector((state: RootState) => state?.productDetail?.product);
   const [color, setColor] = useState(0);
   const [size, setSize] = useState(0);
-  const [productCount, setProductCount] = useState(0);
+  const [productCount, setProductCount] = useState(1);
+  const [productCountMsg, setProductCountMsg] = useState('');
 
   const isLike = useSelector((state: RootState) => (
     state.wishlist.product.some((favItem) => favItem?.id === product?.id)
@@ -68,20 +69,27 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
       dispatch(addToCart({
         productId: product?.id,
         colorId: productById?.colors?.[color].id,
-        userId: parseInt(userId)
+        userId: parseInt(userId),
+        count: productCount
       }));
       setIsModalOpen(false);
     }
   };
 
   const increaseProductCount = () => {
+    if (productCount < 10) {
       setProductCount(prevState => prevState + 1);
+      setProductCountMsg('');
+    } else {
+      setProductCountMsg('You can only add 10 products at once!');
+    }
   };
 
   const decreaseProductCount = () => {
-      if (productCount > 0) {
-          setProductCount(prevState => prevState - 1);
-      };
+    if (productCount > 0) {
+      setProductCountMsg('');
+      setProductCount(prevState => prevState - 1);
+    };
   };
 
   return (
@@ -210,6 +218,9 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
           </div>
         </div>
 
+        {productCountMsg.length > 0 && (
+          <span className='text-sm text-red-600 font-medium text-left block p-1.5 bg-red-100'>{productCountMsg}</span>
+        )}
         <div className='mt-2 flex gap-2 justify-end'>
           <div className="flex items-center justify-between border border-gray-500 rounded-lg w-[20%] p-2">
             <button className="font-medium text-xl" onClick={decreaseProductCount} >-</button>

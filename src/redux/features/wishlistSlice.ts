@@ -5,13 +5,11 @@ import { RootState } from '../app/store';
 
 interface ProductState {
     product: ProductTypes[],
-    favorites: [],
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
 }
 
 const initialState: ProductState = {
     product: [],
-    favorites: [],
     loading: 'idle'
 };
 

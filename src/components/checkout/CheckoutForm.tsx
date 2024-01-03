@@ -1,16 +1,26 @@
 import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import blackCircle from '../../assets/images/blackCircle.svg';
 import emptyCircle from '../../assets/images/emptyCircle.svg';
 import { RootState, useAppDispatch } from '../../redux/app/store';
+import { clearCart, getAllCartItemsByUserId } from '../../redux/features/cartSlice';
 import { addCheckout, getAllCountries, getAllProvinces } from '../../redux/features/checkoutSlice';
 import { validate } from './formValidate';
+const MySwal = withReactContent(Swal);
 
 const CheckoutForm = () => {
     const dispatch = useAppDispatch();
-
     const userId = localStorage.getItem('userId');
+    const { getAllCartItems, subTotal } = useSelector((state: RootState) => state.cart);
+
+    const userId_Int = useMemo(() => {
+        if (userId) {
+            return parseInt(userId);
+        }
+    }, [userId]);
 
     const { values, errors, handleChange, handleSubmit } = useFormik({
         initialValues: {
@@ -27,9 +37,7 @@ const CheckoutForm = () => {
             note: ''
         },
         validate,
-        onSubmit: (values) => {
-            console.log(values);
-        },
+        onSubmit: () => { }
     });
 
     const { countries, provinces } = useSelector((state: RootState) => state.checkout);
@@ -39,30 +47,54 @@ const CheckoutForm = () => {
         dispatch(getAllProvinces());
     }, [dispatch]);
 
+    useEffect(() => {
+        if (userId_Int) {
+            dispatch(getAllCartItemsByUserId(userId_Int));
+        }
+    }, [userId_Int]);
+
     const [accordion, setAccordion] = useState(false);
 
-    const countryId = parseInt(values.country);
-    const provinceId = parseInt(values.province);
-    const userId_Int = userId && parseInt(userId);
+    const countryId_Int = useMemo(() => {
+        if (values.country) {
+            return parseInt(values.country);
+        }
+    }, [values.country]);
 
-    const handlePlaceOrderBtn = () => {
-        if (userId_Int) {
+    const provinceId_Int = useMemo(() => {
+        if (values.province) {
+            return parseInt(values.province);
+        }
+    }, [values.province]);
+
+    const handlePlaceOrderBtn = useCallback(() => {
+        if (userId_Int && countryId_Int && provinceId_Int) {
             dispatch(addCheckout({
                 appUserId: userId_Int,
                 firstName: values.firstName,
                 lastName: values.lastName,
                 companyName: values.companyName,
-                countryId: countryId,
+                countryId: countryId_Int,
                 streetAddress: values.streetAddress,
                 city: values.town,
-                provinceId: provinceId,
+                provinceId: provinceId_Int,
                 zipcode: values.zipCode,
                 phone: values.phone,
                 emailAddress: values.emailAddress,
                 additionalInfo: values.note
-            }));
+            })).then((confirm) => {
+                if (confirm?.meta?.requestStatus === 'fulfilled') {
+                    MySwal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "The product was successfully deleted!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
         }
-    };
+    }, [values]);
 
     return (
         <section className="mt-[63px] mb-[123px]">
@@ -93,7 +125,7 @@ const CheckoutForm = () => {
                             <label className="font-medium text-[#000000] leading-6 mb-[22px] block" htmlFor="countryRegion">Country / Region</label>
                             <select name="country" value={values.country} onChange={handleChange} id="countryRegion" className="border-2 appearance-none border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]">
                                 {countries?.map((country) => (
-                                    <option key={country.id} value={country.id}>{country.countryName}</option>
+                                    <option key={country.id} value={country.id} defaultValue={country.id}>{country.countryName}</option>
                                 ))}
                             </select>
                             <div className="absolute inset-y-0 right-4 top-12 flex items-center px-3 pointer-events-none">
@@ -120,7 +152,7 @@ const CheckoutForm = () => {
                             <label className="font-medium text-[#000000] leading-6 mb-[22px] block" htmlFor="Province">Province</label>
                             <select name="province" value={values.province} onChange={handleChange} id="Province" className="border-2 appearance-none border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]">
                                 {provinces?.map((item) => (
-                                    <option key={item.id} value={item.id}>{item.provinceName}</option>
+                                    <option key={item.id} value={item.id} defaultValue={item.id}>{item.provinceName}</option>
                                 ))}
                             </select>
                             <div className="absolute inset-y-0 right-4 top-12 flex items-center px-3 pointer-events-none">
@@ -160,19 +192,23 @@ const CheckoutForm = () => {
                         <span className="text-[#000000] font-medium lg:text-2xl lg:leading-9 text-xl">Product</span>
                         <span className="text-[#000000] font-medium lg:text-2xl lg:leading-9 text-xl">Subtotal</span>
                     </div>
-                    <div className="flex justify-between mb-[22px]">
-                        <div className="flex gap-3 items-center">
-                            <span className="text-[#9F9F9F] leading-6">Asgaard sofa</span><span className="text-[#000000] font-medium text-xs">X</span> <span className="text-[#000000] font-medium text-xs">1</span>
-                        </div>
-                        <span className="text-[#000000] font-light">Rs. 250,000.00</span>
-                    </div>
+                    {getAllCartItems.map((item) => (
+                        item.cartItems?.map((cartItem) => (
+                            <div className="flex justify-between mb-[22px]" key={cartItem.productId}>
+                                <div className="flex gap-3 items-center">
+                                    <span className="text-[#9F9F9F] leading-6">{cartItem.productTitle}</span><span className="text-[#000000] font-medium text-xs">X</span> <span className="text-[#000000] font-medium text-xs">{cartItem.count}</span>
+                                </div>
+                                <span className="text-[#000000] font-light">Rs. {cartItem.subtotal}</span>
+                            </div>
+                        ))
+                    ))}
                     <div className="flex justify-between mb-4">
                         <span className="font-normal">Subtotal</span>
-                        <span className="text-[#000000] font-light">Rs. 250,000.00</span>
+                        <span className="text-[#000000] font-light">Rs. {subTotal.toFixed(4)}</span>
                     </div>
                     <div className="flex justify-between pb-[33px] border-b-2 border-[#D9D9D9]">
                         <span className="font-normal">Total</span>
-                        <span className="text-[#B88E2F] font-bold lg:text-2xl">Rs. 250,000.00</span>
+                        <span className="text-[#B88E2F] font-bold lg:text-2xl">Rs. {subTotal.toFixed(4)}</span>
                     </div>
                     <div className="mt-[22px]">
                         <div className='flex items-center gap-4 cursor-pointer' onClick={() => setAccordion(!accordion)}>
@@ -200,7 +236,9 @@ const CheckoutForm = () => {
                             )
                         }
                     </div>
-                    <button onClick={handlePlaceOrderBtn} className='text-black text-xl mt-12 border-2 border-black rounded-[15px] py-[17px] w-[318px] mx-auto block hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out'>Place order</button>
+                    {getAllCartItems?.length > 0 && (
+                        <button onClick={handlePlaceOrderBtn} className='text-black text-xl mt-12 border-2 border-black rounded-[15px] py-[17px] w-[318px] mx-auto block hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out'>Place order</button>
+                    )}
                 </div>
             </div>
         </section>

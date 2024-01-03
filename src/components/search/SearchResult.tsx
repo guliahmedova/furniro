@@ -19,11 +19,17 @@ const SearchResult: FC<SearchResultProps> = ({ products, searchText, handleShowM
             <span className="underline italic">{searchText}</span> açar sözü üzrə axtarış nəticələri...
           </div>
         )}
-        <div className="grid lg:grid-cols-4 gap-8 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-8">
-          {products?.map((item) => (
-            <ProductCard key={item.id} product={item} />
-          ))}
-        </div>
+        {products && products?.length > 0 ? (
+          <div className="grid lg:grid-cols-4 gap-8 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-8">
+            {products?.map((item) => (
+              <ProductCard key={item.id} product={item} />
+            ))}
+          </div>
+        ) : (
+          <div className="py-28 flex w-full justify-center items-center flex-col gap-3">
+            <span className="text-red-600 font-bold text-2xl text-center block">No product found for this search.</span>
+          </div>
+        )}
         {(totalCount !== showMore && totalCount > 4) && (
           <button onClick={handleShowMoreClick} className="mt-[32px] border-2 py-[12px] block w-[245px] mx-auto border-[#B88E2F] text-[#B88E2F] font-bold text-[16px] leading-6">Show More</button>
         )}

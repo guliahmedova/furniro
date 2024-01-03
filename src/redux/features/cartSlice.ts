@@ -2,13 +2,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { CartItemType, GetCartItemsType } from '../../models/CartItemType';
 
-const baseurl = 'http://immutable858-001-site1.atempurl.com/api/';
+const baseurl = 'http://immutable858-001-site1.atempurl.com/api/Cart/';
 
 interface CartRequestBody {
     productId: number,
     colorId: number,
-    userId: number
-}
+    userId: number,
+    count?: number
+};
 
 interface CartState {
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
@@ -17,12 +18,15 @@ interface CartState {
     userId: number,
     cartItems: CartItemType[],
     getAllCartItems: GetCartItemsType[],
+    error: string,
+    isDelete: boolean,
+    subTotal: number
 };
 
 export const addToCart = createAsyncThunk(
     'cart/addToCart',
     async (cartItemBody: CartRequestBody) => {
-        const response = await axios.post(`${baseurl}Cart/addToCart`, cartItemBody);
+        const response = await axios.post(`${baseurl}addToCart`, cartItemBody);
         return (await response.data);
     }
 );
@@ -30,7 +34,7 @@ export const addToCart = createAsyncThunk(
 export const getAllCartItemsByUserId = createAsyncThunk(
     'cart/getAllCartItemsByUserId',
     async (userId: number) => {
-        const response = await axios.get(`${baseurl}Cart/getAllCartItems/${userId}`);
+        const response = await axios.get(`${baseurl}getAllCartItems/${userId}`);
         return (await response.data);
     }
 );
@@ -38,7 +42,7 @@ export const getAllCartItemsByUserId = createAsyncThunk(
 export const removeCartItem = createAsyncThunk(
     'cart/removeCartItem',
     async (cartItemBody: CartRequestBody) => {
-        const response = await axios.delete(`${baseurl}Cart/remove`, {
+        const response = await axios.delete(`${baseurl}remove`, {
             data: cartItemBody
         });
         return (await response.data);
@@ -47,19 +51,26 @@ export const removeCartItem = createAsyncThunk(
 
 export const clearCart = createAsyncThunk(
     'checkout/clearCart',
-    async (appUserId: number) => {
-        const response = await axios.post(`${baseurl}ClearCart`, appUserId);
-        return (await response.data);
+    async (appUserId: number, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(`${baseurl}ClearCart`, appUserId);
+            return (await response.data);
+        } catch (error: any) {
+            return rejectWithValue(error?.response?.data?.title);
+        }
     }
 );
 
 const initialState = {
     loading: 'idle',
     success: false,
+    isDelete: false,
     message: '',
     userId: 0,
     cartItems: [],
-    getAllCartItems: []
+    getAllCartItems: [],
+    error: '',
+    subTotal: 0
 } as CartState
 
 const cartSlice = createSlice({
@@ -87,21 +98,29 @@ const cartSlice = createSlice({
         builder.addCase(getAllCartItemsByUserId.fulfilled, (state, action) => {
             state.loading = 'succeeded';
             state.getAllCartItems = action.payload;
+            state.subTotal = action.payload.reduce((total: number, cart: any) => {
+                cart.cartItems.forEach((item: CartItemType) => {
+                    total += item.subtotal;
+                });
+                return total;
+            }, 0);
         });
         builder.addCase(getAllCartItemsByUserId.rejected, (state) => {
             state.loading = 'failed'
         });
 
         builder.addCase(removeCartItem.pending, (state) => {
-            state.loading = 'pending'
+            state.loading = 'pending';
+            state.isDelete = false;
         });
         builder.addCase(removeCartItem.fulfilled, (state, action) => {
             state.loading = 'succeeded';
-            state.success = true;
+            state.isDelete = true;
             state.message = action.payload.message;
         });
         builder.addCase(removeCartItem.rejected, (state) => {
-            state.loading = 'failed'
+            state.loading = 'failed';
+            state.isDelete = false;
         });
 
         builder.addCase(clearCart.pending, (state) => {
@@ -111,8 +130,13 @@ const cartSlice = createSlice({
             state.loading = 'succeeded';
             state.message = action.payload;
         });
-        builder.addCase(clearCart.rejected, (state) => {
+        builder.addCase(clearCart.rejected, (state, action) => {
             state.loading = 'failed';
+            if (action.error) {
+                state.error = action.payload as string;
+            } else {
+                state.error = 'An unknown error occurred';
+            }
         });
     }
 });

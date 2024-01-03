@@ -6,7 +6,6 @@ import { changePassword } from '../../redux/features/authSlice';
 import { ChangePasswordYup } from './ChangePasswordYup';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-
 const MySwal = withReactContent(Swal);
 
 const ChangePassword = () => {

@@ -1,11 +1,14 @@
+import { useEffect, useMemo } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import closeFuncIcon from '../../../assets/images/closeModal.svg';
+import deleteIcon from '../../../assets/images/deleteItem.svg';
 import { useModal } from "../../../contexts/ModalContext";
 import { RootState, useAppDispatch } from "../../../redux/app/store";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import deleteIcon from '../../../assets/images/deleteItem.svg'
 import { getAllCartItemsByUserId, removeCartItem } from "../../../redux/features/cartSlice";
+const MySwal = withReactContent(Swal);
 
 const ShoppingModal = () => {
     const { modal, closeModal } = useModal();
@@ -17,31 +20,39 @@ const ShoppingModal = () => {
     };
     const cartItems = useSelector((state: RootState) => state.cart.getAllCartItems);
     const loading = useSelector((state: RootState) => state.shop.loading);
-
-    let totalSalePrice = 0;
-
-    cartItems.forEach((cartItem) => {
-        cartItem.cartItems.forEach((item) => {
-            totalSalePrice += item.salePrice * item.count;
-        });
-    });
+    const { isDelete, subTotal } = useSelector((state: RootState) => state.cart);
 
     const dispatch = useAppDispatch();
     const userId = localStorage.getItem('userId');
+    const userId_Int = useMemo(() => {
+        if (userId) {
+            return parseInt(userId);
+        };
+    }, [userId]);
 
     useEffect(() => {
-        if (userId) {
-            dispatch(getAllCartItemsByUserId(parseInt(userId)));
+        if (userId_Int) {
+            dispatch(getAllCartItemsByUserId(userId_Int));
         }
-    }, [dispatch, cartItems.length]);
+    }, [dispatch, cartItems.length, userId_Int, isDelete]);
 
     const removeCartItemBtnClickHanler = (colorId: number, productId: number) => {
-        if (userId) {
+        if (userId_Int) {
             dispatch(removeCartItem({
-                userId: parseInt(userId),
+                userId: userId_Int,
                 productId: productId,
                 colorId: colorId
-            }))
+            })).then((confirm) => {
+                if (confirm?.payload?.success) {
+                    MySwal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "The product was successfully deleted!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
         }
     };
 
@@ -71,13 +82,27 @@ const ShoppingModal = () => {
                                 {cartItems?.map((item) => (
                                     item?.cartItems?.map((cart) => {
                                         return (
-                                            <div className="flex justify-between items-center" key={cart.productId}>
-                                                <div className="bg-[#EFE6D1] w-[105px] h-[105px] rounded-xl"> <img className="w-full h-full" src={cart.productImages.imageFiles[0]} alt="product-img" /></div>
-                                                <div className="flex flex-col">
-                                                    <span className="text-black text-base leading-6 font-medium mb-2">{cart.productTitle}</span>
-                                                    <div className="flex items-center gap-4"><span className="text-black text-base">{cart.count}</span><span className="text-base">X</span><span className="text-[#B88E2F] font-medium text-base">Rs. {cart.salePrice}</span></div>
+                                            <div className="flex justify-between items-center gap-8" key={cart.productId}>
+                                                <div className="bg-[#EFE6D1] w-[105px] h-[105px] rounded-xl">
+                                                    <img className="w-full h-full" src={cart.productImages.imageFiles[0]} alt="product-img" />
                                                 </div>
-                                                <button onClick={() => removeCartItemBtnClickHanler(cart.productImages.id, cart.productId)}><img src={deleteIcon} alt="delete-icon" /></button>
+                                                <div className="flex flex-col w-6/12">
+                                                    <span className="text-black text-sm leading-6 font-medium mb-2">{cart.productTitle}</span>
+                                                    <div className="flex items-center gap-3">
+                                                        <span className="text-black text-base">{cart.count}</span>
+                                                        <span className="text-base">X</span>
+                                                        <span className="text-[#B88E2F] font-medium text-base">Rs. {cart.salePrice}</span>
+                                                    </div>
+                                                </div>
+                                                <button
+                                                    onClick={() => {
+                                                        removeCartItemBtnClickHanler(cart.productImages.id, cart.productId);
+                                                        if (userId_Int) {
+                                                            dispatch(getAllCartItemsByUserId(userId_Int));
+                                                        }
+                                                    }}>
+                                                    <img src={deleteIcon} alt="delete-icon" className="w-5" />
+                                                </button>
                                             </div>
                                         )
                                     })
@@ -86,11 +111,11 @@ const ShoppingModal = () => {
                         ) : (<div className="py-28 flex justify-center items-center flex-col gap-3">
                             <span className="text-red-600 font-bold text-2xl">Your Cart is empty!</span>
                             <p className="font-medium text-gray-600">Let's shop now!</p>
-                            <Link to="/shop" className="text-white font-medium text-lg bg-[#B88E2F] rounded-sm shadow-md p-3">Start Shopping</Link>
+                            <Link to="/shop" onClick={closeModal} className="text-white font-medium text-lg bg-[#B88E2F] rounded-sm shadow-md p-3">Start Shopping</Link>
                         </div>)}
                     </>}
 
-                    <div className="mt-20 flex justify-between mb-6 lg:px-8 px-3"><span className="text-black text-base leading-6 select-none">Subtotal</span><span className="text-[#B88E2F] font-semibold text-base">Rs. {totalSalePrice.toFixed(6)}</span></div>
+                    <div className="mt-20 flex justify-between mb-6 lg:px-8 px-3"><span className="text-black text-base leading-6 select-none">Subtotal</span><span className="text-[#B88E2F] font-semibold text-base">Rs. {subTotal.toFixed(6)}</span></div>
 
                     <hr className="w-full bg-[#D9D9D9] mb-6" />
                     <div className="bg-[#FFFFFF] flex justify-between items-center lg:gap-[14px] lg:px-8 px-3">

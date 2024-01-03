@@ -7,12 +7,19 @@ import workingTime from '../../assets/images/workingTime.svg';
 import { RootState, useAppDispatch } from '../../redux/app/store';
 import { getContactDatas, sendContactMessage } from '../../redux/features/contactSlice';
 import { validate } from './contactFormValidate';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 const MySwal = withReactContent(Swal);
 
 const ContactForm = () => {
     const dispatch = useAppDispatch();
+    const userId = localStorage.getItem('userId');
+
+    const userID_Int = useMemo(() => {
+        if (userId) {
+            return parseInt(userId);
+        };
+    }, [userId]);
 
     const { handleChange, values, handleSubmit, errors, resetForm } = useFormik({
         initialValues: {
@@ -22,37 +29,39 @@ const ContactForm = () => {
             message: ''
         },
         validate,
-        onSubmit: (values) => {
-            console.log('salam');
-            MySwal.fire({
-                title: <p>{`Your work has been saved ${JSON.stringify(values.yourName, null, 2)}`}</p>,
-                position: "top-end",
-                icon: "success",
-                showConfirmButton: false,
-                timer: 1500,
-                didOpen: () => {
-                    MySwal.showLoading(),
-                        dispatch(sendContactMessage({
-                            name: values.yourName,
-                            email: values.email,
-                            subject: values.subject,
-                            message: values.message
-                        }));
-                },
-
-            }).then((confirm) => {
-                if (confirm) {
-                    resetForm();
-                }
-            });
-        },
+        onSubmit: () => { },
     });
 
     useEffect(() => {
         dispatch(getContactDatas());
     }, [dispatch]);
 
-    const {mobile, hotline, address, weekdayWorkingTime, weekendWorkingTime} = useSelector((state: RootState) => state.contact);
+    const { mobile, hotline, address, weekdayWorkingTime, weekendWorkingTime } = useSelector((state: RootState) => state.contact);
+
+    const handleSubmitBtnClick = useCallback(() => {
+        if (userID_Int) {
+            dispatch(sendContactMessage({
+                userId: userID_Int,
+                name: values.yourName,
+                email: values.email,
+                subject: values.subject,
+                message: values.message
+            })).then((confirm) => {
+                if (confirm?.payload) {
+                    MySwal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your message has been sent successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    resetForm();
+                }
+            }).catch((error) => {
+                console.error(error);
+            })
+        }
+    }, [values]);
 
     return (
         <section>
@@ -115,7 +124,7 @@ const ContactForm = () => {
                                 {errors.message ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.message}</div> : null}
                             </div>
 
-                            <button type='submit' className='bg-[#B88E2F] w-[237px] py-[13.75px] rounded-md text-white font-normal leading-[24px] hover:bg-yellow-600 lg:mx-0 mx-auto block'>Submit</button>
+                            <button type='submit' className='bg-[#B88E2F] w-[237px] py-[13.75px] rounded-md text-white font-normal leading-[24px] hover:bg-yellow-600 lg:mx-0 mx-auto block' onClick={handleSubmitBtnClick}>Submit</button>
                         </form>
                     </div>
 

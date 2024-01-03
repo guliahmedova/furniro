@@ -74,7 +74,7 @@ const Navbar = () => {
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/shop'>Shop</NavLink>
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/blog'>Blog</NavLink>
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to='/contact'>Contact</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to={`${userToken?.length ? '/profile/edit' : '/login'}`}>Account</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to={`${userToken?.length ? '/profile/edit' : '/login'}`}>Profile</NavLink>
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/search">Search</NavLink>
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/favorites">Favorites</NavLink>
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/cart">Cart</NavLink>
