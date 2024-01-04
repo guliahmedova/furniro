@@ -11,6 +11,7 @@ import shopReducer from '../redux/features/shopSlice';
 import checkoutReducer from '../redux/features/checkoutSlice';
 import productDetailReducer from '../redux/features/productDetailSlice';
 import cartReducer from '../redux/features/cartSlice';
+import forgotPasswordReducer from '../redux/features/forgotPasswordSlice';
 
 export const rootReducer = combineReducers({
     wishlist: wishlistReducer,
@@ -24,5 +25,6 @@ export const rootReducer = combineReducers({
     shop: shopReducer,
     checkout: checkoutReducer,
     productDetail: productDetailReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    forgotPassword: forgotPasswordReducer
 });

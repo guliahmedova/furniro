@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import account from '../../assets/images/account.svg';
@@ -9,14 +9,24 @@ import openmenu from '../../assets/images/openmenu.svg';
 import search from '../../assets/images/search.svg';
 import shopCart from '../../assets/images/shoppingCart.svg';
 import { useModal } from "../../contexts/ModalContext";
-import { RootState } from "../../redux/app/store";
+import { RootState, useAppDispatch } from "../../redux/app/store";
+import { getAllCartItemsByUserId } from "../../redux/features/cartSlice";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const dispatch = useAppDispatch();
   const wishlistproducts = useSelector((state: RootState) => state.wishlist.product);
-
+  const cartItems = useSelector((state: RootState) => state.cart.getAllCartItems);
+  const userToken = localStorage.getItem('userToken');
+  const userid = localStorage.getItem('userId');
   const { openModal } = useModal();
+
+  const userid_int = useMemo(() => {
+    if (userid) {
+      return parseInt(userid);
+    }
+  }, [userid]);
+
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -26,7 +36,11 @@ const Navbar = () => {
     }
   }, [isMenuOpen]);
 
-  const userToken = localStorage.getItem('userToken');
+  useEffect(() => {
+    if (userid_int) {
+      dispatch(getAllCartItemsByUserId(userid_int));
+    }
+  }, [dispatch]);
 
   return (
     <header className="bg-white md:shadow-sm">
@@ -50,7 +64,7 @@ const Navbar = () => {
         </div>
 
         <div className="lg:flex hidden items-center lg:gap-11">
-          <Link to={`${userToken?.length  ? '/profile/edit' : '/login'}`}>
+          <Link to={`${userToken?.length ? '/profile/edit' : '/login'}`}>
             <img src={account} alt="account-icon" />
           </Link>
           <Link to="/search">
@@ -63,7 +77,11 @@ const Navbar = () => {
               </div>}
             <img src={heart} alt="heart-icon" />
           </Link>
-          <div onClick={() => openModal('ShoppingModal')} className="cursor-pointer">
+          <div onClick={() => openModal('ShoppingModal')} className="cursor-pointer relative">
+            {cartItems.length > 0 &&
+              <div className="absolute -top-1 -right-1 bg-[#B88E2F] text-white text-center rounded-full w-4 h-4 text-[10px] flex items-center justify-center">
+                {cartItems.length > 9 ? <span>9+</span> : <span>{cartItems.length}</span>}
+              </div>}
             <img src={shopCart} alt="shopcart-icon" />
           </div>
         </div>
@@ -78,7 +96,7 @@ const Navbar = () => {
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/search">Search</NavLink>
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/favorites">Favorites</NavLink>
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/cart">Cart</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to={`${userToken?.length  ? '/profile/edit' : '/login'}`}>Profile</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to={`${userToken?.length ? '/profile/edit' : '/login'}`}>Profile</NavLink>
         </div>
 
       </nav>

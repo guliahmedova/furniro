@@ -7,7 +7,7 @@ import App from './App.tsx';
 import Spinner from './components/common/Spinner.tsx';
 import { ModalProvider } from './contexts/ModalContext.tsx';
 import './index.css';
-import ForgotPassword from './pages/auth/ChangePassword.tsx';
+import ForgotPassword from './pages/auth/ForgotPassword.tsx';
 import ProfileEdit from './pages/auth/ProfileEdit.tsx';
 import { persistor, store } from './redux/app/store.ts';
 
@@ -47,12 +47,13 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path='*' element={<NotFound />} />
     </Route>
     <Route path='/login' element={<Login />} />
+    <Route path='/forgot-password' element={<ForgotPassword />} />
     <Route path='/register' element={<Register />} />
   </Route>
 ));
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <Suspense fallback={<Spinner />}> 
+  <Suspense fallback={<Spinner />}>
     <PersistGate loading={null} persistor={persistor}>
       <React.StrictMode>
         <Provider store={store}>
