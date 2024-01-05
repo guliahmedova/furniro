@@ -12,6 +12,7 @@ import checkoutReducer from '../redux/features/checkoutSlice';
 import productDetailReducer from '../redux/features/productDetailSlice';
 import cartReducer from '../redux/features/cartSlice';
 import forgotPasswordReducer from '../redux/features/forgotPasswordSlice';
+import reviewReducer from '../redux/features/reviewSlice';
 
 export const rootReducer = combineReducers({
     wishlist: wishlistReducer,
@@ -26,5 +27,6 @@ export const rootReducer = combineReducers({
     checkout: checkoutReducer,
     productDetail: productDetailReducer,
     cart: cartReducer,
-    forgotPassword: forgotPasswordReducer
+    forgotPassword: forgotPasswordReducer,
+    review: reviewReducer
 });

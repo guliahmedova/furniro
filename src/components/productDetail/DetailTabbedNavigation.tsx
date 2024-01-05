@@ -4,9 +4,10 @@ import { DescriptionType } from '../../models/DescriptionType';
 import { RootState, useAppDispatch } from '../../redux/app/store';
 import { getProductDescriptionById } from '../../redux/features/productDetailSlice';
 import { useParams } from 'react-router-dom';
+import RatingBar from './RatingBar';
 
 const DetailTabbedNavigation = () => {
-  const [tabIndex, setTabIndex] = useState(1);
+  const [tabIndex, setTabIndex] = useState(3);
   const toggleTabs = (index: number) => {
     setTabIndex(index);
   };
@@ -40,7 +41,7 @@ const DetailTabbedNavigation = () => {
           </p>
           <div className='flex lg:flex-row flex-col gap-7 mt-[36px]'>
             {productDescription?.imageFiles && productDescription?.imageFiles.length > 0 && (
-              productDescription?.imageFiles.map((item, index)=> (
+              productDescription?.imageFiles.map((item, index) => (
                 <div key={index} className='lg:w-[605px] h-[348px] rounded-lg bg-[#F9F1E7]'><img className='w-full h-full object-cover rounded-lg' src={item} alt="product-img1" /></div>
               ))
             )}
@@ -52,10 +53,11 @@ const DetailTabbedNavigation = () => {
         </div>
 
         <div className={`max-w-[1026px] mx-auto text-[#9F9F9F] font-normal tracking-wider flex flex-col ${tabIndex === 3 ? 'block' : 'hidden'}`}>
-          <span>Review 1</span>
-          <span>Review 2</span>
-          <span>Review 3</span>
-          <span>Review 4</span>
+          <RatingBar />
+          <form className='flex items-center flex-col gap-2 justify-center'>
+            <textarea placeholder='Add a comment' className='outline-none border resize-none rounded-lg p-2 w-6/12 text-black' />
+            <button className='border-2 rounded-md p-2 bg-[#B88E2F] w-6/12 text-white'>Save</button>
+          </form>
         </div>
 
       </div>

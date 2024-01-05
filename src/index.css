@@ -26,8 +26,6 @@ body::-webkit-scrollbar-thumb:hover {
     background: #b88e2f;
 }
 
-
-
 /*categories*/
 .categories::-webkit-scrollbar {
     width: 15px;
@@ -50,7 +48,6 @@ body::-webkit-scrollbar-thumb:hover {
 .categories::-webkit-scrollbar-thumb:hover {
     background: whitesmoke;
 }
-
 
 /* -------------------------------------- */
 .cart-table::-webkit-scrollbar {

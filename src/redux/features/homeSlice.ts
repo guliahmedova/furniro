@@ -22,7 +22,6 @@ const initialState = {
     loading: 'idle'
 } as HomeState;
 
-
 const homeSlice = createSlice({
     name: 'home',
     initialState,
