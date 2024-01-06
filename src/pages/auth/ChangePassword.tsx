@@ -1,11 +1,11 @@
 import { useFormik } from 'formik';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 import { RootState, useAppDispatch } from '../../redux/app/store';
 import { changePassword } from '../../redux/features/authSlice';
 import { ChangePasswordYup } from './ChangePasswordYup';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 const MySwal = withReactContent(Swal);
 
 const ChangePassword = () => {

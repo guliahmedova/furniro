@@ -13,13 +13,13 @@ interface ReviewState {
     rate: number,
     text: string,
     error: string,
-    message: string
+    message: string,
+    reviews: ReviewType[]
 };
 
 export const addReview = createAsyncThunk(
     'review/addReview',
     async (reviewBody: ReviewType, { rejectWithValue }) => {
-        console.log("reviewBody: ", reviewBody);
         try {
             const response = await axios.post(`${baseurl}`, reviewBody);
             return (await response.data);
@@ -49,9 +49,18 @@ export const getReviewsByProductId = createAsyncThunk(
     }
 );
 
+// bu silinecek !!!!!!!!!!!!!
+export const getallreviews = createAsyncThunk(
+    'review/getallreviews',
+    async () => {
+        const response = await axios.get(`${baseurl}`);
+        return (await response.data);
+    }
+);
+
 export const deletReviewById = createAsyncThunk(
     'review/getReviewsById',
-    async (reviewId) => {
+    async (reviewId:number) => {
         const response = await axios.delete(`${baseurl}/${reviewId}`);
         return (await response.data);
     }
@@ -66,7 +75,8 @@ const initialState = {
     rate: 0,
     text: '',
     error: '',
-    message: ''
+    message: '',
+    reviews: []
 } as ReviewState;
 
 const reviewSlice = createSlice({
@@ -118,6 +128,17 @@ const reviewSlice = createSlice({
             state.message = action.payload.message;
         });
         builder.addCase(deletReviewById.rejected, (state) => {
+            state.loading = 'failed';
+        });
+        
+        builder.addCase(getallreviews.pending, (state) => {
+            state.loading = 'pending';
+        });
+        builder.addCase(getallreviews.fulfilled, (state, action) => {
+            state.loading = 'succeeded';
+            state.reviews = action.payload;
+        });
+        builder.addCase(getallreviews.rejected, (state) => {
             state.loading = 'failed';
         });
     },

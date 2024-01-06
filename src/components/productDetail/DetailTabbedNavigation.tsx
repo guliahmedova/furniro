@@ -5,6 +5,8 @@ import { RootState, useAppDispatch } from '../../redux/app/store';
 import { getProductDescriptionById } from '../../redux/features/productDetailSlice';
 import { useParams } from 'react-router-dom';
 import Review from './Review';
+import ReviewList from './ReviewList';
+import { getallreviews } from '../../redux/features/reviewSlice';
 
 const DetailTabbedNavigation = () => {
   const [tabIndex, setTabIndex] = useState(3);
@@ -22,13 +24,19 @@ const DetailTabbedNavigation = () => {
     }
   }, [dispatch, productId]);
 
+  useEffect(() => {
+    dispatch(getallreviews());
+  }, [dispatch]);
+
+  const allRewiews = useSelector((state: RootState) => state.review.reviews);
+
   return (
     <section className="mt-[69px] pt-[46px] pb-[61px] border-t border-b border-[#D9D9D9]">
       <div className='lg:max-w-[1239px] mx-auto lg:px-0 px-3'>
         <div className='flex lg:gap-14 gap-3 lg:justify-center justify-between mb-[37px]'>
           <span onClick={() => toggleTabs(1)} className={`lg:text-2xl text-center ease-in-out duration-300 text-sm ${tabIndex === 1 ? 'text-black font-medium select-none' : 'text-[#9F9F9F] font-normal cursor-pointer'}`}>Description</span>
           <span onClick={() => toggleTabs(2)} className={`lg:text-2xl text-center ease-in-out duration-300 text-sm flex-shrink-0 ${tabIndex === 2 ? 'text-black font-medium select-none' : 'text-[#9F9F9F] font-normal cursor-pointer'}`}>Additional Information</span>
-          <span onClick={() => toggleTabs(3)} className={`lg:text-2xl text-center ease-in-out duration-300 text-sm flex-shrink-0 ${tabIndex === 3 ? 'text-black font-medium select-none' : 'text-[#9F9F9F] font-normal cursor-pointer'}`}>Reviews [5]</span>
+          <span onClick={() => toggleTabs(3)} className={`lg:text-2xl text-center ease-in-out duration-300 text-sm flex-shrink-0 ${tabIndex === 3 ? 'text-black font-medium select-none' : 'text-[#9F9F9F] font-normal cursor-pointer'}`}>Reviews [{allRewiews?.length}]</span>
         </div>
 
         <div className={`${tabIndex === 1 ? 'block' : 'hidden'}`}>
@@ -51,7 +59,8 @@ const DetailTabbedNavigation = () => {
         </div>
 
         <div className={`max-w-[1026px] mx-auto text-[#9F9F9F] font-normal tracking-wider flex flex-col ${tabIndex === 3 ? 'block' : 'hidden'}`}>
-           <Review productId={productId} />
+          <Review productId={productId} />
+          <ReviewList allRewiews={allRewiews} />
         </div>
 
       </div>
