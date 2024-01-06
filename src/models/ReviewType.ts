@@ -4,4 +4,4 @@ export type ReviewType = {
     appUserId: number,
     rate: number,
     text: string
-};
+}; 

@@ -19,11 +19,11 @@ interface ReviewState {
 export const addReview = createAsyncThunk(
     'review/addReview',
     async (reviewBody: ReviewType, { rejectWithValue }) => {
+        console.log("reviewBody: ", reviewBody);
         try {
             const response = await axios.post(`${baseurl}`, reviewBody);
             return (await response.data);
         } catch (error) {
-            console.log('error in reviewSlice: ', error);
             return rejectWithValue(error);
         }
     }
@@ -36,7 +36,6 @@ export const updateReview = createAsyncThunk(
             const response = await axios.post(`${baseurl}`, reviewBody);
             return (await response.data);
         } catch (error) {
-            console.log('error in reviewSlice: ', error);
             return rejectWithValue(error);
         }
     }

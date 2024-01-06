@@ -4,7 +4,7 @@ import { DescriptionType } from '../../models/DescriptionType';
 import { RootState, useAppDispatch } from '../../redux/app/store';
 import { getProductDescriptionById } from '../../redux/features/productDetailSlice';
 import { useParams } from 'react-router-dom';
-import RatingBar from './RatingBar';
+import Review from './Review';
 
 const DetailTabbedNavigation = () => {
   const [tabIndex, setTabIndex] = useState(3);
@@ -13,9 +13,7 @@ const DetailTabbedNavigation = () => {
   };
 
   const productDescription: DescriptionType = useSelector((state: RootState) => state.productDetail.productDescriptions);
-
   const dispatch = useAppDispatch();
-
   const { productId } = useParams();
 
   useEffect(() => {
@@ -53,11 +51,7 @@ const DetailTabbedNavigation = () => {
         </div>
 
         <div className={`max-w-[1026px] mx-auto text-[#9F9F9F] font-normal tracking-wider flex flex-col ${tabIndex === 3 ? 'block' : 'hidden'}`}>
-          <RatingBar />
-          <form className='flex items-center flex-col gap-2 justify-center'>
-            <textarea placeholder='Add a comment' className='outline-none border resize-none rounded-lg p-2 w-6/12 text-black' />
-            <button className='border-2 rounded-md p-2 bg-[#B88E2F] w-6/12 text-white'>Save</button>
-          </form>
+           <Review productId={productId} />
         </div>
 
       </div>
