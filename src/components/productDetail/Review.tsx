@@ -1,52 +1,31 @@
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { useAppDispatch } from '../../redux/app/store';
 import { addReview } from '../../redux/features/reviewSlice';
-import withReactContent from 'sweetalert2-react-content';
-import Swal from 'sweetalert2';
-const MySwal = withReactContent(Swal);
 
 interface ReviewProps {
-  productId: string | undefined
+  productId: number | undefined,
+  userid_int: number | undefined
 };
 
-const Review: FC<ReviewProps> = ({ productId }) => {
+const Review: FC<ReviewProps> = ({ productId , userid_int}) => {
   const [rating, setRating] = useState(0);
   const [text, setText] = useState('');
   const [hover, setHover] = useState(0);
   const dispatch = useAppDispatch();
-  const userid = localStorage.getItem("userId");
-  const userid_int = useMemo(() => {
-    if (userid) {
-      return parseInt(userid);
-    }
-  }, [userid]);
-
-  const productId_Int = useMemo(() => {
-    if (productId) {
-      return parseInt(productId);
-    }
-  }, [productId]);
 
   const handleAddReviewBtnClick = useCallback(() => {
-    if (userid_int && productId_Int && rating > 0 && text.length > 0) {
+    if (userid_int && productId && rating > 0 && text.length > 0) {
       dispatch(addReview({
-        productId: productId_Int,
+        productId: productId,
         appUserId: userid_int,
         rate: rating,
         text: text.trim()
-      })).then(() => {
-        MySwal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Your comment has been successfully added!",
-          showConfirmButton: false,
-          timer: 1500
-        });
+      })).then(()=>{
         setRating(0);
         setText('');
       })
     }
-  }, [dispatch, rating, text, productId_Int, userid_int]);
+  }, [dispatch, rating, text, productId, userid_int]);
 
   return (
     <>

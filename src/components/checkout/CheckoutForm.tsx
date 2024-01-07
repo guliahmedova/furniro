@@ -1,15 +1,12 @@
 import { useFormik } from 'formik';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 import blackCircle from '../../assets/images/blackCircle.svg';
 import emptyCircle from '../../assets/images/emptyCircle.svg';
 import { RootState, useAppDispatch } from '../../redux/app/store';
 import { clearCart, getAllCartItemsByUserId } from '../../redux/features/cartSlice';
-import { addCheckout, getAllCountries, getAllProvinces } from '../../redux/features/checkoutSlice';
-import { validate } from './formValidate';
-const MySwal = withReactContent(Swal);
+import { addCheckout, getAllCountries, getAllProvinces, getRelatedProvince } from '../../redux/features/checkoutSlice';
+import { CheckoutYup } from './CheckoutYup';
 
 const CheckoutForm = () => {
     const dispatch = useAppDispatch();
@@ -36,11 +33,17 @@ const CheckoutForm = () => {
             emailAddress: '',
             note: ''
         },
-        validate,
-        onSubmit: () => { }
+        validationSchema: CheckoutYup,
+        onSubmit: () => {
+            if (userId_Int) {
+                dispatch(clearCart(userId_Int)).then((confirm)=>{
+                    console.log(confirm.payload.message);
+                })
+            }
+        }
     });
 
-    const { countries, provinces } = useSelector((state: RootState) => state.checkout);
+    const { countries, relatedProvinces } = useSelector((state: RootState) => state.checkout);
 
     useEffect(() => {
         dispatch(getAllCountries());
@@ -82,26 +85,22 @@ const CheckoutForm = () => {
                 phone: values.phone,
                 emailAddress: values.emailAddress,
                 additionalInfo: values.note
-            })).then((confirm) => {
-                if (confirm?.meta?.requestStatus === 'fulfilled') {
-                    MySwal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "The product was successfully deleted!",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            })
+            }))
         }
-    }, [values]);
+    }, [values, userId_Int, countryId_Int, provinceId_Int]);
+
+    useEffect(() => {
+        if (countryId_Int) {
+            dispatch(getRelatedProvince(countryId_Int));
+        }
+    }, [dispatch, countryId_Int]);
 
     return (
         <section className="mt-[63px] mb-[123px]">
-            <div className="xl:w-[85%] w-[95%] mx-auto flex lg:flex-row flex-col lg:px-0 px-3">
+            <form className="xl:w-[85%] w-[95%] mx-auto flex lg:flex-row flex-col lg:px-0 px-3" onSubmit={handleSubmit}>
                 <div className="lg:w-6/12 lg:mb-0 mb-12">
                     <h1 className="font-semibold text-[#000000] text-4xl mb-9 leading-10 lg:text-left text-center">Billing details</h1>
-                    <form onSubmit={handleSubmit}>
+                    <div>
                         <div className="flex gap-8 mb-9 lg:flex-row flex-col">
                             <div className="lg:w-6/12">
                                 <label className="font-medium text-[#000000] leading-6 mb-[22px] block" htmlFor="firstName">First Name</label>
@@ -151,7 +150,7 @@ const CheckoutForm = () => {
                         <div className="mb-9 relative">
                             <label className="font-medium text-[#000000] leading-6 mb-[22px] block" htmlFor="Province">Province</label>
                             <select name="province" value={values.province} onChange={handleChange} id="Province" className="border-2 appearance-none border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]">
-                                {provinces?.map((item) => (
+                                {relatedProvinces?.map((item) => (
                                     <option key={item.id} value={item.id} defaultValue={item.id}>{item.provinceName}</option>
                                 ))}
                             </select>
@@ -185,7 +184,7 @@ const CheckoutForm = () => {
                             <input type="text" name='note' value={values.note} onChange={handleChange} className="border-2 border-[#9F9F9F] px-7 w-full rounded-[10px] h-[75px]" placeholder="Additional information" />
                             {errors.note ? <div className='text-red-600 font-semibold text-sm mt-1'>{errors.note}</div> : null}
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div className="lg:w-6/12 lg:p-20">
                     <div className="flex items-center justify-between mb-[14px]">
@@ -237,10 +236,11 @@ const CheckoutForm = () => {
                         }
                     </div>
                     {getAllCartItems?.length > 0 && (
-                        <button onClick={handlePlaceOrderBtn} className='text-black text-xl mt-12 border-2 border-black rounded-[15px] py-[17px] w-[318px] mx-auto block hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out'>Place order</button>
+                        <button type='submit' onClick={handlePlaceOrderBtn}
+                            className='text-black text-xl mt-12 border-2 border-black rounded-[15px] py-[17px] w-[318px] mx-auto block hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out'>Place order</button>
                     )}
                 </div>
-            </div>
+            </form>
         </section>
     )
 };

@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { DescriptionType } from '../../models/DescriptionType';
 import { RootState, useAppDispatch } from '../../redux/app/store';
 import { getProductDescriptionById } from '../../redux/features/productDetailSlice';
-import { useParams } from 'react-router-dom';
+import { getReviewsByProductId } from '../../redux/features/reviewSlice';
 import Review from './Review';
 import ReviewList from './ReviewList';
-import { getallreviews } from '../../redux/features/reviewSlice';
 
 const DetailTabbedNavigation = () => {
   const [tabIndex, setTabIndex] = useState(3);
@@ -14,21 +14,43 @@ const DetailTabbedNavigation = () => {
     setTabIndex(index);
   };
 
+  const [showMore, setShowMore] = useState(8);
+
+  const userid = localStorage.getItem("userId");
+  const userid_int = useMemo(() => {
+    if (userid) {
+      return parseInt(userid);
+    }
+  }, [userid]);
+
   const productDescription: DescriptionType = useSelector((state: RootState) => state.productDetail.productDescriptions);
   const dispatch = useAppDispatch();
   const { productId } = useParams();
 
-  useEffect(() => {
+  const productid_int = useMemo(() => {
     if (productId) {
-      dispatch(getProductDescriptionById(productId));
+      return parseInt(productId);
     }
-  }, [dispatch, productId]);
+  }, [productId]);
 
   useEffect(() => {
-    dispatch(getallreviews());
-  }, [dispatch]);
+    if (productid_int) {
+      dispatch(getProductDescriptionById(productid_int));
+    }
+  }, [dispatch, productid_int]);
+
+  const { isReviewAdded, isReviewEdit } = useSelector((state: RootState) => state.review);
+  useEffect(() => {
+    if (productid_int) {
+      dispatch(getReviewsByProductId({
+        productId: productid_int,
+        take: showMore
+      }));
+    }
+  }, [dispatch, productid_int, isReviewAdded, isReviewEdit, showMore]);
 
   const allRewiews = useSelector((state: RootState) => state.review.reviews);
+  const totalReviewCount = useSelector((state: RootState) => state.review.totalReviewCount);
 
   return (
     <section className="mt-[69px] pt-[46px] pb-[61px] border-t border-b border-[#D9D9D9]">
@@ -36,7 +58,7 @@ const DetailTabbedNavigation = () => {
         <div className='flex lg:gap-14 gap-3 lg:justify-center justify-between mb-[37px]'>
           <span onClick={() => toggleTabs(1)} className={`lg:text-2xl text-center ease-in-out duration-300 text-sm ${tabIndex === 1 ? 'text-black font-medium select-none' : 'text-[#9F9F9F] font-normal cursor-pointer'}`}>Description</span>
           <span onClick={() => toggleTabs(2)} className={`lg:text-2xl text-center ease-in-out duration-300 text-sm flex-shrink-0 ${tabIndex === 2 ? 'text-black font-medium select-none' : 'text-[#9F9F9F] font-normal cursor-pointer'}`}>Additional Information</span>
-          <span onClick={() => toggleTabs(3)} className={`lg:text-2xl text-center ease-in-out duration-300 text-sm flex-shrink-0 ${tabIndex === 3 ? 'text-black font-medium select-none' : 'text-[#9F9F9F] font-normal cursor-pointer'}`}>Reviews [{allRewiews?.length}]</span>
+          <span onClick={() => toggleTabs(3)} className={`lg:text-2xl text-center ease-in-out duration-300 text-sm flex-shrink-0 ${tabIndex === 3 ? 'text-black font-medium select-none' : 'text-[#9F9F9F] font-normal cursor-pointer'}`}>Reviews [{totalReviewCount}]</span>
         </div>
 
         <div className={`${tabIndex === 1 ? 'block' : 'hidden'}`}>
@@ -55,12 +77,16 @@ const DetailTabbedNavigation = () => {
         </div>
 
         <div className={`max-w-[1026px] mx-auto text-[#9F9F9F] font-normal tracking-wider ${tabIndex === 2 ? 'block' : 'hidden'}`}>
-          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio quo voluptates molestias numquam perspiciatis soluta enim repudiandae praesentium ullam doloremque nam porro reiciendis provident, nisi rem ratione! Eos, corrupti tenetur.</p>
+          <p>{productDescription?.introduction}</p>
         </div>
 
         <div className={`max-w-[1026px] mx-auto text-[#9F9F9F] font-normal tracking-wider flex flex-col ${tabIndex === 3 ? 'block' : 'hidden'}`}>
-          <Review productId={productId} />
-          <ReviewList allRewiews={allRewiews} />
+          <Review productId={productid_int} userid_int={userid_int} />
+          <ReviewList allRewiews={allRewiews} totalReviewCount={totalReviewCount}
+            appUserId={userid_int}
+            productId={productid_int}
+            setShowMore={setShowMore}
+            showMore={showMore} />
         </div>
 
       </div>

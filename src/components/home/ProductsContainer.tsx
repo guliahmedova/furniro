@@ -31,11 +31,13 @@ const ProductsContainer = () => {
                             product={item} />
                     ))}
                 </div>
+                {(totalProductCount !== showMore && showMore > 4) && (
                     <button
                         className="mt-[32px] border-2 py-[12px] block w-[245px] mx-auto border-[#B88E2F] text-[#B88E2F] font-bold text-[16px] leading-6"
                         onClick={handleShowMoreClick}>
                         Show More
                     </button>
+                )}
             </div>
         </section>
     )

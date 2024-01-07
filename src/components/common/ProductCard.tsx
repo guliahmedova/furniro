@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback, useState } from 'react';
+import React, { FC, memo, useCallback, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import compare from '../../assets/images/compare.svg';
@@ -22,6 +22,11 @@ interface ProductCardProps {
 
 const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
   const userId = localStorage.getItem('userId');
+  const userId_int = useMemo(()=>{
+    if (userId) {
+        return parseInt(userId);
+    }
+  },[userId])
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isModalOpan, setIsModalOpen] = useState(false);
@@ -49,7 +54,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
   }, []);
 
   const handleAddToCartModalClick = () => {
-    if (userId && userId !== 'undefined') {
+    if (userId_int) {
       setIsModalOpen(!isModalOpan);
     } else {
       navigate('/login');
@@ -65,11 +70,11 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
   };
 
   const handleAddToCartBtn = () => {
-    if (userId && productById?.colors?.[color].id) {
+    if (userId_int && productById?.colors?.[color].id) {
       dispatch(addToCart({
         productId: product?.id,
         colorId: productById?.colors?.[color].id,
-        userId: parseInt(userId),
+        userId: userId_int,
         count: productCount
       }));
       setIsModalOpen(false);

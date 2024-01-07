@@ -6,9 +6,9 @@ import phone from '../../assets/images/phone.svg';
 import workingTime from '../../assets/images/workingTime.svg';
 import { RootState, useAppDispatch } from '../../redux/app/store';
 import { getContactDatas, sendContactMessage } from '../../redux/features/contactSlice';
-import { validate } from './contactFormValidate';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { ContactYup } from './ContactYup';
 const MySwal = withReactContent(Swal);
 
 const ContactForm = () => {
@@ -28,7 +28,7 @@ const ContactForm = () => {
             subject: '',
             message: ''
         },
-        validate,
+        validationSchema: ContactYup,
         onSubmit: () => { },
     });
 

@@ -22,7 +22,7 @@ export const getProductById = createAsyncThunk(
 
 export const getProductDescriptionById = createAsyncThunk(
     'productDetail/getProductDescriptionById',
-    async (productId: string) => {
+    async (productId: number) => {
         const response = await axios.get(`${baseurl}UserProduct/getById/Description?Id=${productId}`);
         return (await response.data);
     }

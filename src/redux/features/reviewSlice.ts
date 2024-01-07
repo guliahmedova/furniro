@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ReviewType } from '../../models/ReviewType';
+import { ReviewDeleteBody, ReviewType } from '../../models/ReviewType';
+import { ReviewResponseBodyType } from '../../models/ReviewResponseBodyType';
 
 const baseurl = "http://immutable858-001-site1.atempurl.com/api/Review";
 
@@ -14,7 +15,10 @@ interface ReviewState {
     text: string,
     error: string,
     message: string,
-    reviews: ReviewType[]
+    reviews: ReviewResponseBodyType[],
+    isReviewAdded: boolean,
+    isReviewEdit: boolean,
+    totalReviewCount: number
 };
 
 export const addReview = createAsyncThunk(
@@ -33,7 +37,7 @@ export const updateReview = createAsyncThunk(
     'review/updateReview',
     async (reviewBody: ReviewType, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${baseurl}`, reviewBody);
+            const response = await axios.put(`${baseurl}`, reviewBody);
             return (await response.data);
         } catch (error) {
             return rejectWithValue(error);
@@ -43,26 +47,23 @@ export const updateReview = createAsyncThunk(
 
 export const getReviewsByProductId = createAsyncThunk(
     'review/getReviewsByUserId',
-    async (productId) => {
-        const response = await axios.get(`${baseurl}/${productId}`);
-        return (await response.data);
-    }
-);
-
-// bu silinecek !!!!!!!!!!!!!
-export const getallreviews = createAsyncThunk(
-    'review/getallreviews',
-    async () => {
-        const response = await axios.get(`${baseurl}`);
+    async ({productId, take} : {productId: number, take: number}) => {
+        const response = await axios.get(`${baseurl}/ProductReviews?ProductId=${productId}&ShowMore.Take=${take}`);
         return (await response.data);
     }
 );
 
 export const deletReviewById = createAsyncThunk(
     'review/getReviewsById',
-    async (reviewId:number) => {
-        const response = await axios.delete(`${baseurl}/${reviewId}`);
-        return (await response.data);
+    async (reviewBody : ReviewDeleteBody, { rejectWithValue }) => {
+        try {
+            await axios.delete(`${baseurl}`, {
+                data: reviewBody
+            });
+            return reviewBody.id;
+        } catch (error : any) {
+            return rejectWithValue(error.message);
+        }
     }
 );
 
@@ -76,7 +77,10 @@ const initialState = {
     text: '',
     error: '',
     message: '',
-    reviews: []
+    reviews: [],
+    isReviewAdded: false,
+    totalReviewCount: 0,
+    isReviewEdit: false
 } as ReviewState;
 
 const reviewSlice = createSlice({
@@ -86,34 +90,42 @@ const reviewSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(addReview.pending, (state) => {
             state.loading = 'pending';
+            state.isReviewAdded = false;
         });
         builder.addCase(addReview.fulfilled, (state) => {
             state.loading = 'succeeded';
             state.isSuccess = true;
+            state.isReviewAdded = true;
         });
         builder.addCase(addReview.rejected, (state) => {
             state.loading = 'failed';
             state.isSuccess = false;
+            state.isReviewAdded = false;
         });
 
         builder.addCase(updateReview.pending, (state) => {
             state.loading = 'pending';
+            state.isReviewEdit = false;
         });
         builder.addCase(updateReview.fulfilled, (state) => {
             state.loading = 'succeeded';
+            state.isReviewAdded = true;
             state.isSuccess = true;
         });
         builder.addCase(updateReview.rejected, (state) => {
             state.loading = 'failed';
             state.isSuccess = false;
+            state.isReviewEdit = false;
         });
 
         builder.addCase(getReviewsByProductId.pending, (state) => {
             state.loading = 'pending';
         });
-        builder.addCase(getReviewsByProductId.fulfilled, (state) => {
+        builder.addCase(getReviewsByProductId.fulfilled, (state, action) => {
             state.loading = 'succeeded';
             state.isSuccess = true;
+            state.reviews  = action.payload.productReviews;
+            state.totalReviewCount = action.payload.totalReviewCount;
         });
         builder.addCase(getReviewsByProductId.rejected, (state) => {
             state.loading = 'failed';
@@ -125,21 +137,18 @@ const reviewSlice = createSlice({
         });
         builder.addCase(deletReviewById.fulfilled, (state, action) => {
             state.loading = 'succeeded';
-            state.message = action.payload.message;
+            const itemsAfterDelete = state.reviews.filter(
+                (item) => item.id !== action.payload
+            );
+            state.reviews = itemsAfterDelete;
         });
-        builder.addCase(deletReviewById.rejected, (state) => {
+        builder.addCase(deletReviewById.rejected, (state, action) => {
             state.loading = 'failed';
-        });
-        
-        builder.addCase(getallreviews.pending, (state) => {
-            state.loading = 'pending';
-        });
-        builder.addCase(getallreviews.fulfilled, (state, action) => {
-            state.loading = 'succeeded';
-            state.reviews = action.payload;
-        });
-        builder.addCase(getallreviews.rejected, (state) => {
-            state.loading = 'failed';
+            if (action.error) {
+                state.error = action.payload as string;
+            } else {
+                state.error = 'An unknown error occurred';
+            }
         });
     },
 });

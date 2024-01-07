@@ -27,7 +27,6 @@ const Navbar = () => {
     }
   }, [userid]);
 
-
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -40,7 +39,7 @@ const Navbar = () => {
     if (userid_int) {
       dispatch(getAllCartItemsByUserId(userid_int));
     }
-  }, [dispatch]);
+  }, [dispatch, userid_int]);
 
   return (
     <header className="bg-white md:shadow-sm">

@@ -7,6 +7,8 @@ import wood from '../../assets/images/wood.svg';
 import { RootState, useAppDispatch } from '../../redux/app/store';
 import { getBlogCategories, getBlogs, getRecentBlogs } from '../../redux/features/blogSlice';
 import { Pagination } from '../common/index';
+import moment from 'moment'
+
 
 const BlogSection = () => {
     const { blogs, categories, recentBlogs, totalCount } = useSelector((state: RootState) => state.blog);
@@ -40,13 +42,13 @@ const BlogSection = () => {
                                     </div>
                                     <div className='flex lg:gap-9 items-center mb-4 lg:justify-normal justify-between'>
                                         <div className='flex lg:gap-2 items-center'>
-                                            <img src={admin} alt="admin-icon" /> <span className='text-sm lg:text-base'>{item?.adminInfo?.roleName}</span>
+                                            <img src={admin} alt="admin-icon" /> <span className='text-sm lg:text-base text-[#9F9F9F]'>{item?.adminInfo?.roleName}</span>
                                         </div>
                                         <div className='flex lg:gap-2 items-center'>
-                                            <img src={date} alt="date-icon" /> <span className='text-sm lg:text-base'>{item?.createdDate}</span>
+                                            <img src={date} alt="date-icon" /> <span className='text-sm lg:text-base text-[#9F9F9F]'>{moment(item?.createdDate).format('DD MMM YYYY')}</span>
                                         </div>
                                         <div className='flex lg:gap-2 items-center'>
-                                            <img src={wood} alt="wood-icon" /> <span className='text-sm lg:text-base'>{item?.category?.categoryName}</span>
+                                            <img src={wood} alt="wood-icon" /> <span className='text-sm lg:text-base text-[#9F9F9F]'>{item?.category?.categoryName}</span>
                                         </div>
                                     </div>
                                     <div className='mb-[30px]'>

@@ -1,12 +1,9 @@
 import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 import deleteIcon from '../../assets/images/deleteIcon.svg';
 import { RootState, useAppDispatch } from '../../redux/app/store';
 import { clearCart, getAllCartItemsByUserId, removeCartItem } from '../../redux/features/cartSlice';
-const MySwal = withReactContent(Swal);
 
 const CartTotals = () => {
     const dispatch = useAppDispatch();
@@ -32,17 +29,7 @@ const CartTotals = () => {
                 userId: userId_Int,
                 productId: productId,
                 colorId: colorId,
-            })).then((confirm) => {
-                if (confirm?.payload?.success) {
-                    MySwal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "The product was successfully deleted!",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            })
+            }))
         }
     };
 
@@ -91,7 +78,7 @@ const CartTotals = () => {
                     </table>
 
                     {cartItems?.length > 0 && (
-                        <button onClick={clearCartBtnClickHandler} className="text-[#000000] border-2 mt-10 border-[#000000] py-[14px] text-[20px] leading-7 rounded-lg w-4/12 block mx-auto hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out">Remove All Items</button>
+                        <button onClick={clearCartBtnClickHandler} type='button' className="text-[#000000] border-2 mt-10 border-[#000000] py-[14px] text-[20px] leading-7 rounded-lg w-4/12 block mx-auto hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out mb-5">Remove All Items</button>
                     )}
                 </div>
 

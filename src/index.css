@@ -27,24 +27,24 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 /*categories*/
+.reviewList::-webkit-scrollbar,
 .categories::-webkit-scrollbar {
     width: 15px;
 }
-
+.reviewList::-webkit-scrollbar-track,
 .categories::-webkit-scrollbar-track {
     border-radius: 1px;
     background: white;
 }
-
-.categories::-webkit-scrollbar-track:hover {
+.reviewList::-webkit-scrollbar-track:hover .categories::-webkit-scrollbar-track:hover {
     background: white;
 }
-
+.reviewList::-webkit-scrollbar-thumb,
 .categories::-webkit-scrollbar-thumb {
     background: whitesmoke;
     border-radius: 10px;
 }
-
+.reviewList::-webkit-scrollbar-thumb:hover,
 .categories::-webkit-scrollbar-thumb:hover {
     background: whitesmoke;
 }
@@ -140,4 +140,27 @@ body::-webkit-scrollbar-thumb:hover {
 }
 .parent img:nth-child(9) {
     grid-area: 6 / 10 / 8 / 12;
+}
+
+/**/
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-8px);
+    }
+    50% {
+        transform: translateX(8px);
+    }
+    75% {
+        transform: translateX(-8px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.shaking-animate {
+    animation: shake 0.4s ease-in-out;
 }

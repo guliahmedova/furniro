@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSelector } from "react-redux";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -14,19 +14,23 @@ const ProfileEdit = () => {
     const { userName, lastName, firstName, email } = useSelector((state: RootState) => state.auth);
     const userId = localStorage.getItem('userId');
 
+    const currentSaveBtn = useRef<HTMLButtonElement>(null);
+
     const userID_Int = useMemo(() => {
         if (userId) {
             return parseInt(userId);
         };
     }, [userId]);
 
+    const initialFormValues = {
+        email: email || '',
+        userName: userName || '',
+        firstName: firstName || '',
+        lastName: lastName || '',
+    };
+
     const { handleChange, values, handleSubmit, errors, setValues } = useFormik({
-        initialValues: {
-            email: email && email,
-            userName: userName && userName,
-            firstName: firstName && firstName,
-            lastName: lastName && lastName,
-        },
+        initialValues: initialFormValues,
         validationSchema: RegisterYup,
         onSubmit: () => { }
     });
@@ -42,6 +46,11 @@ const ProfileEdit = () => {
         }
     }, [userName, lastName, firstName, email, setValues]);
 
+    const isFormModified = useMemo(
+        () => JSON.stringify(values) !== JSON.stringify(initialFormValues),
+        [values, initialFormValues]
+    );
+
     useEffect(() => {
         if (userID_Int) {
             dispatch(getUserById(userID_Int));
@@ -49,7 +58,14 @@ const ProfileEdit = () => {
     }, [dispatch, values, userID_Int]);
 
     const handleBtnClick = useCallback(() => {
-        if (userID_Int) {
+        if (!isFormModified) {
+            currentSaveBtn.current?.classList.add("shaking-animate");
+            setTimeout(() => {
+                currentSaveBtn.current?.classList.remove('shaking-animate');
+            }, 1000);
+        }
+        else if (userID_Int && isFormModified) {
+            currentSaveBtn.current?.classList.remove("shaking-animate");
             dispatch(updateUser({
                 id: userID_Int,
                 userName: values.userName,
@@ -106,7 +122,7 @@ const ProfileEdit = () => {
                             </div>
                         </div>
 
-                        <button type="submit" onClick={handleBtnClick} className="block bg-[#B88E2F] text-white font-medium text-lg md:w-[30%] w-full ml-auto py-4 rounded-md mt-5 hover:bg-yellow-600">Save Changes</button>
+                        <button type="submit" ref={currentSaveBtn} onClick={handleBtnClick} className="block bg-[#B88E2F] text-white font-medium text-lg md:w-[30%] w-full ml-auto py-4 rounded-md mt-5 hover:bg-yellow-600">Save Changes</button>
                     </form>
                 </div>
             </section>

@@ -1,14 +1,11 @@
 import { useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 import closeFuncIcon from '../../../assets/images/closeModal.svg';
 import deleteIcon from '../../../assets/images/deleteItem.svg';
 import { useModal } from "../../../contexts/ModalContext";
 import { RootState, useAppDispatch } from "../../../redux/app/store";
 import { getAllCartItemsByUserId, removeCartItem } from "../../../redux/features/cartSlice";
-const MySwal = withReactContent(Swal);
 
 const ShoppingModal = () => {
     const { modal, closeModal } = useModal();
@@ -42,24 +39,14 @@ const ShoppingModal = () => {
                 userId: userId_Int,
                 productId: productId,
                 colorId: colorId
-            })).then((confirm) => {
-                if (confirm?.payload?.success) {
-                    MySwal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "The product was successfully deleted!",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            })
+            }))
         }
     };
 
     return (
         modal && (
             <div onClick={handleBackgroundClick} className={`modal-background | fixed h-full w-full bg-[#3A3A3A]/70 flex justify-end bottom-0 z-40 opacity-100 transition-all ease-in-out duration-500 ${modal ? 'right-0' : 'right-[-100%]'}`}>
-                <div className="bg-white top-0 h-fit py-7 w-auto">
+                <div className="bg-white top-0 h-fit py-7 w-4/12">
                     <div className="flex justify-between gap-40 lg:px-8 px-3">
                         <h2 className="text-black font-bold lg:text-2xl text-sm">Shopping Cart</h2>
                         <button onClick={closeModal}><img src={closeFuncIcon} alt="close-icon" /></button>
@@ -67,7 +54,7 @@ const ShoppingModal = () => {
                     <hr className="lg:w-[287px] bg-[#D9D9D9] mt-7 ml-8" />
 
                     {loading === 'pending' ? (
-                        <div className="text-center h-[50vh] w-[30%] flex items-center justify-center">
+                        <div className="text-center h-[50vh] w-full flex items-center justify-center">
                             <div role="status">
                                 <svg aria-hidden="true" className="inline w-16 h-16 text-gray-200 animate-spin dark:text-gray-600 fill-[#B88E2F]" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />

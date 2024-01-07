@@ -11,6 +11,7 @@ interface CheckoutState {
     provinces: ProvinceType[]
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
     isSuccess: boolean,
+    relatedProvinces: ProvinceType[]
 };
 
 export const getAllCountries = createAsyncThunk(
@@ -25,6 +26,14 @@ export const getAllProvinces = createAsyncThunk(
     'checkout/getAllProvinces',
     async () => {
         const response = await axios.get(`${baseUrl}Province`);
+        return (await response.data);
+    }
+);
+
+export const getRelatedProvince = createAsyncThunk(
+    'checkout/getRelatedProvince',
+    async (countryId: number) => {
+        const response = await axios.get(`${baseUrl}Province/GetRelatedProvince/${countryId}`);
         return (await response.data);
     }
 );
@@ -47,6 +56,7 @@ const initialState = {
     countries: [],
     provinces: [],
     isSuccess: false,
+    relatedProvinces: []
 } as CheckoutState;
 
 const checkoutSlice = createSlice({
@@ -84,6 +94,19 @@ const checkoutSlice = createSlice({
             state.isSuccess = true;
         });
         builder.addCase(addCheckout.rejected, (state) => {
+            state.loading = 'failed';
+            state.isSuccess = false;
+        });
+
+        builder.addCase(getRelatedProvince.pending, (state) => {
+            state.loading = 'pending';
+        });
+        builder.addCase(getRelatedProvince.fulfilled, (state, action) => {
+            state.loading = 'succeeded';
+            state.isSuccess = true;
+            state.relatedProvinces = action.payload;
+        });
+        builder.addCase(getRelatedProvince.rejected, (state) => {
             state.loading = 'failed';
             state.isSuccess = false;
         });

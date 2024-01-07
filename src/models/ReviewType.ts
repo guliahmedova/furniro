@@ -4,4 +4,10 @@ export type ReviewType = {
     appUserId: number,
     rate: number,
     text: string
-}; 
+};
+
+export type ReviewDeleteBody = {
+    id: number,
+    productId: number,
+    appUserId: number
+};

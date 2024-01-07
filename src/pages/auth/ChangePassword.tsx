@@ -7,6 +7,8 @@ import { ChangePasswordYup } from './ChangePasswordYup';
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 const MySwal = withReactContent(Swal);
+import closeEye from '../../assets/images/close-eye.svg';
+import openEye from '../../assets/images/open-eye.svg';
 
 const ChangePassword = () => {
   const dispatch = useAppDispatch();
@@ -14,6 +16,18 @@ const ChangePassword = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const error = useSelector((state: RootState) => state.auth.changepErr);
   const isSuccess = useSelector((state: RootState) => state.auth.isSuccess);
+  const [showPassword, setShowPassword] = useState({
+    currentPassword: false,
+    newPassword: false,
+    repeatNewPassword: false,
+  });
+
+  const togglePasswordVisibility = (field: keyof typeof showPassword) => {
+    setShowPassword((prevState) => ({
+      ...prevState,
+      [field]: !prevState[field],
+    }));
+  };
 
   const userID_Int = useMemo(() => {
     if (userId) {
@@ -70,18 +84,28 @@ const ChangePassword = () => {
           <form className="w-full border p-5" onSubmit={handleSubmit}>
             <div className="w-full">
               <label htmlFor="currentPassword" className="block capitalize font-medium text-lg my-2 select-none">current Password</label>
-              <input className="p-4 rounded-md focus:outline w-full focus:outline-gray-500" value={values.currentPassword} name='currentPassword' type="text" id="currentPassword" onChange={handleChange} />
+              <div className='relative'>
+                <input className="p-4 rounded-md focus:outline w-full focus:outline-gray-500" value={values.currentPassword} name='currentPassword' type="text" id="currentPassword" onChange={handleChange} />
+                <img src={showPassword.currentPassword ? openEye : closeEye} className='absolute w-6 h-6 cursor-pointer right-2.5 top-4' onClick={() => togglePasswordVisibility('currentPassword')} alt="" />
+              </div>
               {errors.currentPassword ? <div className='text-red-600 font-semibold text-sm text-right'>{errors.currentPassword}</div> : ""}
+
             </div>
             <div className="flex gap-3 xl:flex-row flex-col">
               <div className="xl:w-6/12 w-full">
                 <label htmlFor="newPassword" className="block capitalize font-medium text-lg my-2 select-none">new password</label>
-                <input className="p-4 rounded-md focus:outline w-full focus:outline-gray-500" value={values.newPassword} name='newPassword' type="text" id="newPassword" onChange={handleChange} />
+                <div className='relative'>
+                  <input className="p-4 rounded-md focus:outline w-full focus:outline-gray-500" value={values.newPassword} name='newPassword' type="text" id="newPassword" onChange={handleChange} />
+                  <img src={showPassword.newPassword ? openEye : closeEye} className='absolute w-6 h-6 cursor-pointer right-2.5 top-4' onClick={() => togglePasswordVisibility('newPassword')} alt="" />
+                </div>
                 {errors.newPassword ? <div className='text-red-600 font-semibold text-sm text-right'>{errors.newPassword}</div> : ""}
               </div>
               <div className="xl:w-6/12 w-full">
                 <label htmlFor="repeatNewPassword" className="block capitalize font-medium text-lg my-2 select-none">Repeat new password</label>
-                <input className="p-4 rounded-md focus:outline w-full focus:outline-gray-500" value={values.repeatNewPassword} name='repeatNewPassword' type="text" id="repeatNewPassword" onChange={handleChange} />
+                <div className='relative'>
+                  <input className="p-4 rounded-md focus:outline w-full focus:outline-gray-500" value={values.repeatNewPassword} name='repeatNewPassword' type="text" id="repeatNewPassword" onChange={handleChange} />
+                  <img src={showPassword.repeatNewPassword ? openEye : closeEye} className='absolute w-6 h-6 cursor-pointer right-2.5 top-4' onClick={() => togglePasswordVisibility('repeatNewPassword')} alt="" />
+                </div>
                 {errors.repeatNewPassword ? <div className='text-red-600 font-semibold text-sm text-right'>{errors.repeatNewPassword}</div> : ""}
               </div>
             </div>

@@ -2,25 +2,63 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { RootState, useAppDispatch } from "../../redux/app/store";
 import { useSelector } from "react-redux";
 import { deleteAccount } from "../../redux/features/authSlice";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 const AccountSidebar = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
     const removeToken = () => {
-        localStorage.removeItem("userToken");
-        localStorage.removeItem('userId');
-        navigate('/login');
+        MySwal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert your account!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem("userToken");
+                localStorage.removeItem('userId');
+                navigate('/login');
+                MySwal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+            }
+        });
     };
 
     const username = useSelector((state: RootState) => state.auth.userName);
-    
+
     const deleteAccountClickHandler = () => {
         if (username.length > 0) {
-            dispatch(deleteAccount(username));
-            localStorage.removeItem("userToken");
-            localStorage.removeItem('userId');
-            navigate('/register');
+            MySwal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert your account!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(deleteAccount(username));
+                    localStorage.removeItem("userToken");
+                    localStorage.removeItem('userId');
+                    navigate('/register');
+                    MySwal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
+                }
+            });
         }
     };
 

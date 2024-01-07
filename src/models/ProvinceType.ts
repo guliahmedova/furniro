@@ -1,6 +1,6 @@
 export type ProvinceType = {
     id: number,
-    country: {
+    country?: {
         id: number,
         countryName: string
     },
