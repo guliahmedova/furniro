@@ -39,8 +39,6 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
   const [productCount, setProductCount] = useState(1);
   const [productCountMsg, setProductCountMsg] = useState('');
 
-  const errorMsg = useSelector((state: RootState) => state.cart.stolkMsg);
-
   const isLike = useSelector((state: RootState) => (
     state.wishlist.product.some((favItem) => favItem?.id === product?.id)
   ));

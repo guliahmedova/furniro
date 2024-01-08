@@ -7,7 +7,9 @@ import { RootState, useAppDispatch } from '../../redux/app/store';
 import { clearCart, getAllCartItemsByUserId } from '../../redux/features/cartSlice';
 import { addCheckout, getAllCountries, getAllProvinces, getRelatedProvince } from '../../redux/features/checkoutSlice';
 import { CheckoutYup } from './CheckoutYup';
-
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+const MySwal = withReactContent(Swal);
 const CheckoutForm = () => {
     const dispatch = useAppDispatch();
     const userId = localStorage.getItem('userId');
@@ -19,7 +21,7 @@ const CheckoutForm = () => {
         }
     }, [userId]);
 
-    const { values, errors, handleChange, handleSubmit } = useFormik({
+    const { values, errors, handleChange, handleSubmit, resetForm } = useFormik({
         initialValues: {
             firstName: '',
             lastName: '',
@@ -36,8 +38,18 @@ const CheckoutForm = () => {
         validationSchema: CheckoutYup,
         onSubmit: () => {
             if (userId_Int) {
-                dispatch(clearCart(userId_Int)).then((confirm)=>{
-                    console.log(confirm.payload.message);
+                dispatch(clearCart(userId_Int)).then((confirm) => {
+                    if (confirm.meta.requestStatus === 'fulfilled') {
+                        resetForm();
+                        MySwal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: confirm.payload.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        dispatch(getAllCartItemsByUserId(userId_Int))
+                    }
                 })
             }
         }

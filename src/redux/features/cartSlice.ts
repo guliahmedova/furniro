@@ -21,7 +21,6 @@ interface CartState {
     error: string,
     isDelete: boolean,
     subTotal: number,
-    stolkMsg: string
 };
 
 export const addToCart = createAsyncThunk(
@@ -82,7 +81,6 @@ const initialState = {
     getAllCartItems: [],
     error: '',
     subTotal: 0,
-    stolkMsg: ''
 } as CartState
 
 const cartSlice = createSlice({
@@ -100,13 +98,8 @@ const cartSlice = createSlice({
             state.userId = action.payload.cart.userId;
             state.cartItems = action.payload.cart.cartItems;
         });
-        builder.addCase(addToCart.rejected, (state, action) => {
+        builder.addCase(addToCart.rejected, (state) => {
             state.loading = 'failed';
-            if (action.error) {
-                state.stolkMsg = action.payload as string;
-            } else {
-                state.stolkMsg = 'An unknown error occurred';
-            }
         });
 
         builder.addCase(getAllCartItemsByUserId.pending, (state) => {
