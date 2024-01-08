@@ -39,7 +39,8 @@ const DetailTabbedNavigation = () => {
     }
   }, [dispatch, productid_int]);
 
-  const { isReviewAdded, isReviewEdit } = useSelector((state: RootState) => state.review);
+  const allRewiews = useSelector((state: RootState) => state.review.reviews);
+
   useEffect(() => {
     if (productid_int) {
       dispatch(getReviewsByProductId({
@@ -47,9 +48,8 @@ const DetailTabbedNavigation = () => {
         take: showMore
       }));
     }
-  }, [dispatch, productid_int, isReviewAdded, isReviewEdit, showMore]);
+  }, [dispatch, productid_int, showMore]);
 
-  const allRewiews = useSelector((state: RootState) => state.review.reviews);
   const totalReviewCount = useSelector((state: RootState) => state.review.totalReviewCount);
 
   return (
@@ -81,7 +81,7 @@ const DetailTabbedNavigation = () => {
         </div>
 
         <div className={`max-w-[1026px] mx-auto text-[#9F9F9F] font-normal tracking-wider flex flex-col ${tabIndex === 3 ? 'block' : 'hidden'}`}>
-          <Review productId={productid_int} userid_int={userid_int} />
+          <Review productId={productid_int} userid_int={userid_int} showMore={showMore} />
           <ReviewList allRewiews={allRewiews} totalReviewCount={totalReviewCount}
             appUserId={userid_int}
             productId={productid_int}

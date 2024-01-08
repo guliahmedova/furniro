@@ -2,7 +2,7 @@ import moment from 'moment';
 import { FC, useState } from "react";
 import { ReviewResponseBodyType } from "../../models/ReviewResponseBodyType";
 import { useAppDispatch } from "../../redux/app/store";
-import { deletReviewById } from "../../redux/features/reviewSlice";
+import { deletReviewById, getReviewsByProductId } from "../../redux/features/reviewSlice";
 import ReviewEditModal from "./ReviewEditModal";
 
 interface ReviewListProps {
@@ -17,7 +17,6 @@ interface ReviewListProps {
 const ReviewList: FC<ReviewListProps> = ({ allRewiews, totalReviewCount, setShowMore, showMore, appUserId, productId }) => {
     const dispatch = useAppDispatch();
     const [showEditModal, setShowEditModal] = useState(false);
-
     const [reviewId, setReviewId] = useState(0);
 
     const deleteReviewByIdClickHandler = (reviewId: number) => {
@@ -26,7 +25,12 @@ const ReviewList: FC<ReviewListProps> = ({ allRewiews, totalReviewCount, setShow
                 id: reviewId,
                 productId: productId,
                 appUserId: appUserId
-            }));
+            })).then(() => {
+                dispatch(getReviewsByProductId({
+                    productId: productId,
+                    take: showMore
+                }))
+            })
         }
     };
 
@@ -59,7 +63,7 @@ const ReviewList: FC<ReviewListProps> = ({ allRewiews, totalReviewCount, setShow
                                         {review.rate}
                                     </span>
                                 </div>
-                                <div className="flex items-center gap-3 mt-5 justify-end">
+                                <div className={`items-center gap-3 mt-5 justify-end ${review.appUserId === appUserId ? 'flex' : 'hidden'}`}>
                                     <span className="text-sm text-gray-500 font-medium  w-full">{moment(review.createdAt).add(10, 'days').calendar()}</span>
                                     <button className="bg-yellow-500 text-white px-5 py-1 font-medium"
                                         onClick={() => editReviewBtnHandler(review.id)}>Edit</button>
@@ -77,6 +81,7 @@ const ReviewList: FC<ReviewListProps> = ({ allRewiews, totalReviewCount, setShow
                                 setShowEditModal={setShowEditModal}
                                 rate={review.rate}
                                 textvalue={review.text}
+                                showMore={showMore}
                                 reviewId={review.id}
                                 productId={review.productId}
                                 appUserId={review.appUserId}

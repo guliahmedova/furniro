@@ -1,13 +1,14 @@
 import { FC, useCallback, useState } from 'react';
 import { useAppDispatch } from '../../redux/app/store';
-import { addReview } from '../../redux/features/reviewSlice';
+import { addReview, getReviewsByProductId } from '../../redux/features/reviewSlice';
 
 interface ReviewProps {
   productId: number | undefined,
-  userid_int: number | undefined
+  userid_int: number | undefined,
+  showMore: number
 };
 
-const Review: FC<ReviewProps> = ({ productId , userid_int}) => {
+const Review: FC<ReviewProps> = ({ productId, userid_int, showMore }) => {
   const [rating, setRating] = useState(0);
   const [text, setText] = useState('');
   const [hover, setHover] = useState(0);
@@ -20,9 +21,13 @@ const Review: FC<ReviewProps> = ({ productId , userid_int}) => {
         appUserId: userid_int,
         rate: rating,
         text: text.trim()
-      })).then(()=>{
+      })).then(() => {
         setRating(0);
         setText('');
+        dispatch(getReviewsByProductId({
+          productId: productId,
+          take: showMore
+        }))
       })
     }
   }, [dispatch, rating, text, productId, userid_int]);

@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import admin from '../../assets/images/admin.svg';
@@ -7,8 +8,6 @@ import wood from '../../assets/images/wood.svg';
 import { RootState, useAppDispatch } from '../../redux/app/store';
 import { getBlogCategories, getBlogs, getRecentBlogs } from '../../redux/features/blogSlice';
 import { Pagination } from '../common/index';
-import moment from 'moment'
-
 
 const BlogSection = () => {
     const { blogs, categories, recentBlogs, totalCount } = useSelector((state: RootState) => state.blog);

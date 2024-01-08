@@ -23,7 +23,7 @@ export const sendContactMessage = createAsyncThunk(
         try {
             const response = await axios.post(`${baseUrl}ContactMessage`, contactData, {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    "Authorization": `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
             });

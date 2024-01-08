@@ -16,8 +16,6 @@ interface ReviewState {
     error: string,
     message: string,
     reviews: ReviewResponseBodyType[],
-    isReviewAdded: boolean,
-    isReviewEdit: boolean,
     totalReviewCount: number
 };
 
@@ -37,8 +35,10 @@ export const updateReview = createAsyncThunk(
     'review/updateReview',
     async (reviewBody: ReviewType, { rejectWithValue }) => {
         try {
-            const response = await axios.put(`${baseurl}`, reviewBody);
-            return (await response.data);
+            await axios.put(`${baseurl}`, reviewBody);
+            if (reviewBody.id) {
+                return reviewBody.id;
+            }
         } catch (error) {
             return rejectWithValue(error);
         }
@@ -47,7 +47,7 @@ export const updateReview = createAsyncThunk(
 
 export const getReviewsByProductId = createAsyncThunk(
     'review/getReviewsByUserId',
-    async ({productId, take} : {productId: number, take: number}) => {
+    async ({ productId, take }: { productId: number, take: number }) => {
         const response = await axios.get(`${baseurl}/ProductReviews?ProductId=${productId}&ShowMore.Take=${take}`);
         return (await response.data);
     }
@@ -55,13 +55,13 @@ export const getReviewsByProductId = createAsyncThunk(
 
 export const deletReviewById = createAsyncThunk(
     'review/getReviewsById',
-    async (reviewBody : ReviewDeleteBody, { rejectWithValue }) => {
+    async (reviewBody: ReviewDeleteBody, { rejectWithValue }) => {
         try {
             await axios.delete(`${baseurl}`, {
                 data: reviewBody
             });
             return reviewBody.id;
-        } catch (error : any) {
+        } catch (error: any) {
             return rejectWithValue(error.message);
         }
     }
@@ -78,9 +78,7 @@ const initialState = {
     error: '',
     message: '',
     reviews: [],
-    isReviewAdded: false,
     totalReviewCount: 0,
-    isReviewEdit: false
 } as ReviewState;
 
 const reviewSlice = createSlice({
@@ -90,32 +88,26 @@ const reviewSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(addReview.pending, (state) => {
             state.loading = 'pending';
-            state.isReviewAdded = false;
         });
         builder.addCase(addReview.fulfilled, (state) => {
             state.loading = 'succeeded';
             state.isSuccess = true;
-            state.isReviewAdded = true;
         });
         builder.addCase(addReview.rejected, (state) => {
             state.loading = 'failed';
             state.isSuccess = false;
-            state.isReviewAdded = false;
         });
 
         builder.addCase(updateReview.pending, (state) => {
             state.loading = 'pending';
-            state.isReviewEdit = false;
         });
         builder.addCase(updateReview.fulfilled, (state) => {
             state.loading = 'succeeded';
-            state.isReviewAdded = true;
             state.isSuccess = true;
         });
         builder.addCase(updateReview.rejected, (state) => {
             state.loading = 'failed';
             state.isSuccess = false;
-            state.isReviewEdit = false;
         });
 
         builder.addCase(getReviewsByProductId.pending, (state) => {
@@ -124,7 +116,7 @@ const reviewSlice = createSlice({
         builder.addCase(getReviewsByProductId.fulfilled, (state, action) => {
             state.loading = 'succeeded';
             state.isSuccess = true;
-            state.reviews  = action.payload.productReviews;
+            state.reviews = action.payload.productReviews;
             state.totalReviewCount = action.payload.totalReviewCount;
         });
         builder.addCase(getReviewsByProductId.rejected, (state) => {

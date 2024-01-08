@@ -1,6 +1,6 @@
 import { FC, useState } from "react"
 import closeIcon from '../../assets/images/closeModal.svg';
-import { updateReview } from "../../redux/features/reviewSlice";
+import { getReviewsByProductId, updateReview } from "../../redux/features/reviewSlice";
 import { useAppDispatch } from "../../redux/app/store";
 
 interface ReviewEditModalProps {
@@ -10,13 +10,15 @@ interface ReviewEditModalProps {
     textvalue: string,
     reviewId: number,
     productId: number,
-    appUserId: number
+    appUserId: number,
+    showMore: number
 }
-const ReviewEditModal: FC<ReviewEditModalProps> = ({ showEditModal, setShowEditModal, rate, textvalue, reviewId, productId, appUserId }) => {
+const ReviewEditModal: FC<ReviewEditModalProps> = ({ showEditModal, setShowEditModal, rate, textvalue, reviewId, productId, appUserId, showMore}) => {
     const [rating, setRating] = useState(rate);
     const [text, setText] = useState(textvalue);
     const [hover, setHover] = useState(0);
     const dispatch = useAppDispatch();
+
 
     const editReviewBtnHandler = () => {
         if (reviewId && appUserId && productId) {
@@ -26,9 +28,13 @@ const ReviewEditModal: FC<ReviewEditModalProps> = ({ showEditModal, setShowEditM
                 appUserId: appUserId,
                 rate: rating,
                 text: text
-            })).then(()=>{
+            })).then(() => {
                 setShowEditModal(false);
                 document.body.style.overflow = 'unset';
+                dispatch(getReviewsByProductId({
+                    productId: productId,
+                    take: showMore
+                }))
             })
         }
     };
@@ -38,13 +44,13 @@ const ReviewEditModal: FC<ReviewEditModalProps> = ({ showEditModal, setShowEditM
             <div className="bg-gray-100 w-6/12 h-auto p-5">
                 <div className="flex items-center justify-between border-b pb-3 px-1 py-5">
                     <span className="font-bold text-xl text-left px-5 block w-10/12">Edit Review</span>
-                    <button className="w-1/12 flex justify-center border-4 p-1 mr-5" 
-                    onClick={() => {
-                        if (setShowEditModal) {
-                            setShowEditModal(false);
-                            document.body.style.overflow = 'unset';
-                        }
-                    }}><img src={closeIcon} alt="" /></button>
+                    <button className="w-1/12 flex justify-center border-4 p-1 mr-5"
+                        onClick={() => {
+                            if (setShowEditModal) {
+                                setShowEditModal(false);
+                                document.body.style.overflow = 'unset';
+                            }
+                        }}><img src={closeIcon} alt="" /></button>
                 </div>
 
                 <div className='flex gap-0 w-6/12 mx-auto justify-center mb-3'>
