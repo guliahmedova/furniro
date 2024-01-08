@@ -89,9 +89,10 @@ const reviewSlice = createSlice({
         builder.addCase(addReview.pending, (state) => {
             state.loading = 'pending';
         });
-        builder.addCase(addReview.fulfilled, (state) => {
+        builder.addCase(addReview.fulfilled, (state, action) => {
             state.loading = 'succeeded';
             state.isSuccess = true;
+            state.message = action.payload
         });
         builder.addCase(addReview.rejected, (state) => {
             state.loading = 'failed';

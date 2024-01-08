@@ -9,11 +9,14 @@ import shopIcon from '../../assets/images/shoppingCart.svg';
 import heart from '../../assets/images/whiteheart.svg';
 import { ProductTypes } from '../../models/productTypes';
 import { RootState, useAppDispatch } from '../../redux/app/store';
-import { addToCart } from '../../redux/features/cartSlice';
+import { addToCart, getAllCartItemsByUserId } from '../../redux/features/cartSlice';
 import { getProductById } from '../../redux/features/productDetailSlice';
 import { getProductIDByCLick } from '../../redux/features/productSlice';
 import { addToWishlist, removeFromWishlist } from '../../redux/features/wishlistSlice';
 import AddToCartModal from './AddToCartModal';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+const MySwal = withReactContent(Swal);
 
 interface ProductCardProps {
   product: ProductTypes;
@@ -22,11 +25,11 @@ interface ProductCardProps {
 
 const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
   const userId = localStorage.getItem('userId');
-  const userId_int = useMemo(()=>{
+  const userId_int = useMemo(() => {
     if (userId) {
-        return parseInt(userId);
+      return parseInt(userId);
     }
-  },[userId])
+  }, [userId])
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isModalOpan, setIsModalOpen] = useState(false);
@@ -35,6 +38,8 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
   const [size, setSize] = useState(0);
   const [productCount, setProductCount] = useState(1);
   const [productCountMsg, setProductCountMsg] = useState('');
+
+  const errorMsg = useSelector((state: RootState) => state.cart.stolkMsg);
 
   const isLike = useSelector((state: RootState) => (
     state.wishlist.product.some((favItem) => favItem?.id === product?.id)
@@ -76,7 +81,19 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
         colorId: productById?.colors?.[color].id,
         userId: userId_int,
         count: productCount
-      }));
+      })).then((confirm) => {
+        if (confirm.meta.requestStatus === 'rejected') {
+          MySwal.fire({
+            position: "center",
+            icon: "warning",
+            title: confirm.payload,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          dispatch(getAllCartItemsByUserId(userId_int));
+        }
+      })
       setIsModalOpen(false);
     }
   };

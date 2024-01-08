@@ -19,15 +19,15 @@ const AccountSidebar = () => {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Yes, logout!"
         }).then((result) => {
             if (result.isConfirmed) {
                 localStorage.removeItem("userToken");
                 localStorage.removeItem('userId');
                 navigate('/login');
                 MySwal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
+                    title: "Logout!",
+                    text: "Your logout successfully.",
                     icon: "success"
                 });
             }
@@ -54,7 +54,7 @@ const AccountSidebar = () => {
                     navigate('/register');
                     MySwal.fire({
                         title: "Deleted!",
-                        text: "Your file has been deleted.",
+                        text: "Your account has been deleted.",
                         icon: "success"
                     });
                 }

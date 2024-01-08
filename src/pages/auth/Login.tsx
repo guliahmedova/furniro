@@ -36,7 +36,7 @@ const Login = () => {
           setError('');
           resetForm();
           MySwal.fire({
-            position: "top-end",
+            position: "center",
             icon: "success",
             title: "You have successfully logged in",
             showConfirmButton: false,

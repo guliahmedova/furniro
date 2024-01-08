@@ -10,7 +10,10 @@ import twitter from '../../assets/images/twitter.svg';
 import { ProductTypes } from "../../models/productTypes";
 import { RootState, useAppDispatch } from "../../redux/app/store";
 import { getProductById } from "../../redux/features/productDetailSlice";
-import { addToCart } from "../../redux/features/cartSlice";
+import { addToCart, getAllCartItemsByUserId } from "../../redux/features/cartSlice";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+const MySwal = withReactContent(Swal);
 const stars = [star, star, star, star, halfStar];
 
 const Details = () => {
@@ -77,7 +80,19 @@ const Details = () => {
         colorId: colorId,
         userId: userId_Int,
         count: productCount
-      }))
+      })).then((confirm) => {
+        if (confirm.meta.requestStatus === 'rejected') {
+          MySwal.fire({
+            position: "center",
+            icon: "warning",
+            title: confirm.payload,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          dispatch(getAllCartItemsByUserId(userId_Int));
+        }
+      })
     } else {
       navigate('/login');
     }

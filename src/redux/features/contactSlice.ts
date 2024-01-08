@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ContactType } from '../../models/ContactTypr';
-const token = localStorage.getItem('userToken');
+const token = localStorage.getItem('userToken')?.replace(/['"]+/g, '');
 
 const baseUrl = 'http://immutable858-001-site1.atempurl.com/api/';
 
@@ -21,12 +21,15 @@ export const sendContactMessage = createAsyncThunk(
     'contact/sendContactMessage',
     async (contactData: ContactType, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${baseUrl}ContactMessage`, contactData, {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            });
+            const response = await axios.post(`${baseUrl}ContactMessage`,
+                contactData,
+                {
+                    headers: {
+                        "Accept": "/",
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                });
             return (await response.data);
         } catch (error) {
             return rejectWithValue(error);

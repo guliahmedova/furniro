@@ -19,7 +19,6 @@ const ReviewEditModal: FC<ReviewEditModalProps> = ({ showEditModal, setShowEditM
     const [hover, setHover] = useState(0);
     const dispatch = useAppDispatch();
 
-
     const editReviewBtnHandler = () => {
         if (reviewId && appUserId && productId) {
             dispatch(updateReview({

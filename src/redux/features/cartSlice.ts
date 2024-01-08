@@ -20,14 +20,19 @@ interface CartState {
     getAllCartItems: GetCartItemsType[],
     error: string,
     isDelete: boolean,
-    subTotal: number
+    subTotal: number,
+    stolkMsg: string
 };
 
 export const addToCart = createAsyncThunk(
     'cart/addToCart',
-    async (cartItemBody: CartRequestBody) => {
-        const response = await axios.post(`${baseurl}addToCart`, cartItemBody);
-        return (await response.data);
+    async (cartItemBody: CartRequestBody, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(`${baseurl}addToCart`, cartItemBody);
+            return (await response.data);
+        } catch (error : any) {
+            return rejectWithValue(error.response.data.Message);
+        }
     }
 );
 
@@ -76,7 +81,8 @@ const initialState = {
     cartItems: [],
     getAllCartItems: [],
     error: '',
-    subTotal: 0
+    subTotal: 0,
+    stolkMsg: ''
 } as CartState
 
 const cartSlice = createSlice({
@@ -94,8 +100,13 @@ const cartSlice = createSlice({
             state.userId = action.payload.cart.userId;
             state.cartItems = action.payload.cart.cartItems;
         });
-        builder.addCase(addToCart.rejected, (state) => {
-            state.loading = 'failed'
+        builder.addCase(addToCart.rejected, (state, action) => {
+            state.loading = 'failed';
+            if (action.error) {
+                state.stolkMsg = action.payload as string;
+            } else {
+                state.stolkMsg = 'An unknown error occurred';
+            }
         });
 
         builder.addCase(getAllCartItemsByUserId.pending, (state) => {

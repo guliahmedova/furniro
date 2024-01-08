@@ -1,6 +1,4 @@
 import { useFormik } from 'formik';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 import addressIcon from '../../assets/images/address.svg';
 import phone from '../../assets/images/phone.svg';
 import workingTime from '../../assets/images/workingTime.svg';
@@ -9,6 +7,8 @@ import { getContactDatas, sendContactMessage } from '../../redux/features/contac
 import { useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { ContactYup } from './ContactYup';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 const MySwal = withReactContent(Swal);
 
 const ContactForm = () => {
@@ -47,11 +47,11 @@ const ContactForm = () => {
                 subject: values.subject,
                 message: values.message
             })).then((confirm) => {
-                if (confirm?.payload) {
+                if (confirm?.payload?.message) {
                     MySwal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: "Your message has been sent successfully",
+                        title: confirm?.payload?.message,
                         showConfirmButton: false,
                         timer: 1500
                     });
