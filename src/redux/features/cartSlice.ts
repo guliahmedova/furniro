@@ -29,7 +29,7 @@ export const addToCart = createAsyncThunk(
         try {
             const response = await axios.post(`${baseurl}addToCart`, cartItemBody);
             return (await response.data);
-        } catch (error : any) {
+        } catch (error: any) {
             return rejectWithValue(error.response.data.Message);
         }
     }
@@ -126,10 +126,12 @@ const cartSlice = createSlice({
         builder.addCase(removeCartItem.fulfilled, (state, action) => {
             state.loading = 'succeeded';
             state.isDelete = true;
-            const itemsAfterDelete = state.cartItems.filter(
-                (item) => item.productId !== action.payload
+            const itemsAfterDelete = state.getAllCartItems.filter(
+                (item) => item.cartItems?.map((cartItem) => (
+                    cartItem.productId === action.payload
+                ))
             );
-            state.cartItems = itemsAfterDelete;
+            state.getAllCartItems = itemsAfterDelete;
         });
         builder.addCase(removeCartItem.rejected, (state) => {
             state.loading = 'failed';

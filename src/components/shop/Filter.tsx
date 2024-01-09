@@ -65,14 +65,14 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor
         }));
     }, [categories]);
 
-    const handleChangeSize = useCallback((option: readonly Option[], actionMeta: ActionMeta<Option>) => {
+    const handleChangeSize = useCallback((option: readonly Option[], _: ActionMeta<Option>) => {
         const mutableOption = [...option];
         if (setSize) {
             setSize(mutableOption);
         };
     }, []);
 
-    const handleChangeColor = useCallback((option: readonly Option[], actionMeta: ActionMeta<Option>) => {
+    const handleChangeColor = useCallback((option: readonly Option[], _: ActionMeta<Option>) => {
         const mutableOption = [...option];
         const colorValues = mutableOption.map((item) => item.value);
         if (setColor) {
@@ -80,14 +80,14 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor
         }
     }, []);
 
-    const handleChangeTag = useCallback((option: readonly Option[], actionMeta: ActionMeta<Option>) => {
+    const handleChangeTag = useCallback((option: readonly Option[], _: ActionMeta<Option>) => {
         const mutableOption = [...option];
         if (setTag) {
             setTag(mutableOption);
         }
     }, []);
 
-    const handleChangeCategory = useCallback((option: readonly Option[], actionMeta: ActionMeta<Option>) => {
+    const handleChangeCategory = useCallback((option: readonly Option[], _: ActionMeta<Option>) => {
         const mutableOption = [...option];
         if (setCategory) {
             setCategory(mutableOption);
