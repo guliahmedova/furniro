@@ -1,4 +1,4 @@
-export interface SecondaryHeroTypes {
+export interface SecondaryHeroType {
     title: string,
     logo?: string,
     isSearch?: boolean,

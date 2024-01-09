@@ -2,9 +2,9 @@ import { FC, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import searchIcon from '../../assets/images/search.svg';
 import heroArrow from '../../assets/images//heroArrow.svg';
-import { SecondaryHeroTypes } from '../../models/SecondaryHeroTypes';
+import { SecondaryHeroType } from '../../models/SecondaryHeroType';
 
-const SecondaryHero: FC<SecondaryHeroTypes> = ({ title, logo, isSearch, searchText, saveSearchText }) => {
+const SecondaryHero: FC<SecondaryHeroType> = ({ title, logo, isSearch, searchText, saveSearchText }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const text = event.target.value;
     saveSearchText && saveSearchText(text);
