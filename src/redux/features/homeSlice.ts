@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { GridImageType } from '../../models/GridImageType';
+import { FuniroFurnitureType } from '../../models/FuniroFurnitureType';
 
 const baseurl = 'http://immutable858-001-site1.atempurl.com/api/';
 
 interface HomeState {
-    images: GridImageType[],
+    images: FuniroFurnitureType[],
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
 };
 

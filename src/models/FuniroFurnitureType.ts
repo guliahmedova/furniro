@@ -1,4 +1,4 @@
-export type GridImageType = {
+export type FuniroFurnitureType = {
     id: number,
     imageUrls: string[]
 };
