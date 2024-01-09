@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
 
-export type ModalContextTypes = {
+export type ShoppinModalType = {
     children: ReactNode
 }

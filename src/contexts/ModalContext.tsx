@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { ModalContextTypes } from "../models/ModalContextTypes";
+import { ShoppinModalType } from "../models/ShoppinModalType";
 
 export const ModalContext = createContext({
     modal: "",
@@ -7,7 +7,7 @@ export const ModalContext = createContext({
     closeModal: () => { },
 });
 
-export const ModalProvider = ({ children }: ModalContextTypes) => {
+export const ModalProvider = ({ children }: ShoppinModalType) => {
     const [modal, setModal] = useState('');
 
     const openModal = (name: string) => {
