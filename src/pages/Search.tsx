@@ -30,7 +30,7 @@ const Search = () => {
                     title="Search"
                     isSearch={true}
                     searchText={searchText}
-                    saveSearchText={(text) => dispatch(saveSearchText(text))}
+                    saveSearchText={(text:string) => dispatch(saveSearchText(text))}
                 />
             </Reveal>
             <Reveal><SearchResult
