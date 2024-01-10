@@ -130,7 +130,7 @@ const Details = () => {
 
           <div>
             <h1 className="text-black lg:text-[42px] lg:leading-[63px] text-2xl tracking-wide">{product?.title}</h1>
-            <span className="text-[#9F9F9F] lg:text-2xl font-medium text-lg lg:mt-0 mt-3 block">$ {product?.salePrice}</span>
+            <span className="text-[#9F9F9F] lg:text-2xl font-medium text-lg lg:mt-0 mt-3 block">$ {product?.salePrice?.toFixed(2)}</span>
             <div className="flex gap-[18px] mt-4 mb-5">
               <div className="flex items-center gap-[6px]">
                 {stars.map((item, index) => (
