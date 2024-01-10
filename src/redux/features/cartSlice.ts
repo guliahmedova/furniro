@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { CartItemType, GetCartItemsType } from '../../models/CartItemType';
-
-const baseurl = 'http://immutable858-001-site1.atempurl.com/api/Cart/';
+import instance from './apiConfig';
 
 interface CartRequestBody {
     productId: number,
@@ -27,7 +25,7 @@ export const addToCart = createAsyncThunk(
     'cart/addToCart',
     async (cartItemBody: CartRequestBody, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${baseurl}addToCart`, cartItemBody);
+            const response = await instance.post(`Cart/addToCart`, cartItemBody);
             return (await response.data);
         } catch (error: any) {
             return rejectWithValue(error.response.data.Message);
@@ -38,7 +36,7 @@ export const addToCart = createAsyncThunk(
 export const getAllCartItemsByUserId = createAsyncThunk(
     'cart/getAllCartItemsByUserId',
     async (userId: number) => {
-        const response = await axios.get(`${baseurl}getAllCartItems/${userId}`);
+        const response = await instance.get(`Cart/getAllCartItems/${userId}`);
         return (await response.data);
     }
 );
@@ -47,7 +45,7 @@ export const removeCartItem = createAsyncThunk(
     'cart/removeCartItem',
     async (cartItemBody: CartRequestBody, { rejectWithValue }) => {
         try {
-            await axios.delete(`${baseurl}remove`, {
+            await instance.delete(`Cart/remove`, {
                 data: cartItemBody
             });
             return cartItemBody.productId;
@@ -61,7 +59,7 @@ export const clearCart = createAsyncThunk(
     'checkout/clearCart',
     async (appUserId: number, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`http://immutable858-001-site1.atempurl.com/api/Cart/ClearCart`, {
+            const response = await instance.post(`Cart/ClearCart`, {
                 appUserId: appUserId
             });
             return (await response.data);

@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { ContactType } from '../../models/ContactTypr';
+import instance from './apiConfig';
 const token = localStorage.getItem('userToken')?.replace(/['"]+/g, '');
-
-const baseUrl = 'http://immutable858-001-site1.atempurl.com/api/';
 
 interface ContactState {
     message: string,
@@ -21,7 +19,7 @@ export const sendContactMessage = createAsyncThunk(
     'contact/sendContactMessage',
     async (contactData: ContactType, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${baseUrl}ContactMessage`,
+            const response = await instance.post(`ContactMessage`,
                 contactData,
                 {
                     headers: {
@@ -40,7 +38,7 @@ export const sendContactMessage = createAsyncThunk(
 export const getContactDatas = createAsyncThunk(
     'contact/getContactDatas',
     async () => {
-        const response = await axios.get(`${baseUrl}Contact`);
+        const response = await instance.get(`Contact`);
         return (await response.data);
     }
 );

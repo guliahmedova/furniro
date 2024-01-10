@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { ProductTypes } from '../../models/productTypes';
 import { DescriptionType } from '../../models/DescriptionType';
-
-const baseurl = 'http://immutable858-001-site1.atempurl.com/api/';
+import { ProductTypes } from '../../models/productTypes';
+import instance from './apiConfig';
 
 interface ProductDetail {
     product: ProductTypes,
@@ -15,7 +13,7 @@ interface ProductDetail {
 export const getProductById = createAsyncThunk(
     'productDetail/getProductById',
     async ({ productID, sizeID }: { productID: number, sizeID: number }) => {
-        const response = await axios.get(`${baseurl}UserProduct/getById/ProductPage?Id=${productID}&SizeId=${sizeID}`);
+        const response = await instance.get(`UserProduct/getById/ProductPage?Id=${productID}&SizeId=${sizeID}`);
         return response.data;
     }
 );
@@ -23,7 +21,7 @@ export const getProductById = createAsyncThunk(
 export const getProductDescriptionById = createAsyncThunk(
     'productDetail/getProductDescriptionById',
     async (productId: number) => {
-        const response = await axios.get(`${baseurl}UserProduct/getById/Description?Id=${productId}`);
+        const response = await instance.get(`UserProduct/getById/Description?Id=${productId}`);
         return (await response.data);
     }
 );
@@ -31,7 +29,7 @@ export const getProductDescriptionById = createAsyncThunk(
 export const getRelatedProducts = createAsyncThunk(
     'productDetail/getRelatedProducts',
     async ({ productId, take }: { productId: string, take: number }) => {
-        const response = await axios.get(`${baseurl}UserProduct/RelatedProducts?ShowMore.Take=${take}&MainProductId=${productId}`);
+        const response = await instance.get(`UserProduct/RelatedProducts?ShowMore.Take=${take}&MainProductId=${productId}`);
         return (await response.data);
     }
 );

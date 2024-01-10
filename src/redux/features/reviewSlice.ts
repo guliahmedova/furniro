@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { ReviewDeleteBody, ReviewType } from '../../models/ReviewType';
 import { ReviewResponseBodyType } from '../../models/ReviewResponseBodyType';
-
-const baseurl = "http://immutable858-001-site1.atempurl.com/api/Review";
+import { ReviewDeleteBody, ReviewType } from '../../models/ReviewType';
+import instance from './apiConfig';
 
 interface ReviewState {
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
@@ -23,7 +21,7 @@ export const addReview = createAsyncThunk(
     'review/addReview',
     async (reviewBody: ReviewType, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${baseurl}`, reviewBody);
+            const response = await instance.post(`Review`, reviewBody);
             return (await response.data);
         } catch (error) {
             return rejectWithValue(error);
@@ -35,7 +33,7 @@ export const updateReview = createAsyncThunk(
     'review/updateReview',
     async (reviewBody: ReviewType, { rejectWithValue }) => {
         try {
-            await axios.put(`${baseurl}`, reviewBody);
+            await instance.put(`Review`, reviewBody);
             if (reviewBody.id) {
                 return reviewBody.id;
             }
@@ -48,7 +46,7 @@ export const updateReview = createAsyncThunk(
 export const getReviewsByProductId = createAsyncThunk(
     'review/getReviewsByUserId',
     async ({ productId, take }: { productId: number, take: number }) => {
-        const response = await axios.get(`${baseurl}/ProductReviews?ProductId=${productId}&ShowMore.Take=${take}`);
+        const response = await instance.get(`Review/ProductReviews?ProductId=${productId}&ShowMore.Take=${take}`);
         return (await response.data);
     }
 );
@@ -57,7 +55,7 @@ export const deletReviewById = createAsyncThunk(
     'review/getReviewsById',
     async (reviewBody: ReviewDeleteBody, { rejectWithValue }) => {
         try {
-            await axios.delete(`${baseurl}`, {
+            await instance.delete(`Review`, {
                 data: reviewBody
             });
             return reviewBody.id;

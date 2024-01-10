@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { DescriptionType } from '../../models/DescriptionType';
 import { ProductTypes } from '../../models/productTypes';
-
-const baseurl = 'http://immutable858-001-site1.atempurl.com/api/UserProduct/';
+import instance from './apiConfig';
 
 interface ProductState {
     products: ProductTypes[]
@@ -16,7 +14,7 @@ interface ProductState {
 export const getProducts = createAsyncThunk(
     'products/getProducts',
     async (take: number) => {
-        const response = await axios.get(`${baseurl}Products?ShowMore.Take=${take}`);
+        const response = await instance.get(`UserProduct/Products?ShowMore.Take=${take}`);
         return (await response.data);
     }
 );
@@ -24,7 +22,7 @@ export const getProducts = createAsyncThunk(
 export const getNewProducts = createAsyncThunk(
     'products/getNewProducts',
     async (count: number) => {
-        const response = await axios.get(`${baseurl}NewProducts?ShowMore.TakeProduct=${count}`);
+        const response = await instance.get(`UserProduct/NewProducts?ShowMore.TakeProduct=${count}`);
         return (await response.data);
     }
 );

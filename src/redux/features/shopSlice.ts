@@ -6,6 +6,7 @@ import { Option } from '../../models/OptionType';
 import { SizeType } from '../../models/SizeType';
 import { TagType } from '../../models/TagType';
 import { ProductTypes } from '../../models/productTypes';
+import instance from './apiConfig';
 
 const baseurl = 'http://immutable858-001-site1.atempurl.com/api/';
 
@@ -22,7 +23,7 @@ interface ProductState {
 export const getAllSizes = createAsyncThunk(
     'shop/getAllSizes',
     async () => {
-        const response = await axios.get(`${baseurl}Size/getAll`);
+        const response = await instance.get(`Size/getAll`);
         return (await response.data);
     }
 );
@@ -30,7 +31,7 @@ export const getAllSizes = createAsyncThunk(
 export const getAllColors = createAsyncThunk(
     'shop/getAllColors',
     async () => {
-        const response = await axios.get(`${baseurl}Color/getAll`);
+        const response = await instance.get(`Color/getAll`);
         return (await response.data);
     }
 );
@@ -38,7 +39,7 @@ export const getAllColors = createAsyncThunk(
 export const getAllTags = createAsyncThunk(
     'shop/getAllTags',
     async () => {
-        const response = await axios.get(`${baseurl}Tag/getAll`);
+        const response = await instance.get(`Tag/getAll`);
         return (await response.data);
     }
 );
@@ -46,7 +47,7 @@ export const getAllTags = createAsyncThunk(
 export const getAllCategories = createAsyncThunk(
     'shop/getAllCategories',
     async () => {
-        const response = await axios.get(`${baseurl}Category/getAll`);
+        const response = await instance.get(`Category/getAll`);
         return (await response.data);
     }
 );
@@ -77,7 +78,7 @@ export const getFilteredProducts = createAsyncThunk(
         orderBy?: string
     }) => {
        try {
-        const response = await axios.get(`${baseurl}UserProduct/Products?Page=${page}${take > 0 ? `&ShowMore.Take=${take}` : ''}${categoryName?.length > 0 ? categoryName?.map((item) => `&CategoryNames=${item.value}`).join('') : ''}${typeof (isNew) === 'boolean' ? `&IsNew=${isNew}` : ''}${productTags?.length > 0 ? productTags.map((item) => `&ProductTags=${item.value}`).join('') : ''}${productSizes?.length > 0 ? `${productSizes?.map((item) => `&ProductSizes=${item.value}`).join('')}` : ''}${productColors.length > 0 ? `${productColors.map((item) => `&ProductColors=${item.replace(/#/g, '%23')}`).join('')}` : ''}${minPrice > 0 ? `&MinPrice=${minPrice}` : ''}${maxPrice > 0 ? `&MaxPrice=${maxPrice}` : ''}${orderBy?.length > 0 ? `&OrderBy=${orderBy}` : ''}`);
+        const response = await instance.get(`UserProduct/Products?Page=${page}${take > 0 ? `&ShowMore.Take=${take}` : ''}${categoryName?.length > 0 ? categoryName?.map((item) => `&CategoryNames=${item.value}`).join('') : ''}${typeof (isNew) === 'boolean' ? `&IsNew=${isNew}` : ''}${productTags?.length > 0 ? productTags.map((item) => `&ProductTags=${item.value}`).join('') : ''}${productSizes?.length > 0 ? `${productSizes?.map((item) => `&ProductSizes=${item.value}`).join('')}` : ''}${productColors.length > 0 ? `${productColors.map((item) => `&ProductColors=${item.replace(/#/g, '%23')}`).join('')}` : ''}${minPrice > 0 ? `&MinPrice=${minPrice}` : ''}${maxPrice > 0 ? `&MaxPrice=${maxPrice}` : ''}${orderBy?.length > 0 ? `&OrderBy=${orderBy}` : ''}`);
         return (await response.data);
        } catch (error) {
             console.error(error);

@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { FuniroFurnitureType } from '../../models/FuniroFurnitureType';
-
-const baseurl = 'http://immutable858-001-site1.atempurl.com/api/';
+import instance from './apiConfig';
 
 interface HomeState {
     images: FuniroFurnitureType[],
@@ -12,7 +10,7 @@ interface HomeState {
 export const getGridImages = createAsyncThunk(
     'home/getGridImages',
     async () => {
-        const response = await axios.get(`${baseurl}Home`);
+        const response = await instance.get(`Home`);
         return (await response.data);
     }
 );

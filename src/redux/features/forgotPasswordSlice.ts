@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { ResetPasswordType } from '../../models/ForgotPasswordType';
-
-const baseUrl = 'http://immutable858-001-site1.atempurl.com/api/ForgotPassword/';
+import instance from './apiConfig';
 
 interface ForgotPasswordState {
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
@@ -15,7 +13,7 @@ export const resetPassword = createAsyncThunk(
     'forgotPassword/resetPassword',
     async (forgotPasswordData: ResetPasswordType, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${baseUrl}ResetPassword`, forgotPasswordData);
+            const response = await instance.post(`ForgotPassword/ResetPassword`, forgotPasswordData);
             return (await response.data);
         } catch (error: any) {
             return rejectWithValue(error.response.data.Message);

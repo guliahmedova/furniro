@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { BlogType } from '../../models/BlogType';
 import { CategoryType } from '../../models/CategoryType';
-
-const baseurl = 'http://immutable858-001-site1.atempurl.com/api/Blog';
+import instance from './apiConfig';
 
 interface BlogState {
     blogs: BlogType[],
@@ -16,7 +14,7 @@ interface BlogState {
 export const getBlogs = createAsyncThunk(
     'blogs/getBlogs',
     async ({ page, take, prompt, categoryId }: { take: number, page: number, prompt?: string, categoryId?: number }) => {
-        const response = await axios.get(`${baseurl}?Page=${page}&ShowMore.Take=${take}${prompt?.length ? `&Prompt=${prompt}` : ''}${categoryId !== 0 ? `&CategoryId=${categoryId}` : ''}`);
+        const response = await instance.get(`Blog?Page=${page}&ShowMore.Take=${take}${prompt?.length ? `&Prompt=${prompt}` : ''}${categoryId !== 0 ? `&CategoryId=${categoryId}` : ''}`);
         return (await response.data);
     }
 );
@@ -24,7 +22,7 @@ export const getBlogs = createAsyncThunk(
 export const getBlogCategories = createAsyncThunk(
     'blogs/getBlogCategories',
     async () => {
-        const response = await axios.get(`${baseurl}/blog-categories`);
+        const response = await instance.get(`Blog/blog-categories`);
         return (await response.data);
     }
 );
@@ -32,7 +30,7 @@ export const getBlogCategories = createAsyncThunk(
 export const getRecentBlogs = createAsyncThunk(
     'blogs/getRecentBlogs',
     async () => {
-        const response = await axios.get(`${baseurl}/recent-posts`);
+        const response = await instance.get(`Blog/recent-posts`);
         return (await response.data);
     }
 );

@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { CheckoutType } from '../../models/CheckoutTypes';
 import { CountryType } from '../../models/CountryType';
 import { ProvinceType } from '../../models/ProvinceType';
-import { CheckoutType } from '../../models/CheckoutTypes';
-
-const baseUrl = "http://immutable858-001-site1.atempurl.com/api/";
+import instance from './apiConfig';
 
 interface CheckoutState {
     countries: CountryType[],
@@ -17,7 +15,7 @@ interface CheckoutState {
 export const getAllCountries = createAsyncThunk(
     'checkout/getAllCountries',
     async () => {
-        const response = await axios.get(`${baseUrl}Country`);
+        const response = await instance.get(`Country`);
         return (await response.data);
     }
 );
@@ -25,7 +23,7 @@ export const getAllCountries = createAsyncThunk(
 export const getAllProvinces = createAsyncThunk(
     'checkout/getAllProvinces',
     async () => {
-        const response = await axios.get(`${baseUrl}Province`);
+        const response = await instance.get(`Province`);
         return (await response.data);
     }
 );
@@ -33,7 +31,7 @@ export const getAllProvinces = createAsyncThunk(
 export const getRelatedProvince = createAsyncThunk(
     'checkout/getRelatedProvince',
     async (countryId: number) => {
-        const response = await axios.get(`${baseUrl}Province/GetRelatedProvince/${countryId}`);
+        const response = await instance.get(`Province/GetRelatedProvince/${countryId}`);
         return (await response.data);
     }
 );
@@ -42,7 +40,7 @@ export const addCheckout = createAsyncThunk(
     'checkout/addCheckout',
     async (checkoutData: CheckoutType, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${baseUrl}Checkout`, checkoutData);
+            const response = await instance.post(`Checkout`, checkoutData);
             return (await response.data);
         } catch (error: any) {
             console.log('error in checkoutslice: ', error.message);

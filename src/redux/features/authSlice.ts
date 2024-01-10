@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { AppUserType } from '../../models/AppUserType';
 import { ChangePasswordType } from '../../models/ChangePasswordType';
 import { LoginType } from '../../models/LoginType';
-
-const baseurl = 'http://immutable858-001-site1.atempurl.com/api/ApplicationUser/';
+import instance from './apiConfig';
 
 interface AuthState {
     error: string,
@@ -23,7 +21,7 @@ interface AuthState {
 
 export const userRegister = createAsyncThunk('auth/userRegister', async (body: AppUserType, { rejectWithValue }) => {
     try {
-        const response = await axios.post(`${baseurl}CreateUser`, body);
+        const response = await instance.post(`ApplicationUser/CreateUser`, body);
         return response.data;
     } catch (error: any) {
         if (error.response && error.response.data && error.response.data.Message) {
@@ -37,7 +35,7 @@ export const userRegister = createAsyncThunk('auth/userRegister', async (body: A
 export const userLogin = createAsyncThunk(
     'auth/userLogin',
     async (body: LoginType) => {
-        const response = await axios.post(`${baseurl}Login`, body);
+        const response = await instance.post(`ApplicationUser/Login`, body);
         const token = response.data.jwtToken;
         const userId = response.data.userId;
         localStorage.setItem('userId', JSON.stringify(userId));
@@ -49,7 +47,7 @@ export const userLogin = createAsyncThunk(
 export const updateUser = createAsyncThunk(
     'auth/updateUser',
     async (body: AppUserType) => {
-        const response = await axios.put(`${baseurl}UpdateUser`, body);
+        const response = await instance.put(`ApplicationUser/UpdateUser`, body);
         return (await response.data);
     }
 );
@@ -57,7 +55,7 @@ export const updateUser = createAsyncThunk(
 export const getUserById = createAsyncThunk(
     'auth/getUserById',
     async (userId: number) => {
-        const response = await axios.get(`${baseurl}${userId}`);
+        const response = await instance.get(`ApplicationUser/${userId}`);
         return (await response.data);
     }
 );
@@ -65,7 +63,7 @@ export const getUserById = createAsyncThunk(
 export const deleteAccount = createAsyncThunk(
     'auth/deleteAccount',
     async (username: string) => {
-        const response = await axios.put(`${baseurl}DeleteUser`, username);
+        const response = await instance.put(`ApplicationUser/DeleteUser`, username);
         return (await response.data);
     }
 );
@@ -74,7 +72,7 @@ export const changePassword = createAsyncThunk(
     'auth/changePassword',
     async (body: ChangePasswordType, { rejectWithValue }) => {
         try {
-            const response = await axios.put(`${baseurl}ChangePassword`, body);
+            const response = await instance.put(`ApplicationUser/ChangePassword`, body);
             return (await response.data);
         } catch (error: any) {
             return rejectWithValue(error.response.data.Message);

@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ProductTypes } from "../../models/productTypes";
-import axios from "axios";
+import instance from "./apiConfig";
 
 interface ProductState {
     filteredProducts: ProductTypes[],
@@ -21,7 +21,7 @@ const initialState: ProductState = {
 export const searchProducts = createAsyncThunk(
     'search/searchProducts',
     async ({ prompt, take }: { prompt: string, take: number }) => {
-        const response = await axios.get(`http://immutable858-001-site1.atempurl.com/api/UserProduct/Products?Prompt=${prompt}&ShowMore.TakeProduct=${take}`);
+        const response = await instance.get(`UserProduct/Products?Prompt=${prompt}&ShowMore.TakeProduct=${take}`);
         return (await response.data);
     }
 );
