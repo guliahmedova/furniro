@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { CategoryType } from '../../models/CategoryType';
 import { ColorType } from '../../models/ColorType';
 import { Option } from '../../models/OptionType';
@@ -7,8 +6,6 @@ import { SizeType } from '../../models/SizeType';
 import { TagType } from '../../models/TagType';
 import { ProductTypes } from '../../models/productTypes';
 import instance from './apiConfig';
-
-const baseurl = 'http://immutable858-001-site1.atempurl.com/api/';
 
 interface ProductState {
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
