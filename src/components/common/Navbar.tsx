@@ -56,10 +56,10 @@ const Navbar = () => {
         </div>
 
         <div className="lg:flex hidden items-center gap-4 font-medium lg:gap-[75px] text-base">
-          <NavLink className={({ isActive }) => isActive ? "font-semibold underline decoration-black" : ""} to='/'>Home</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} to='/shop'>Shop</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} to='/blog'>Blog</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} to='/contact'>Contact</NavLink>
+          <NavLink className={({ isActive }) => `${isActive ? "font-semibold underline decoration-black" : ""} hover:translate-x-1 ease-in-out duration-200 hover:text-[#B88E2F] hover:decoration-[#B88E2F]`} to='/'>Home</NavLink>
+          <NavLink className={({ isActive }) => `${isActive ? "font-semibold underline decoration-black" : ""} hover:translate-x-1 ease-in-out duration-200 hover:text-[#B88E2F] hover:decoration-[#B88E2F]`} to='/shop'>Shop</NavLink>
+          <NavLink className={({ isActive }) => `${isActive ? "font-semibold underline decoration-black" : ""} hover:translate-x-1 ease-in-out duration-200 hover:text-[#B88E2F] hover:decoration-[#B88E2F]`} to='/blog'>Blog</NavLink>
+          <NavLink className={({ isActive }) => `${isActive ? "font-semibold underline decoration-black" : ""} hover:translate-x-1 ease-in-out duration-200 hover:text-[#B88E2F] hover:decoration-[#B88E2F]`} to='/contact'>Contact</NavLink>
         </div>
 
         <div className="lg:flex hidden items-center lg:gap-11">

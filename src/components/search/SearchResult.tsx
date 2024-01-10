@@ -15,8 +15,8 @@ const SearchResult: FC<SearchResultProps> = ({ products, searchText, handleShowM
     <section>
       <div className="xl:w-[85%] w-[95%] mx-auto mt-[56px] mb-[69px] lg:px-0 px-3">
         {searchText && (
-          <div className="font-medium text-gray-400 lg:text-left capitalize lg:text-2xl text-xl text-center">
-            <span className="underline italic">{searchText}</span> açar sözü üzrə axtarış nəticələri...
+          <div className="font-medium text-gray-400 lg:text-left text-sm text-center">
+            Search results for the <span className="underline">{searchText}</span> keyword...
           </div>
         )}
         {products && products?.length > 0 ? (

@@ -14,22 +14,16 @@ const AccountSidebar = () => {
     const removeToken = () => {
         MySwal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert your account!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
+            confirmButtonColor: "#008000",
+            cancelButtonColor: "#a3142c",
             confirmButtonText: "Yes, logout!"
         }).then((result) => {
             if (result.isConfirmed) {
                 localStorage.removeItem("userToken");
                 localStorage.removeItem('userId');
                 navigate('/login');
-                MySwal.fire({
-                    title: "Logout!",
-                    text: "Your logout successfully.",
-                    icon: "success"
-                });
             }
         });
     };
@@ -43,8 +37,8 @@ const AccountSidebar = () => {
                 text: "You won't be able to revert your account!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
+                confirmButtonColor: "#008000",
+                cancelButtonColor: "#780115",
                 confirmButtonText: "Yes, delete it!"
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -52,11 +46,6 @@ const AccountSidebar = () => {
                     localStorage.removeItem("userToken");
                     localStorage.removeItem('userId');
                     navigate('/register');
-                    MySwal.fire({
-                        title: "Deleted!",
-                        text: "Your account has been deleted.",
-                        icon: "success"
-                    });
                 }
             });
         }
