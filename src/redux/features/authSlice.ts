@@ -3,6 +3,7 @@ import { AppUserType } from '../../models/AppUserType';
 import { ChangePasswordType } from '../../models/ChangePasswordType';
 import { LoginType } from '../../models/LoginType';
 import instance from './apiConfig';
+const token = localStorage.getItem('userToken')?.replace(/['"]+/g, '');
 
 interface AuthState {
     error: string,
@@ -47,7 +48,13 @@ export const userLogin = createAsyncThunk(
 export const updateUser = createAsyncThunk(
     'auth/updateUser',
     async (body: AppUserType) => {
-        const response = await instance.put(`ApplicationUser/UpdateUser`, body);
+        const response = await instance.put(`ApplicationUser/UpdateUser`, body, {
+            headers: {
+                "Accept": "/",
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        });
         return (await response.data);
     }
 );
@@ -63,7 +70,13 @@ export const getUserById = createAsyncThunk(
 export const deleteAccount = createAsyncThunk(
     'auth/deleteAccount',
     async (username: string) => {
-        const response = await instance.put(`ApplicationUser/DeleteUser`, username);
+        const response = await instance.put(`ApplicationUser/DeleteUser`, username, {
+            headers: {
+                "Accept": "/",
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        });
         return (await response.data);
     }
 );
@@ -72,7 +85,13 @@ export const changePassword = createAsyncThunk(
     'auth/changePassword',
     async (body: ChangePasswordType, { rejectWithValue }) => {
         try {
-            const response = await instance.put(`ApplicationUser/ChangePassword`, body);
+            const response = await instance.put(`ApplicationUser/ChangePassword`, body, {
+                headers: {
+                    "Accept": "/",
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            });
             return (await response.data);
         } catch (error: any) {
             return rejectWithValue(error.response.data.Message);

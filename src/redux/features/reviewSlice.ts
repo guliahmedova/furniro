@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ReviewResponseBodyType } from '../../models/ReviewResponseBodyType';
 import { ReviewDeleteBody, ReviewType } from '../../models/ReviewType';
 import instance from './apiConfig';
+const token = localStorage.getItem('userToken')?.replace(/['"]+/g, '');
 
 interface ReviewState {
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
@@ -21,7 +22,14 @@ export const addReview = createAsyncThunk(
     'review/addReview',
     async (reviewBody: ReviewType, { rejectWithValue }) => {
         try {
-            const response = await instance.post(`Review`, reviewBody);
+            const response = await instance.post(`Review`, reviewBody,
+                {
+                    headers: {
+                        "Accept": "/",
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                });
             return (await response.data);
         } catch (error) {
             return rejectWithValue(error);
@@ -33,7 +41,13 @@ export const updateReview = createAsyncThunk(
     'review/updateReview',
     async (reviewBody: ReviewType, { rejectWithValue }) => {
         try {
-            await instance.put(`Review`, reviewBody);
+            await instance.put(`Review`, reviewBody, {
+                headers: {
+                    "Accept": "/",
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            });
             if (reviewBody.id) {
                 return reviewBody.id;
             }
@@ -56,7 +70,12 @@ export const deletReviewById = createAsyncThunk(
     async (reviewBody: ReviewDeleteBody, { rejectWithValue }) => {
         try {
             await instance.delete(`Review`, {
-                data: reviewBody
+                data: reviewBody,
+                headers: {
+                    "Accept": "/",
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
             });
             return reviewBody.id;
         } catch (error: any) {

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { CartItemType, GetCartItemsType } from '../../models/CartItemType';
 import instance from './apiConfig';
+const token = localStorage.getItem('userToken')?.replace(/['"]+/g, '');
 
 interface CartRequestBody {
     productId: number,
@@ -25,7 +26,13 @@ export const addToCart = createAsyncThunk(
     'cart/addToCart',
     async (cartItemBody: CartRequestBody, { rejectWithValue }) => {
         try {
-            const response = await instance.post(`Cart/addToCart`, cartItemBody);
+            const response = await instance.post(`Cart/addToCart`, cartItemBody, {
+                headers: {
+                    "Accept": "/",
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            });
             return (await response.data);
         } catch (error: any) {
             return rejectWithValue(error.response.data.Message);
@@ -36,7 +43,13 @@ export const addToCart = createAsyncThunk(
 export const getAllCartItemsByUserId = createAsyncThunk(
     'cart/getAllCartItemsByUserId',
     async (userId: number) => {
-        const response = await instance.get(`Cart/getAllCartItems/${userId}`);
+        const response = await instance.get(`Cart/getAllCartItems/${userId}`, {
+            headers: {
+                "Accept": "/",
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        });
         return (await response.data);
     }
 );
@@ -46,7 +59,13 @@ export const removeCartItem = createAsyncThunk(
     async (cartItemBody: CartRequestBody, { rejectWithValue }) => {
         try {
             await instance.delete(`Cart/remove`, {
-                data: cartItemBody
+                data: cartItemBody,
+                headers: {
+                    "Accept": "/",
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+
             });
             return cartItemBody.productId;
         } catch (error) {
@@ -61,6 +80,12 @@ export const clearCart = createAsyncThunk(
         try {
             const response = await instance.post(`Cart/ClearCart`, {
                 appUserId: appUserId
+            }, {
+                headers: {
+                    "Accept": "/",
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
             });
             return (await response.data);
         } catch (error: any) {

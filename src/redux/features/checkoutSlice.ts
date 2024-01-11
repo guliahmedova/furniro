@@ -3,6 +3,7 @@ import { CheckoutType } from '../../models/CheckoutTypes';
 import { CountryType } from '../../models/CountryType';
 import { ProvinceType } from '../../models/ProvinceType';
 import instance from './apiConfig';
+const token = localStorage.getItem('userToken')?.replace(/['"]+/g, '');
 
 interface CheckoutState {
     countries: CountryType[],
@@ -15,23 +16,28 @@ interface CheckoutState {
 export const getAllCountries = createAsyncThunk(
     'checkout/getAllCountries',
     async () => {
-        const response = await instance.get(`Country`);
+        const response = await instance.get(`Country`, {
+            headers: {
+                "Accept": "/",
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        });
         return (await response.data);
     }
 );
 
-export const getAllProvinces = createAsyncThunk(
-    'checkout/getAllProvinces',
-    async () => {
-        const response = await instance.get(`Province`);
-        return (await response.data);
-    }
-);
 
 export const getRelatedProvince = createAsyncThunk(
     'checkout/getRelatedProvince',
     async (countryId: number) => {
-        const response = await instance.get(`Province/GetRelatedProvince/${countryId}`);
+        const response = await instance.get(`Province/GetRelatedProvince/${countryId}`, {
+            headers: {
+                "Accept": "/",
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        });
         return (await response.data);
     }
 );
@@ -40,7 +46,13 @@ export const addCheckout = createAsyncThunk(
     'checkout/addCheckout',
     async (checkoutData: CheckoutType, { rejectWithValue }) => {
         try {
-            const response = await instance.post(`Checkout`, checkoutData);
+            const response = await instance.post(`Checkout`, checkoutData, {
+                headers: {
+                    "Accept": "/",
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            });
             return (await response.data);
         } catch (error: any) {
             console.log('error in checkoutslice: ', error.message);
@@ -70,17 +82,6 @@ const checkoutSlice = createSlice({
             state.countries = action.payload;
         });
         builder.addCase(getAllCountries.rejected, (state) => {
-            state.loading = 'failed';
-        });
-
-        builder.addCase(getAllProvinces.pending, (state) => {
-            state.loading = 'pending';
-        });
-        builder.addCase(getAllProvinces.fulfilled, (state, action) => {
-            state.loading = 'succeeded';
-            state.provinces = action.payload;
-        });
-        builder.addCase(getAllProvinces.rejected, (state) => {
             state.loading = 'failed';
         });
 

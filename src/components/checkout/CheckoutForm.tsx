@@ -5,7 +5,7 @@ import blackCircle from '../../assets/images/blackCircle.svg';
 import emptyCircle from '../../assets/images/emptyCircle.svg';
 import { RootState, useAppDispatch } from '../../redux/app/store';
 import { clearCart, getAllCartItemsByUserId } from '../../redux/features/cartSlice';
-import { addCheckout, getAllCountries, getAllProvinces, getRelatedProvince } from '../../redux/features/checkoutSlice';
+import { addCheckout, getAllCountries, getRelatedProvince } from '../../redux/features/checkoutSlice';
 import { CheckoutYup } from './CheckoutYup';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -59,7 +59,6 @@ const CheckoutForm = () => {
 
     useEffect(() => {
         dispatch(getAllCountries());
-        dispatch(getAllProvinces());
     }, [dispatch]);
 
     useEffect(() => {
