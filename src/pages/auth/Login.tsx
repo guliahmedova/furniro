@@ -68,6 +68,7 @@ const Login = () => {
             <div className="flex items-center justify-between">
               <Link to="/forgot-password" className="text-sm font-medium text-black hover:underline">Forgot password?</Link>
             </div>
+            <Link to="/" className='text-right hover:underline' >Back To </Link>
             <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg sm:text-lg text-center bg-yellow-700 border dark:hover:bg-primary-700 dark:focus:ring-primary-800 text-sm"><span className='block px-5 py-2.5 w-full h-full hover:translate-x-1 duration-200 ease-in-out'>Sign in</span></button>
             <span className='text-sm font-medium text-red-500 ml-1.5'>{error && error} </span>
             <p className="text-sm text-black text-right">

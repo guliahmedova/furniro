@@ -85,6 +85,7 @@ const Register = () => {
                 </div>
               </div>
               <div className='w-full h-full flex flex-col place-content-end'>
+                <Link to="/" className='text-right hover:underline mb-6 mr-1' >Back To </Link>
                 <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg sm:text-lg text-center bg-yellow-700 border dark:hover:bg-primary-700 dark:focus:ring-primary-800 text-sm mb-3"><span className='block px-5 py-2.5 w-full h-full hover:translate-x-1 duration-200 ease-in-out'>Sign up</span></button>
                 <p className="text-sm text-black text-right">
                   Already have an account? <Link to="/register" className="font-medium text-primary-600 hover:underline ease-in-out duration-200 dark:text-primary-500 text-sm">Login here</Link>
