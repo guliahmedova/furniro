@@ -12,8 +12,8 @@ interface ProductDetail {
 
 export const getProductById = createAsyncThunk(
     'productDetail/getProductById',
-    async ({ productID, sizeID }: { productID: number, sizeID: number }) => {
-        const response = await instance.get(`UserProduct/getById/ProductPage?Id=${productID}&SizeId=${sizeID}`);
+    async ({ productID, sizeID }: { productID: number, sizeID?: number }) => {
+        const response = await instance.get(`UserProduct/getById/ProductPage?Id=${productID}${sizeID ? `&SizeId=${sizeID}` : ''}`);
         return response.data;
     }
 );

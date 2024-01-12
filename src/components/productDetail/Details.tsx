@@ -36,9 +36,15 @@ const Details = () => {
   const [selectedImg, setSelectedImg] = useState(0);
   const { productId } = useParams();
 
-  useEffect(() => {
+  const productID_Int = useMemo(()=>{
     if (productId) {
-      dispatch(getProductById({ productID: parseInt(productId), sizeID: 2 }));
+      return parseInt(productId);
+    }
+  }, [productId])
+
+  useEffect(() => {
+    if (productID_Int) {
+      dispatch(getProductById({ productID: productID_Int }));
     };
   }, [dispatch, productId]);
 
@@ -50,6 +56,10 @@ const Details = () => {
   };
 
   const handleSizeActiveClass = (sizeIndex: number) => {
+    const sizeID = product?.sizes?.[sizeIndex].id;
+    if (sizeID && productID_Int) {
+      dispatch(getProductById({ productID: productID_Int, sizeID: sizeID }));
+    }
     setSize(sizeIndex);
   };
 
@@ -169,7 +179,7 @@ const Details = () => {
               </div>
               <button onClick={() => handleAddToCartBtn(
                 product.id,
-                product?.colors?.[color].id
+                product?.colors?.[color].id,
               )}
                 className="xl:w-[35%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out capitalize">Add to cart</button>
               <button className="xl:w-[35%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out">+ Compare</button>
