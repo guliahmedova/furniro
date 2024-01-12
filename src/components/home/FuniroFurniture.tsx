@@ -12,7 +12,6 @@ const FuniroFurniture = () => {
         dispatch(getGridImages());
     }, [dispatch]);
 
-
     return (
         <section className="w-full mb-[50px] h-full">
             <div className="text-center">

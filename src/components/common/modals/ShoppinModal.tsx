@@ -78,7 +78,7 @@ const ShoppingModal = () => {
                                                     <div className="flex items-center gap-3">
                                                         <span className="text-black text-base">{cart.count}</span>
                                                         <span className="text-base">X</span>
-                                                        <span className="text-[#B88E2F] font-medium text-base">$ {cart.salePrice.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
+                                                        <span className="text-[#B88E2F] font-medium text-base">${cart.salePrice.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
                                                     </div>
                                                 </div>
                                                 <button
@@ -102,7 +102,7 @@ const ShoppingModal = () => {
                         </div>)}
                     </>}
 
-                    <div className="mt-20 flex justify-between mb-6 lg:px-8 px-3"><span className="text-black text-base leading-6 select-none">Subtotal</span><span className="text-[#B88E2F] font-semibold text-base">$ {subTotal.toFixed(2).replace(/(\.0+|0+)$/, '')}</span></div>
+                    <div className="mt-20 flex justify-between mb-6 lg:px-8 px-3"><span className="text-black text-base leading-6 select-none">Subtotal</span><span className="text-[#B88E2F] font-semibold text-base">${subTotal.toFixed(2).replace(/(\.0+|0+)$/, '')}</span></div>
 
                     <hr className="w-full bg-[#D9D9D9] mb-6" />
                     <div className="bg-[#FFFFFF] flex justify-between items-center lg:gap-[14px] lg:px-8 px-3">

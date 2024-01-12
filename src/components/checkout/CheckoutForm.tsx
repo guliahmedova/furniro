@@ -208,17 +208,17 @@ const CheckoutForm = () => {
                                 <div className="flex gap-3 items-center">
                                     <span className="text-[#9F9F9F] leading-6">{cartItem.productTitle}</span><span className="text-[#000000] font-medium text-xs">X</span> <span className="text-[#000000] font-medium text-xs">{cartItem.count}</span>
                                 </div>
-                                <span className="text-[#000000] font-light">$ {cartItem.subtotal.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
+                                <span className="text-[#000000] font-light">${cartItem.subtotal.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
                             </div>
                         ))
                     ))}
                     <div className="flex justify-between mb-4">
                         <span className="font-normal">Subtotal</span>
-                        <span className="text-[#000000] font-light">$ {subTotal.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
+                        <span className="text-[#000000] font-light">${subTotal.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
                     </div>
                     <div className="flex justify-between pb-[33px] border-b-2 border-[#D9D9D9]">
                         <span className="font-normal">Total</span>
-                        <span className="text-[#B88E2F] font-bold lg:text-2xl">$ {subTotal.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
+                        <span className="text-[#B88E2F] font-bold lg:text-2xl">${subTotal.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
                     </div>
                     <div className="mt-[22px]">
                         <div className='flex items-center gap-4 cursor-pointer' onClick={() => setAccordion(!accordion)}>

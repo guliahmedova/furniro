@@ -128,7 +128,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
 
           <div className='absolute top-[24px] right-6'>
             {(product.isNew && product.discountPercent !== 0) ? (
-              <div className='flex items-center gap-2'>
+              <div className='flex items-center justify-between gap-2'>
                 <span className='w-12 h-12 rounded-full bg-[#2EC1AC] flex items-center justify-center text-white font-medium'>New</span>
                 <span className='w-12 h-12 rounded-full flex items-center justify-center bg-[#E97171] text-white font-medium'>-{product?.discountPercent}%</span>
               </div>
@@ -179,8 +179,8 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
             <p className='text-[#898989] lg:text-base text-sm font-medium truncate'>{product?.subTitle}</p>
 
             <div className='mt-[8px] flex gap-4 justify-between items-center'>
-              <span className='text-[#3A3A3A] font-bold lg:text-xl'>$ {product?.discountedPrice?.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
-              <span className='text-[#B0B0B0] font-normal lg:leading-6 line-through'>$ {product?.salePrice?.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
+              <span className='text-[#3A3A3A] font-bold lg:text-xl'>${product?.discountedPrice?.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
+              <span className='text-[#B0B0B0] font-normal lg:leading-6 line-through'>${product?.salePrice?.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
             </div>
 
             <div className='mt-4 flex items-center justify-end gap-1 lg:hidden'>
@@ -217,8 +217,8 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
         <div className='bg-gray-100 my-3 p-5 pb-7'>
           <div>
             <h1 className='font-medium text-xl truncate'>{product?.title}</h1>
-            <div className='text-gray-500 text-sm'>
-              <span>{product?.subTitle}</span> - <span>{product?.salePrice}</span>
+            <div className='text-gray-500'>
+              <span>{product?.subTitle}</span> / $<span>{product?.discountedPrice}</span>  <span className='text-sm line-through'>${product?.salePrice}</span> 
             </div>
           </div>
 
