@@ -11,6 +11,7 @@ import ForgotPassword from './pages/auth/ForgotPassword.tsx';
 import ProfileEdit from './pages/auth/ProfileEdit.tsx';
 import { persistor, store } from './redux/app/store.ts';
 import ChangePassword from './pages/auth/ChangePassword.tsx';
+import NewProducts from './pages/NewProducts.tsx';
 
 const Home = lazy(() => import('./pages/Home.tsx'));
 const Shop = lazy(() => import('./pages/Shop.tsx'));
@@ -40,6 +41,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='search' element={<Search />} />
     <Route path='favorites' element={<Favorites />} />
     <Route path='productComparison' element={<ProductComparison />} />
+    <Route path='newProducts' element={<NewProducts />} />
     <Route path='profile' element={<Profile />} >
       <Route path='change-password' element={<ChangePassword />} />
       <Route path='edit' index element={<ProfileEdit />} />

@@ -20,7 +20,7 @@ const FuniroFurniture = () => {
                 <h1 className="text-[#3A3A3A] font-bold lg:text-[40px] lg:leading-[48px] text-lg">#FuniroFurniture</h1>
             </div>
 
-            <div className="parent h-[100vh]">
+            <div className="parent h-[100vh] overflow-hidden lg:w-full min-w-[760px]">
                 {gridImages?.map((item) => (
                     <img src={item.imageUrls[0]} key={item.id} alt="" className='w-full h-full object-cover' />
                 ))}

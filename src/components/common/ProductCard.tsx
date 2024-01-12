@@ -88,8 +88,16 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
             showConfirmButton: false,
             timer: 1500
           });
-        } else {
-          dispatch(getAllCartItemsByUserId(userId_int));
+        } else if (confirm.meta.requestStatus === 'fulfilled') {
+          dispatch(getAllCartItemsByUserId(userId_int)).then(() => {
+            MySwal.fire({
+              position: "center",
+              icon: "success",
+              title: "The Product added successfully",
+              showConfirmButton: false,
+              timer: 1500
+            });
+          })
         }
       })
       setIsModalOpen(false);

@@ -44,8 +44,7 @@ const initialState = {
 const productDetailSlice = createSlice({
     name: 'productDetail',
     initialState,
-    reducers: {
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getProductById.fulfilled, (state, action) => {
             state.product = action.payload;

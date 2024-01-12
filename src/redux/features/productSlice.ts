@@ -21,8 +21,8 @@ export const getProducts = createAsyncThunk(
 
 export const getNewProducts = createAsyncThunk(
     'products/getNewProducts',
-    async (count: number) => {
-        const response = await instance.get(`UserProduct/NewProducts?ShowMore.TakeProduct=${count}`);
+    async (take: number) => {
+        const response = await instance.get(`UserProduct/NewProducts?ShowMore.Take=${take}`);
         return (await response.data);
     }
 );
@@ -72,5 +72,5 @@ const productSlice = createSlice({
     },
 });
 
-export const { getProductIDByCLick} = productSlice.actions;
+export const { getProductIDByCLick } = productSlice.actions;
 export default productSlice.reducer;
