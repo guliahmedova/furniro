@@ -127,9 +127,20 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
           <img src={product?.imageFiles?.[0]} onError={getImageError} alt="" className='h-[301px] w-full object-cover' />
 
           <div className='absolute top-[24px] right-6'>
-            {(product?.isNew || product?.discountPercent === 0) ? (<span className='w-12 h-12 rounded-full bg-[#2EC1AC] flex items-center justify-center text-white font-medium'>New</span>) : (
-              <span className='w-12 h-12 rounded-full flex items-center justify-center bg-[#E97171] text-white font-medium'>-{product?.discountPercent}%</span>)}
+            {(product.isNew && product.discountPercent !== 0) ? (
+              <div className='flex items-center gap-2'>
+                <span className='w-12 h-12 rounded-full bg-[#2EC1AC] flex items-center justify-center text-white font-medium'>New</span>
+                <span className='w-12 h-12 rounded-full flex items-center justify-center bg-[#E97171] text-white font-medium'>-{product?.discountPercent}%</span>
+              </div>
+            ) : (
+              product?.isNew ?
+                (<span className='w-12 h-12 rounded-full bg-[#2EC1AC] flex items-center justify-center text-white font-medium'>New</span>) : (
+                  product.discountPercent !== 0 &&
+                  <span className='w-12 h-12 rounded-full flex items-center justify-center bg-[#E97171] text-white font-medium'>-{product?.discountPercent}%</span>
+                )
+            )}
           </div>
+
           <div className="lg:absolute hidden h-full w-full bg-[#3A3A3A]/70 lg:flex items-center justify-center bottom-0 hover:bottom-0 opacity-0 hover:opacity-100 transition-all duration-300">
             <div className='w-full'>
               <div className='bg-white w-[70%] mb-6 text-center mx-auto opacity-100 text-[#B88E2F] font-bold text-[16px] leading-6 py-[12px]'
