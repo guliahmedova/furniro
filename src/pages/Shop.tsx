@@ -18,6 +18,7 @@ const Shop = () => {
   const [maxPrice, setMaxPrice] = useState(0);
   const [show, setShow] = useState(16);
   const [sortBy, setSortBy] = useState('');
+  const [isNew, setIsNew] = useState(false);
 
   useEffect(() => {
     dispatch(getAllSizes());
@@ -45,6 +46,8 @@ const Shop = () => {
           maxPrice={maxPrice}
           show={show}
           sortBy={sortBy}
+          isNew = {isNew}
+          setIsNew = {setIsNew}
         /></Reveal>
       <Reveal>
         <Cards
@@ -56,6 +59,7 @@ const Shop = () => {
           minPrice={minPrice}
           maxPrice={maxPrice}
           show={show}
+          isNew = {isNew}
           sortBy={sortBy} />
       </Reveal>
       <Reveal><FeaturesBar /></Reveal>

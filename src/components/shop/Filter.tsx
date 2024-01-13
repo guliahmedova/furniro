@@ -19,18 +19,20 @@ interface FilterProps {
     setMaxPrice?: React.Dispatch<React.SetStateAction<number>> | undefined;
     setShow?: React.Dispatch<React.SetStateAction<number>> | undefined;
     setSortBy?: React.Dispatch<React.SetStateAction<string>> | undefined;
+    setIsNew?: React.Dispatch<React.SetStateAction<boolean>> | undefined;
     gridClass: string,
     minPrice?: number;
     maxPrice?: number;
+    isNew: boolean
     show?: number;
     sortBy?: string;
 };
 
-const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor, setTag, setCategory, setMaxPrice, setMinPrice, setShow, setSortBy, minPrice, maxPrice, show, sortBy }) => {
+const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor, setTag, setCategory, setMaxPrice, setMinPrice, setShow, setSortBy, setIsNew, minPrice, maxPrice, show, sortBy, isNew }) => {
     const totalProduct = useSelector((state: RootState) => state.product.totalProductCount);
     const [showFiltersMenu, setShowFiltersMenu] = useState(false);
 
-    const {sizes, colors, tags, categories} = useSelector((state: RootState) => state.shop);
+    const { sizes, colors, tags, categories } = useSelector((state: RootState) => state.shop);
 
     const sizeOptions = useMemo(() => {
         return sizes?.map((size) => ({
@@ -191,7 +193,11 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor
 
                 <div className='flex items-center gap-1.5 '>
                     <label htmlFor="isNew" className='font-medium capitalize text-gray-500 text-sm'>New</label>
-                    <input type="checkbox" id='isNew' />
+                    <input type="checkbox" id='isNew' checked={isNew} onChange={(e) => {
+                        if (setIsNew) {
+                            setIsNew(e.target.checked);
+                        }
+                    }} />
                 </div>
 
             </div>

@@ -55,7 +55,7 @@ export const getFilteredProducts = createAsyncThunk(
         page,
         take,
         categoryName = [],
-        isNew = true,
+        isNew = null,
         productTags = [],
         productSizes = [],
         productColors = [],

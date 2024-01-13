@@ -16,27 +16,28 @@ interface CardsProps {
     maxPrice?: number
     show: number
     sortBy?: string
+    isNew: boolean
 };
 
-const Cards: FC<CardsProps> = ({ gridClass, size, color, tag, category, minPrice, maxPrice, show, sortBy }) => {
+const Cards: FC<CardsProps> = ({ gridClass, size, color, tag, category, minPrice, maxPrice, show, sortBy, isNew }) => {
     const dispatch = useAppDispatch();
     const currentpage = useSelector((state: RootState) => state.pagination.currentPage);
     const { totalProductCount, filteredProducts } = useSelector((state: RootState) => state.shop);
-
+    
     useEffect(() => {
         dispatch(getFilteredProducts({
             page: currentpage,
             take: show,
             categoryName: category,
-            isNew: null,
+            isNew: isNew,
             productTags: tag,
             productSizes: size,
             productColors: color,
             maxPrice: maxPrice,
             minPrice: minPrice,
-            orderBy: sortBy
+            orderBy: sortBy,
         }));
-    }, [dispatch, currentpage, size, color, minPrice, maxPrice, sortBy, show, category, tag]);
+    }, [dispatch, currentpage, size, color, minPrice, maxPrice, sortBy, show, category, tag, isNew]);
 
     return (
         <section className="bg-white">
