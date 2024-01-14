@@ -76,9 +76,10 @@ const BlogSection = () => {
                         <h1 className='text-black font-medium text-2xl mb-8'>Categories</h1>
                         <div className='overflow-y-scroll h-80 | categories px-2'>
                             {categories?.map(item => (
-                                <div key={item?.id} className='flex justify-between mb-10 cursor-pointer' onClick={() => setCategoryID(item.id)}>
-                                    <span className='text-[#9F9F9F]'>{item?.categoryName}</span>
-                                    <span className='text-[#9F9F9F]'>{item?.blogCount}</span>
+                                <div key={item?.id} className='flex items-center mb-10 cursor-pointer' onClick={() => setCategoryID(item.id)}>
+                                    <span className='text-[#9F9F9F] w-full'>{item?.categoryName}</span>
+                                    <span className={`w-4/12 text-right ${categoryID === item.id ? 'block' : 'hidden'}`}>&#10003;</span>
+                                    <span className='text-[#9F9F9F] w-4/12 flex justify-end'>{item?.blogCount}</span>
                                 </div>
                             ))}
                         </div>
