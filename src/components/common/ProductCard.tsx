@@ -180,7 +180,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
 
             <div className='mt-[8px] flex gap-4 justify-between items-center'>
               <span className='text-[#3A3A3A] font-bold lg:text-xl'>${product?.discountedPrice?.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
-              <span className='text-[#B0B0B0] font-normal lg:leading-6 line-through'>${product?.salePrice?.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
+              <span className={`text-[#B0B0B0] font-normal lg:leading-6 line-through ${product.discountPercent === 0 ? 'hidden' : ''}`}>${product?.salePrice?.toFixed(2).replace(/(\.0+|0+)$/, '')}</span>
             </div>
 
             <div className='mt-4 flex items-center justify-end gap-1 lg:hidden'>

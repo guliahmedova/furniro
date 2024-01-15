@@ -1,20 +1,23 @@
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../redux/app/store"
 import { useEffect, useState } from "react";
-import { getNewProducts } from "../redux/features/productSlice";
 import { ProductTypes } from "../models/productTypes";
 import { ProductCard } from "../components/common";
+import { getFilteredProducts } from "../redux/features/shopSlice";
 
 const NewProducts = () => {
     const dispatch = useAppDispatch();
-    const newProducts = useSelector((state: RootState) => state.product.newProducts);
+    const newProducts = useSelector((state: RootState) => state.shop.filteredProducts);
+    const totalProductCount = useSelector((state: RootState) => state.shop.totalProductCount);
     const [showMore, setShowMore] = useState(8);
 
     useEffect(() => {
-        dispatch(getNewProducts(showMore));
+        dispatch(getFilteredProducts({
+            take: showMore,
+            isNew: "true"
+        }));
     }, [showMore]);
 
-    const totalProductCount = 48;
     const handleShowMoreClick = () => {
         if (totalProductCount > showMore) {
             setShowMore(prevState => prevState + 8);
@@ -32,7 +35,7 @@ const NewProducts = () => {
                             product={item} />
                     ))}
                 </div>
-                {(totalProductCount !== showMore && showMore >= 8) && (
+                {(totalProductCount !== showMore && showMore > 8) && (
                     <button
                         className="mt-[32px] border-2 py-[12px] block w-[245px] mx-auto border-[#B88E2F] text-[#B88E2F] font-bold text-[16px] leading-6" onClick={handleShowMoreClick} >
                         Show More
