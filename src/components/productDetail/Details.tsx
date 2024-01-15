@@ -13,6 +13,7 @@ import { getProductById } from "../../redux/features/productDetailSlice";
 import { addToCart, getAllCartItemsByUserId } from "../../redux/features/cartSlice";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { getProductRating, getReviewsByProductId } from "../../redux/features/reviewSlice";
 const MySwal = withReactContent(Swal);
 const stars = [star, star, star, star, halfStar];
 
@@ -118,6 +119,25 @@ const Details = () => {
     }
   };
 
+  const totalReviewCount = useSelector((state: RootState) => state.review.totalReviewCount);
+  const reviewRating = useSelector((state: RootState) => state.review.reviewRating);
+
+  const reviewCell = useMemo(() => {
+    if (reviewRating) {
+      return Math.ceil(reviewRating);
+    }
+  }, [reviewRating]);
+
+  useEffect(() => {
+    if (productID_Int) {
+      dispatch(getReviewsByProductId({
+        productId: productID_Int,
+        take: 10
+      }))
+      dispatch(getProductRating(productID_Int));
+    }
+  }, [productID_Int]);
+
   return (
     <section className="w-full">
       {loading === 'pending' ? (
@@ -149,7 +169,7 @@ const Details = () => {
               <div className="flex gap-8 lg:flex-row flex-col-reverse">
                 <div className="flex lg:flex-col flex-row lg;gap-8 gap-3">
                   {product?.colors?.[color].imageFiles?.map((item, index) => (
-                    <div key={index} className={`rounded-lg w-[76px] h-20 flex items-center justify-center cursor-pointer`} onClick={() => handleSlideImageChange(index)}><img src={item} className="w-full h-full object-cover rounded-lg" alt="product-img" /></div>
+                    <div key={index} className={`rounded-lg w-[76px] h-20 flex items-center justify-center cursor-pointer border`} onClick={() => handleSlideImageChange(index)}><img src={item} className="w-full h-full object-cover rounded-lg" alt="product-img" /></div>
                   ))}
                 </div>
                 {product?.colors?.[color].imageFiles && product?.colors?.[color].imageFiles?.length > 0 && (
@@ -163,16 +183,16 @@ const Details = () => {
                 <h1 className="text-black lg:text-[42px] lg:leading-[63px] text-2xl tracking-wide">{product?.title}</h1>
                 <div className="flex items-center gap-2">
                   <span className="text-[#9F9F9F] lg:text-2xl font-medium text-lg lg:mt-0 mt-3 block">${product?.salePrice?.toFixed(2)}</span>
-                  <span className="text-[#9F9F9F] text-sm lg:mt-0 mt-3 block line-through">${product?.salePrice?.toFixed(2)}</span>
-                  <span className="rounded-sm bg-[#f1cb71] text-white px-1 select-none">-{product.discountPercent}%</span>
+                  <span className={`text-[#9F9F9F] text-sm lg:mt-0 mt-3 block line-through ${product.discountPercent > 0 ? 'block' : 'hidden'}`}>${product?.salePrice?.toFixed(2)}</span>
+                  <span className={`rounded-sm bg-[#f1cb71] text-white px-1 select-none ${product.discountPercent > 0 ? 'block' : 'hidden'}`}>-{product.discountPercent}%</span>
                 </div>
-                <div className="flex gap-[18px] mt-4 mb-5">
-                  <div className="flex items-center gap-[6px]">
-                    {stars.map((item, index) => (
-                      <img key={index} src={item} alt="" />
+                <div className="flex gap-[18px] mt-4 mb-5 items-center">
+                  <div className="flex items-center gap-1">
+                    {[...Array(reviewCell)].map((_, index) => (
+                      <span  className="cursor-pointer block text-2xl" key={index} style={{color: '#ffc107'}}>&#9733;</span>
                     ))}
                   </div>
-                  <span className="text-[#9F9F9F] text-[13px] border-l border-[#9F9F9F] block pl-[22px]">5 Customer Review</span>
+                  <span className="text-[#9F9F9F] text-[13px] border-l border-[#9F9F9F] block pl-[22px]">{totalReviewCount && totalReviewCount} Customer Review</span>
                 </div>
                 <p className="lg:text-[13px] lg:max-w-[390px] font-medium text-black mb-[22px]">{product?.introduction}</p>
                 <div className="mb-[18px]">

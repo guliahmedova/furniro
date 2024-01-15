@@ -16,7 +16,7 @@ const Shop = () => {
   const [category, setCategory] = useState<Option[]>([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
-  const [show, setShow] = useState(16);
+  const [show, setShow] = useState(8);
   const [sortBy, setSortBy] = useState('');
   const [isNew, setIsNew] = useState(false);
 

@@ -15,7 +15,8 @@ interface ReviewState {
     error: string,
     message: string,
     reviews: ReviewResponseBodyType[],
-    totalReviewCount: number
+    totalReviewCount: number,
+    reviewRating: number
 };
 
 export const addReview = createAsyncThunk(
@@ -84,6 +85,14 @@ export const deletReviewById = createAsyncThunk(
     }
 );
 
+export const getProductRating = createAsyncThunk(
+    'review/getProductRating',
+    async (productId: number ) => {
+        const response = await instance.get(`Review/ProductRating?ProductId=${productId}`);
+        return (await response.data);
+    }
+);
+
 const initialState = {
     loading: 'idle',
     isSuccess: false,
@@ -96,6 +105,7 @@ const initialState = {
     message: '',
     reviews: [],
     totalReviewCount: 0,
+    reviewRating: 0
 } as ReviewState;
 
 const reviewSlice = createSlice({
@@ -159,6 +169,19 @@ const reviewSlice = createSlice({
             } else {
                 state.error = 'An unknown error occurred';
             }
+        });
+
+        builder.addCase(getProductRating.pending, (state) => {
+            state.loading = 'pending';
+        });
+        builder.addCase(getProductRating.fulfilled, (state, action) => {
+            state.loading = 'succeeded';
+            state.isSuccess = true;
+            state.reviewRating = action.payload;
+        });
+        builder.addCase(getProductRating.rejected, (state) => {
+            state.loading = 'failed';
+            state.isSuccess = false;
         });
     },
 });
