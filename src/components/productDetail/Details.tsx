@@ -15,32 +15,41 @@ import { getProductRating, getReviewsByProductId } from "../../redux/features/re
 const MySwal = withReactContent(Swal);
 
 const Details = () => {
+  const [size, setSize] = useState(0);
+  const [color, setColor] = useState(0);
+  const [colorId, setColorId] = useState(0);
+  const [activeColor, setActiveColor] = useState('');
+  const [selectedImg, setSelectedImg] = useState('');
+  const [productCount, setProductCount] = useState(1);
+  const [productCountMsg, setProductCountMsg] = useState('');
+  const { productId } = useParams();
   const userId = localStorage.getItem('userId');
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const product: ProductTypes = useSelector((state: RootState) => state.productDetail.product);
+  const loading = useSelector((state: RootState) => state.productDetail.loading);
+  const totalReviewCount = useSelector((state: RootState) => state.review.totalReviewCount);
+  const reviewRating = useSelector((state: RootState) => state.review.reviewRating);
+
   const userId_Int = useMemo(() => {
     if (userId) {
       return parseInt(userId);
     };
   }, [userId]);
 
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  const [productCount, setProductCount] = useState(1);
-  const [productCountMsg, setProductCountMsg] = useState('');
-  const product: ProductTypes = useSelector((state: RootState) => state.productDetail.product);
-
-  const [size, setSize] = useState(0);
-  const [color, setColor] = useState(0);
-  const [selectedImg, setSelectedImg] = useState(0);
-  const { productId } = useParams();
-
-  const loading = useSelector((state: RootState) => state.productDetail.loading);
-
   const productID_Int = useMemo(() => {
     if (productId) {
       return parseInt(productId);
     }
-  }, [productId])
+  }, [productId]);
+
+  const reviewCell = useMemo(() => {
+    if (reviewRating) {
+      return Math.ceil(reviewRating);
+    }
+  }, [reviewRating]);
 
   useEffect(() => {
     if (productID_Int) {
@@ -48,12 +57,33 @@ const Details = () => {
     };
   }, [dispatch, productId]);
 
-  const handleSlideImageChange = (index: number) => {
-    const slider = product?.colors?.[0].imageFiles.find((_, index) => index === index);
-    if (slider !== undefined) {
-      setSelectedImg(index);
+  useEffect(() => {
+    if (!colorId && product?.colors?.length > 0) {
+      setColorId(product.colors?.[0].id);
     }
-  };
+  }, [colorId, product]);
+
+  useEffect(() => {
+    if (product?.colors?.length > 0) {
+      setSelectedImg(product?.colors?.[color].imageFiles[0]);
+    }
+  }, [product, color]);
+
+  useEffect(() => {
+    if (product?.colors?.length > 0) {
+      setActiveColor(product.colors?.[0].colorHexCode);
+    }
+  }, [product]);
+
+  useEffect(() => {
+    if (productID_Int) {
+      dispatch(getReviewsByProductId({
+        productId: productID_Int,
+        take: 10
+      }))
+      dispatch(getProductRating(productID_Int));
+    }
+  }, [productID_Int]);
 
   const handleSizeActiveClass = (sizeIndex: number) => {
     const sizeID = product?.sizes?.[sizeIndex].id;
@@ -63,8 +93,14 @@ const Details = () => {
     setSize(sizeIndex);
   };
 
-  const handleColor = (colorIndex: number) => {
+  const handleColor = (colorIndex: number, colorName: string, colorId: number) => {
+    setActiveColor(colorName);
     setColor(colorIndex);
+    setColorId(colorId);
+  };
+
+  const changeImage = (newImage: string) => {
+    setSelectedImg(newImage);
   };
 
   const increaseProductCount = () => {
@@ -116,25 +152,6 @@ const Details = () => {
     }
   };
 
-  const totalReviewCount = useSelector((state: RootState) => state.review.totalReviewCount);
-  const reviewRating = useSelector((state: RootState) => state.review.reviewRating);
-
-  const reviewCell = useMemo(() => {
-    if (reviewRating) {
-      return Math.ceil(reviewRating);
-    }
-  }, [reviewRating]);
-
-  useEffect(() => {
-    if (productID_Int) {
-      dispatch(getReviewsByProductId({
-        productId: productID_Int,
-        take: 10
-      }))
-      dispatch(getProductRating(productID_Int));
-    }
-  }, [productID_Int]);
-
   return (
     <section className="w-full">
       {loading === 'pending' ? (
@@ -166,12 +183,12 @@ const Details = () => {
               <div className="flex gap-8 lg:flex-row flex-col-reverse">
                 <div className="flex lg:flex-col flex-row lg;gap-8 gap-3">
                   {product?.colors?.[color].imageFiles?.map((item, index) => (
-                    <div key={index} className={`rounded-lg w-[76px] h-20 flex items-center justify-center cursor-pointer border`} onClick={() => handleSlideImageChange(index)}><img src={item} className="w-full h-full object-cover rounded-lg" alt="product-img" /></div>
+                    <div key={index} className={`rounded-lg w-[76px] h-20 flex items-center justify-center cursor-pointer border`} onClick={() => changeImage(item)}><img src={item} className="w-full h-full object-cover rounded-lg" alt="product-img" /></div>
                   ))}
                 </div>
                 {product?.colors?.[color].imageFiles && product?.colors?.[color].imageFiles?.length > 0 && (
                   <div className='rounded-lg lg:w-[423px] lg:h-[500px]'>
-                    <img className="w-full h-full object-cover rounded-lg" src={product?.colors?.[color].imageFiles[selectedImg]} alt="slide-img" />
+                    <img className="w-full h-full object-cover rounded-lg" src={selectedImg && selectedImg} alt="slide-img" />
                   </div>
                 )}
               </div>
@@ -186,7 +203,7 @@ const Details = () => {
                 <div className="flex gap-[18px] mt-4 mb-5 items-center">
                   <div className="flex items-center gap-1">
                     {[...Array(reviewCell)].map((_, index) => (
-                      <span  className="cursor-pointer block text-2xl" key={index} style={{color: '#ffc107'}}>&#9733;</span>
+                      <span className="cursor-pointer block text-2xl" key={index} style={{ color: '#ffc107' }}>&#9733;</span>
                     ))}
                   </div>
                   <span className="text-[#9F9F9F] text-[13px] border-l border-[#9F9F9F] block pl-[22px]">{totalReviewCount && totalReviewCount} Customer Review</span>
@@ -205,7 +222,7 @@ const Details = () => {
                   <h4 className="text-[#9F9F9F] text-[14px] mb-3">Color</h4>
                   <div className="flex gap-4 items-center">
                     {product?.colors?.map((item, index) => (
-                      <button key={item.id} onClick={() => handleColor(index)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-full border-2 ${index === color ? 'border-[#B88E2F]' : ''}`} style={{ backgroundColor: item.colorHexCode }}></button>
+                      <button key={item.id} onClick={() => handleColor(index, item.colorHexCode, item.id)} className={`w-[30px] h-[30px] flex-shrink-0 rounded-full border-2 ${item.colorHexCode === activeColor ? 'border-[#B88E2F]' : ''}`} style={{ backgroundColor: item.colorHexCode }}></button>
                     ))}
                   </div>
                 </div>

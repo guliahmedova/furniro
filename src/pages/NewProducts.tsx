@@ -24,6 +24,8 @@ const NewProducts = () => {
         }
     };
 
+    console.log(totalProductCount, showMore);
+
     return (
         <section className="bg-white">
             <div className="xl:w-[85%] w-[90%] mx-auto mt-[56px] mb-[69px]">
@@ -35,7 +37,7 @@ const NewProducts = () => {
                             product={item} />
                     ))}
                 </div>
-                {(totalProductCount !== showMore && showMore > 8) && (
+                {(totalProductCount >= showMore && showMore >= 8) && (
                     <button
                         className="mt-[32px] border-2 py-[12px] block w-[245px] mx-auto border-[#B88E2F] text-[#B88E2F] font-bold text-[16px] leading-6" onClick={handleShowMoreClick} >
                         Show More
