@@ -182,7 +182,7 @@ const Details = () => {
               <div>
                 <h1 className="text-black lg:text-[42px] lg:leading-[63px] text-2xl tracking-wide">{product?.title}</h1>
                 <div className="flex items-center gap-2">
-                  <span className="text-[#9F9F9F] lg:text-2xl font-medium text-lg lg:mt-0 mt-3 block">${product?.salePrice?.toFixed(2)}</span>
+                  <span className="text-[#9F9F9F] lg:text-2xl font-medium text-lg lg:mt-0 mt-3 block">${product?.discountedPrice?.toFixed(2)}</span>
                   <span className={`text-[#9F9F9F] text-sm lg:mt-0 mt-3 block line-through ${product.discountPercent > 0 ? 'block' : 'hidden'}`}>${product?.salePrice?.toFixed(2)}</span>
                   <span className={`rounded-sm bg-[#f1cb71] text-white px-1 select-none ${product.discountPercent > 0 ? 'block' : 'hidden'}`}>-{product.discountPercent}%</span>
                 </div>
