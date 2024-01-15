@@ -50,7 +50,7 @@ const Login = () => {
   return (
     <section className="bg-primary-hero-image w-full h-screen bg-cover bg-fixed bg-center bg-no-repeat md:bg-top">
       <div className='bg-[#3A3A3A]/75 w-full h-full'>
-        <div className="h-full lg:w-[40%] md:w-8/12 sm:w-10/12 flex flex-col justify-center items-center mx-auto px-4">
+        <div className="h-[95%] lg:w-[40%] md:w-8/12 sm:w-10/12 flex flex-col justify-center items-center mx-auto px-4">
           <form className="flex flex-col gap-5 w-full xl:mt-0 mt-5 p-6 bg-slate-50 rounded-lg" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="userName" className="block mb-2 sm:text-lg font-medium text-black capitalize">user Name</label>
