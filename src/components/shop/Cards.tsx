@@ -29,7 +29,7 @@ const Cards: FC<CardsProps> = ({ gridClass, size, color, tag, category, minPrice
             page: currentpage,
             take: show,
             categoryName: category,
-            isNew: null,
+            isNew: isNew,
             productTags: tag,
             productSizes: size,
             productColors: color,

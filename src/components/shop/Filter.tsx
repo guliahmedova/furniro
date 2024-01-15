@@ -191,17 +191,8 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor
                     }} />
                 </div>
 
-                {/* <div className='flex items-center gap-1.5 '>
-                    <label htmlFor="isNew" className='font-medium capitalize text-gray-500 text-sm'>New</label>
-                    <input type="checkbox" id='isNew' checked={isNew} onChange={(e) => {
-                        if (setIsNew) {
-                            setIsNew(e.target.checked);
-                        }
-                    }} />
-                </div> */}
-
                 <div className='flex flex-col mt-7'>
-                    <select name="isNew" id="isNew" value={isNew} onChange={(e) => setIsNew && setIsNew(e.target.value)} className='py-1.5 px-7 outline-0 appearance-none border-0 text-gray-600'>
+                    <select name="isNew" id="isNew" value={isNew} onChange={(e) => setIsNew && setIsNew(e.target.value)} className='py-1.5 px-7 outline-0 appearance-none border-0 text-gray-400'>
                         <option value="null" defaultChecked>All</option>
                         <option value="true">New Arrivals</option>
                         <option value="false">Latest Arrivals</option>

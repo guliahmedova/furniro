@@ -66,7 +66,7 @@ export const getFilteredProducts = createAsyncThunk(
         page: number,
         take: number,
         categoryName?: Option[],
-        isNew?: boolean | null,
+        isNew?: string | null,
         productTags?: Option[],
         productSizes?: Option[],
         productColors?: String[],
@@ -75,7 +75,7 @@ export const getFilteredProducts = createAsyncThunk(
         orderBy?: string
     }) => {
        try {
-        const response = await instance.get(`UserProduct/Products?Page=${page}${take > 0 ? `&ShowMore.Take=${take}` : ''}${categoryName?.length > 0 ? categoryName?.map((item) => `&CategoryNames=${item.value}`).join('') : ''}${typeof (isNew) === 'boolean' ? `&IsNew=${isNew}` : ''}${productTags?.length > 0 ? productTags.map((item) => `&ProductTags=${item.value}`).join('') : ''}${productSizes?.length > 0 ? `${productSizes?.map((item) => `&ProductSizes=${item.value}`).join('')}` : ''}${productColors.length > 0 ? `${productColors.map((item) => `&ProductColors=${item.replace(/#/g, '%23')}`).join('')}` : ''}${minPrice > 0 ? `&MinPrice=${minPrice}` : ''}${maxPrice > 0 ? `&MaxPrice=${maxPrice}` : ''}${orderBy?.length > 0 ? `&OrderBy=${orderBy}` : ''}`);
+        const response = await instance.get(`UserProduct/Products?Page=${page}${take > 0 ? `&ShowMore.Take=${take}` : ''}${categoryName?.length > 0 ? categoryName?.map((item) => `&CategoryNames=${item.value}`).join('') : ''}${isNew?.length && isNew !== 'null' ? `&IsNew=${isNew}` : ''}${productTags?.length > 0 ? productTags.map((item) => `&ProductTags=${item.value}`).join('') : ''}${productSizes?.length > 0 ? `${productSizes?.map((item) => `&ProductSizes=${item.value}`).join('')}` : ''}${productColors.length > 0 ? `${productColors.map((item) => `&ProductColors=${item.replace(/#/g, '%23')}`).join('')}` : ''}${minPrice > 0 ? `&MinPrice=${minPrice}` : ''}${maxPrice > 0 ? `&MaxPrice=${maxPrice}` : ''}${orderBy?.length > 0 ? `&OrderBy=${orderBy}` : ''}`);
         return (await response.data);
        } catch (error) {
             console.error(error);
