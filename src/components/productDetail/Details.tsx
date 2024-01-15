@@ -4,8 +4,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import arrow from '../../assets/images//heroArrow.svg';
 import facebook from '../../assets/images/facebook.svg';
 import linkedin from '../../assets/images/linkedin.svg';
-import halfStar from '../../assets/images/halfStar.svg';
-import star from '../../assets/images/star.svg';
 import twitter from '../../assets/images/twitter.svg';
 import { ProductTypes } from "../../models/productTypes";
 import { RootState, useAppDispatch } from "../../redux/app/store";
@@ -15,7 +13,6 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { getProductRating, getReviewsByProductId } from "../../redux/features/reviewSlice";
 const MySwal = withReactContent(Swal);
-const stars = [star, star, star, star, halfStar];
 
 const Details = () => {
   const userId = localStorage.getItem('userId');

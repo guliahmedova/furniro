@@ -18,7 +18,7 @@ const Shop = () => {
   const [maxPrice, setMaxPrice] = useState(0);
   const [show, setShow] = useState(8);
   const [sortBy, setSortBy] = useState('');
-  const [isNew, setIsNew] = useState(false);
+  const [isNew, setIsNew] = useState('');
 
   useEffect(() => {
     dispatch(getAllSizes());

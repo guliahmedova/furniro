@@ -19,11 +19,11 @@ interface FilterProps {
     setMaxPrice?: React.Dispatch<React.SetStateAction<number>> | undefined;
     setShow?: React.Dispatch<React.SetStateAction<number>> | undefined;
     setSortBy?: React.Dispatch<React.SetStateAction<string>> | undefined;
-    setIsNew?: React.Dispatch<React.SetStateAction<boolean>> | undefined;
+    setIsNew?: React.Dispatch<React.SetStateAction<string>> | undefined;
     gridClass: string,
     minPrice?: number;
     maxPrice?: number;
-    isNew: boolean
+    isNew: string;
     show?: number;
     sortBy?: string;
 };
@@ -132,7 +132,7 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor
                     </div>
                 </div>
             </div>
-            <div className={`w-[85%] mx-auto py-7 flex-wrap ease-linea items-centerr gap-1 justify-between duration-500 ${showFiltersMenu ? 'flex' : 'hidden'}`}>
+            <div className={`w-[85%] mx-auto py-7 flex-wrap ease-linea items-center gap-1 justify-between duration-500 ${showFiltersMenu ? 'flex' : 'hidden'}`}>
                 <div className='xl:w-2/12 w-full'>
                     <span className='font-medium capitalize text-gray-500 mb-2 block text-sm'>Category Names</span>
                     <Select
@@ -191,13 +191,21 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor
                     }} />
                 </div>
 
-                <div className='flex items-center gap-1.5 '>
+                {/* <div className='flex items-center gap-1.5 '>
                     <label htmlFor="isNew" className='font-medium capitalize text-gray-500 text-sm'>New</label>
                     <input type="checkbox" id='isNew' checked={isNew} onChange={(e) => {
                         if (setIsNew) {
                             setIsNew(e.target.checked);
                         }
                     }} />
+                </div> */}
+
+                <div className='flex flex-col mt-7'>
+                    <select name="isNew" id="isNew" value={isNew} onChange={(e) => setIsNew && setIsNew(e.target.value)} className='py-1.5 px-7 outline-0 appearance-none border-0 text-gray-600'>
+                        <option value="null" defaultChecked>All</option>
+                        <option value="true">New Arrivals</option>
+                        <option value="false">Latest Arrivals</option>
+                    </select>
                 </div>
 
             </div>

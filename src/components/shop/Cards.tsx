@@ -16,7 +16,7 @@ interface CardsProps {
     maxPrice?: number
     show: number
     sortBy?: string
-    isNew: boolean
+    isNew: string
 };
 
 const Cards: FC<CardsProps> = ({ gridClass, size, color, tag, category, minPrice, maxPrice, show, sortBy, isNew }) => {
