@@ -14,9 +14,7 @@ import { getProductById } from '../../redux/features/productDetailSlice';
 import { getProductIDByCLick } from '../../redux/features/productSlice';
 import { addToWishlist, removeFromWishlist } from '../../redux/features/wishlistSlice';
 import AddToCartModal from './AddToCartModal';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-const MySwal = withReactContent(Swal);
+import { toast } from 'react-toastify';
 
 interface ProductCardProps {
   product: ProductTypes;
@@ -81,22 +79,10 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
         count: productCount
       })).then((confirm) => {
         if (confirm.meta.requestStatus === 'rejected') {
-          MySwal.fire({
-            position: "center",
-            icon: "warning",
-            title: confirm.payload,
-            showConfirmButton: false,
-            timer: 1500
-          });
+          toast.warning(confirm.payload)
         } else if (confirm.meta.requestStatus === 'fulfilled') {
           dispatch(getAllCartItemsByUserId(userId_int)).then(() => {
-            MySwal.fire({
-              position: "center",
-              icon: "success",
-              title: "The Product added successfully",
-              showConfirmButton: false,
-              timer: 1500
-            });
+            toast.success('The Product added successfully');
           })
         }
       })
@@ -218,7 +204,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
           <div>
             <h1 className='font-medium text-xl truncate'>{product?.title}</h1>
             <div className='text-gray-500'>
-              <span>{product?.subTitle}</span> / $<span>{product?.discountedPrice}</span>  <span className='text-sm line-through'>${product?.salePrice}</span> 
+              <span>{product?.subTitle}</span> / $<span>{product?.discountedPrice}</span>  <span className='text-sm line-through'>${product?.salePrice}</span>
             </div>
           </div>
 

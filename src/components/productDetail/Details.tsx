@@ -9,10 +9,8 @@ import { ProductTypes } from "../../models/productTypes";
 import { RootState, useAppDispatch } from "../../redux/app/store";
 import { getProductById } from "../../redux/features/productDetailSlice";
 import { addToCart, getAllCartItemsByUserId } from "../../redux/features/cartSlice";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
 import { getProductRating, getReviewsByProductId } from "../../redux/features/reviewSlice";
-const MySwal = withReactContent(Swal);
+import { toast } from 'react-toastify';
 
 const Details = () => {
   const [size, setSize] = useState(0);
@@ -128,22 +126,10 @@ const Details = () => {
         count: productCount
       })).then((confirm) => {
         if (confirm.meta.requestStatus === 'rejected') {
-          MySwal.fire({
-            position: "center",
-            icon: "warning",
-            title: confirm.payload,
-            showConfirmButton: false,
-            timer: 1500
-          });
+          toast.warning(confirm.payload);
         } else if (confirm.meta.requestStatus === 'fulfilled') {
           dispatch(getAllCartItemsByUserId(userId_Int)).then(() => {
-            MySwal.fire({
-              position: "center",
-              icon: "success",
-              title: "The Product added successfully",
-              showConfirmButton: false,
-              timer: 1500
-            });
+            toast.success('The Product added successfully')
           })
         }
       })
