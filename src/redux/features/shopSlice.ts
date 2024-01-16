@@ -59,8 +59,8 @@ export const getFilteredProducts = createAsyncThunk(
         productTags = [],
         productSizes = [],
         productColors = [],
-        maxPrice = 0,
-        minPrice = 0,
+        maxPrice = '',
+        minPrice = '',
         orderBy = ''
     }: {
         page?: number,
@@ -70,12 +70,12 @@ export const getFilteredProducts = createAsyncThunk(
         productTags?: Option[],
         productSizes?: Option[],
         productColors?: String[],
-        maxPrice?: number,
-        minPrice?: number,
+        maxPrice?: string,
+        minPrice?: string,
         orderBy?: string
     }) => {
        try {
-        const response = await instance.get(`UserProduct/Products?${page ? `Page=${page}` : ''}${take > 0 ? `&ShowMore.Take=${take}` : ''}${categoryName?.length > 0 ? categoryName?.map((item) => `&CategoryNames=${item.value}`).join('') : ''}${isNew?.length && isNew !== 'null' ? `&IsNew=${isNew}` : ''}${productTags?.length > 0 ? productTags.map((item) => `&ProductTags=${item.value}`).join('') : ''}${productSizes?.length > 0 ? `${productSizes?.map((item) => `&ProductSizes=${item.value}`).join('')}` : ''}${productColors.length > 0 ? `${productColors.map((item) => `&ProductColors=${item.replace(/#/g, '%23')}`).join('')}` : ''}${minPrice > 0 ? `&MinPrice=${minPrice}` : ''}${maxPrice > 0 ? `&MaxPrice=${maxPrice}` : ''}${orderBy?.length > 0 ? `&OrderBy=${orderBy}` : ''}`);
+        const response = await instance.get(`UserProduct/Products?${page ? `Page=${page}` : ''}${take > 0 ? `&ShowMore.Take=${take}` : ''}${categoryName?.length > 0 ? categoryName?.map((item) => `&CategoryNames=${item.value}`).join('') : ''}${isNew?.length && isNew !== 'null' ? `&IsNew=${isNew}` : ''}${productTags?.length > 0 ? productTags.map((item) => `&ProductTags=${item.value}`).join('') : ''}${productSizes?.length > 0 ? `${productSizes?.map((item) => `&ProductSizes=${item.value}`).join('')}` : ''}${productColors.length > 0 ? `${productColors.map((item) => `&ProductColors=${item.replace(/#/g, '%23')}`).join('')}` : ''}${minPrice !== '0' ? `&MinPrice=${minPrice}` : ''}${maxPrice !== '0' ? `&MaxPrice=${maxPrice}` : ''}${orderBy?.length > 0 ? `&OrderBy=${orderBy}` : ''}`);
         return (await response.data);
        } catch (error) {
             console.error(error);

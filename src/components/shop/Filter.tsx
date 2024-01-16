@@ -15,14 +15,14 @@ interface FilterProps {
     setColor?: React.Dispatch<React.SetStateAction<string[]>> | undefined;
     setTag?: React.Dispatch<React.SetStateAction<Option[]>> | undefined;
     setCategory?: React.Dispatch<React.SetStateAction<Option[]>> | undefined;
-    setMinPrice?: React.Dispatch<React.SetStateAction<number>> | undefined;
-    setMaxPrice?: React.Dispatch<React.SetStateAction<number>> | undefined;
+    setMinPrice?: React.Dispatch<React.SetStateAction<string>> | undefined;
+    setMaxPrice?: React.Dispatch<React.SetStateAction<string>> | undefined;
     setShow?: React.Dispatch<React.SetStateAction<number>> | undefined;
     setSortBy?: React.Dispatch<React.SetStateAction<string>> | undefined;
     setIsNew?: React.Dispatch<React.SetStateAction<string>> | undefined;
     gridClass: string,
-    minPrice?: number;
-    maxPrice?: number;
+    minPrice?: string;
+    maxPrice?: string;
     isNew: string;
     show?: number;
     sortBy?: string;
@@ -176,18 +176,14 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor
                 <div className='xl:w-1/12 w-full'>
                     <span className='font-medium capitalize text-gray-500 mb-2 block text-sm'>Min price</span>
                     <input type="number" className='p-1.5 outline-none w-full' value={minPrice} name='minPrice' onChange={(e) => {
-                        if (parseInt(e.target.value) > 0) {
-                            setMinPrice && setMinPrice(parseInt(e.target.value));
-                        }
+                        setMinPrice && setMinPrice(e.target.value);
                     }} />
                 </div>
 
                 <div className='xl:w-1/12 w-full'>
                     <span className='font-medium capitalize text-gray-500 mb-2 block text-sm'>Max price</span>
                     <input type="number" className='p-1.5 outline-none w-full' value={maxPrice} name='maxPrice' onChange={(e) => {
-                        if (parseInt(e.target.value) < 5000) {
-                            setMaxPrice && setMaxPrice(parseInt(e.target.value));
-                        }
+                        setMaxPrice && setMaxPrice(e.target.value);
                     }} />
                 </div>
 
