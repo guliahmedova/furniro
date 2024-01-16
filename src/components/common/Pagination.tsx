@@ -26,7 +26,7 @@ const Pagination: FC<PaginationProps> = ({ page, total }) => {
     };
 
     const dotsCount = Math.ceil(total / page);
-
+    
     let dots = [];
     for (let index = 0; index < dotsCount; index++) {
         dots.push(<li key={index} onClick={(e) => {
@@ -41,6 +41,12 @@ const Pagination: FC<PaginationProps> = ({ page, total }) => {
         </li>)
     };
 
+    useEffect(()=>{
+        if (currentPage && dotsCount && (currentPage > dotsCount)) {
+            setCurrentPage(1);
+        }
+    }, [dotsCount]);
+    
     return (
         <div className={`justify-center mt-[70px] ${dotsCount > 1 ? 'flex' : 'hidden'}`}>
             <nav aria-label="Page navigation example mx-auto block">

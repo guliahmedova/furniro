@@ -26,12 +26,11 @@ interface FilterProps {
     isNew: string;
     show?: number;
     sortBy?: string;
+    totalProductCount: number
 };
 
-const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor, setTag, setCategory, setMaxPrice, setMinPrice, setShow, setSortBy, setIsNew, minPrice, maxPrice, show, sortBy, isNew }) => {
-    const totalProduct = useSelector((state: RootState) => state.product.totalProductCount);
+const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor, setTag, setCategory, setMaxPrice, setMinPrice, setShow, setSortBy, setIsNew, minPrice, maxPrice, show, sortBy, isNew, totalProductCount }) => {
     const [showFiltersMenu, setShowFiltersMenu] = useState(false);
-
     const { sizes, colors, tags, categories } = useSelector((state: RootState) => state.shop);
 
     const sizeOptions = useMemo(() => {
@@ -108,14 +107,15 @@ const Filter: FC<FilterProps> = ({ changeGridClass, gridClass, setSize, setColor
                         <img src={gtidIcon} alt="grid-icon" onClick={() => changeGridClass('grid')} className={`${gridClass === 'grid' ? 'cursor-default' : 'cursor-pointer'}`} />
                         <img src={viewIcon} alt="view-icon" onClick={() => changeGridClass('view')} className={`${gridClass === 'view' ? 'cursor-default' : 'cursor-pointer'}`} />
                     </div>
-                    <span className='select-none lg:border-l-2 border-[#9F9F9F] lg:pl-[24px] lg:text-base text-sm'>Showing 1–16 of {totalProduct} results</span>
+                    <span className='select-none lg:border-l-2 border-[#9F9F9F] lg:pl-[24px] lg:text-base text-sm'>Showing 1–{show} of {totalProductCount} results</span>
                 </div>
 
                 <div className='flex items-center justify-center gap-7 lg:mt-0 mt-6'>
                     <div className='flex items-center lg:gap-4 gap-3'>
                         <span className='lg:text-xl text-sm'>Show</span>
                         <select name="show" value={show} onChange={(e) => setShow && setShow(parseInt(e.target.value))} id="showBy" className='w-[55px] h-[55px] text-center appearance-none border-0 text-[#9F9F9F] lg:text-xl outline-0'>
-                            <option value="16" defaultChecked>16</option>
+                            <option value="8" defaultChecked>8</option>
+                            <option value="16">16</option>
                             <option value="20">20</option>
                             <option value="24">24</option>
                             <option value="28">28</option>

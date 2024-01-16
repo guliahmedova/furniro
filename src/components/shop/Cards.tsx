@@ -1,43 +1,15 @@
-import { FC, useEffect, memo } from "react";
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { FC, memo } from "react";
 import { ProductTypes } from "../../models/productTypes";
-import { RootState, useAppDispatch } from "../../redux/app/store";
-import { getFilteredProducts } from '../../redux/features/shopSlice';
 import { Pagination, ProductCard } from "../common/index";
-import { Option } from "../../models/OptionType";
 
 interface CardsProps {
     gridClass?: string;
-    size?: Option[];
-    color?: string[];
-    tag?: Option[];
-    category?: Option[];
-    minPrice?: number
-    maxPrice?: number
     show: number
-    sortBy?: string
-    isNew: string
+    totalProductCount: number,
+    filteredProducts: ProductTypes[]
 };
 
-const Cards: FC<CardsProps> = ({ gridClass, size, color, tag, category, minPrice, maxPrice, show, sortBy, isNew }) => {
-    const dispatch = useAppDispatch();
-    const currentpage = useSelector((state: RootState) => state.pagination.currentPage);
-    const { totalProductCount, filteredProducts } = useSelector((state: RootState) => state.shop);
-    
-    useEffect(() => {
-        dispatch(getFilteredProducts({
-            page: currentpage,
-            take: show,
-            categoryName: category,
-            isNew: isNew,
-            productTags: tag,
-            productSizes: size,
-            productColors: color,
-            maxPrice: maxPrice,
-            minPrice: minPrice,
-            orderBy: sortBy,
-        }));
-    }, [dispatch, currentpage, size, color, minPrice, maxPrice, sortBy, show, category, tag, isNew]);
+const Cards: FC<CardsProps> = ({ gridClass, totalProductCount, filteredProducts, show }) => {
 
     return (
         <section className="bg-white">
