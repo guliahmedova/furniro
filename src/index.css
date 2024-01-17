@@ -164,3 +164,10 @@ body::-webkit-scrollbar-thumb:hover {
 .shaking-animate {
     animation: shake 0.4s ease-in-out;
 }
+
+
+/**/
+.spin-button-none::-webkit-outer-spin-button,
+.spin-button-none::-webkit-inner-spin-button{
+    appearance: none;
+}

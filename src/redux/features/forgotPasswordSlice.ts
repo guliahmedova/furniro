@@ -21,6 +21,33 @@ export const resetPassword = createAsyncThunk(
     }
 );
 
+export const sendOtpEmail = createAsyncThunk(
+    'forgotPassword/sendOtpEmail',
+    async (email: string, { rejectWithValue }) => {
+        try {
+            const response = await instance.post(`ForgotPassword/SendOTPEmail`, email);
+            return (await response.data);
+        } catch (error: any) {
+            return rejectWithValue(error.response.data.Message);
+        }
+    }
+);
+
+export const otpConfirmation = createAsyncThunk(
+    'forgotPassword/otpConfirmation',
+    async ({ email, otpToken }: { email: string, otpToken: string }, { rejectWithValue }) => {
+        try {
+            const response = await instance.post(`ForgotPassword/OtpConfirmation`, {
+                email: email,
+                otpToken: otpToken
+            });
+            return (await response.data);
+        } catch (error: any) {
+            return rejectWithValue(error.response.data.Message);
+        }
+    }
+);
+
 const initialState = {
     loading: 'idle',
     isSuccess: false,
@@ -31,7 +58,9 @@ const initialState = {
 const forgotPasswordSlice = createSlice({
     name: 'forgotPassword',
     initialState,
-    reducers: {},
+    reducers: {
+        clearResults() { }
+    },
     extraReducers: (builder) => {
         builder.addCase(resetPassword.pending, (state) => {
             state.loading = 'pending';
@@ -51,7 +80,45 @@ const forgotPasswordSlice = createSlice({
                 state.error = 'An unknown error occurred';
             }
         });
+
+        builder.addCase(sendOtpEmail.pending, (state) => {
+            state.loading = 'pending';
+        });
+        builder.addCase(sendOtpEmail.fulfilled, (state, action) => {
+            state.loading = 'succeeded';
+            state.isSuccess = true;
+            state.message = action.payload;
+        });
+        builder.addCase(sendOtpEmail.rejected, (state, action) => {
+            state.loading = 'failed';
+            state.isSuccess = false;
+            if (action.error) {
+                state.error = action.payload as string;
+            } else {
+                state.error = 'An unknown error occurred';
+            }
+        });
+
+        builder.addCase(otpConfirmation.pending, (state) => {
+            state.loading = 'pending';
+        });
+        builder.addCase(otpConfirmation.fulfilled, (state, action) => {
+            state.loading = 'succeeded';
+            state.isSuccess = true;
+            state.isSuccess = action.payload.isSuccess;
+            state.message = action.payload.message;
+        });
+        builder.addCase(otpConfirmation.rejected, (state, action) => {
+            state.loading = 'failed';
+            state.isSuccess = false;
+            if (action.error) {
+                state.error = action.payload as string;
+            } else {
+                state.error = 'An unknown error occurred';
+            }
+        });
     }
 });
 
+export const { clearResults } = forgotPasswordSlice.actions;
 export default forgotPasswordSlice.reducer;
