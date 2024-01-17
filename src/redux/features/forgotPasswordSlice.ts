@@ -25,7 +25,9 @@ export const sendOtpEmail = createAsyncThunk(
     'forgotPassword/sendOtpEmail',
     async (email: string, { rejectWithValue }) => {
         try {
-            const response = await instance.post(`ForgotPassword/SendOTPEmail`, email);
+            const response = await instance.post(`ForgotPassword/SendOTPEmail`, {
+                email: email
+            });
             return (await response.data);
         } catch (error: any) {
             return rejectWithValue(error.response.data.Message);
@@ -59,7 +61,6 @@ const forgotPasswordSlice = createSlice({
     name: 'forgotPassword',
     initialState,
     reducers: {
-        clearResults() { }
     },
     extraReducers: (builder) => {
         builder.addCase(resetPassword.pending, (state) => {
@@ -120,5 +121,4 @@ const forgotPasswordSlice = createSlice({
     }
 });
 
-export const { clearResults } = forgotPasswordSlice.actions;
 export default forgotPasswordSlice.reducer;

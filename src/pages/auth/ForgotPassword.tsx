@@ -1,29 +1,25 @@
 import { useFormik } from 'formik';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import closeEye from '../../assets/images/close-eye.svg';
+import openEye from '../../assets/images/open-eye.svg';
 import { RootState, useAppDispatch } from '../../redux/app/store';
 import { resetPassword } from '../../redux/features/forgotPasswordSlice';
 import { ForgotPasswordYup } from './ForgotPasswordYup';
-import { useEffect, useState, FC } from 'react';
-import { useSelector } from 'react-redux';
 const MySwal = withReactContent(Swal);
-import closeEye from '../../assets/images/close-eye.svg';
-import openEye from '../../assets/images/open-eye.svg';
 
-//React.Dispatch<React.SetStateAction<number>> | undefined;
-
-interface ForgotPasswordProps {
-    setStepIndex: React.Dispatch<React.SetStateAction<number>> | undefined;
-};
-
-const ForgotPassword: FC<ForgotPasswordProps> = ({ setStepIndex }) => {
+const ForgotPassword = () => {
     const dispatch = useAppDispatch();
     const [errorMsg, setErrorMsg] = useState('');
-    const { error, isSuccess } = useSelector((state: RootState) => state.forgotPassword);
+    const { isSuccess } = useSelector((state: RootState) => state.forgotPassword);
     const [showPassword, setShowPassword] = useState({
         newPassword: false,
         repeatNewPassword: false,
     });
+    const navigate = useNavigate();
 
     const togglePasswordVisibility = (field: keyof typeof showPassword) => {
         setShowPassword((prevState) => ({
@@ -42,23 +38,16 @@ const ForgotPassword: FC<ForgotPasswordProps> = ({ setStepIndex }) => {
         onSubmit: () => { }
     });
 
-    useEffect(() => {
-        if (error?.length > 0 && !isSuccess) {
-            setErrorMsg(error);
-        } else {
-            setErrorMsg('');
-            resetForm();
-        }
-    }, [error, errorMsg, isSuccess]);
 
     const resetPasswordClickHandler = () => {
-        if (values.email.length > 0 && values.newPassword.length > 0 && values.repeatNewPassword.length > 0) {
+        const userEmail = localStorage.getItem("email");
+        if (userEmail && userEmail.length > 0 && values.newPassword.length > 0 && values.repeatNewPassword.length > 0) {
             dispatch(resetPassword({
-                email: values.email,
+                email: userEmail,
                 newPassword: values.newPassword,
                 repeatNewPassword: values.repeatNewPassword
             })).then((confirm) => {
-                if (confirm?.payload?.length === 0) {
+                if (confirm?.meta.requestStatus === 'fulfilled') {
                     MySwal.fire({
                         position: "top-end",
                         icon: "success",
@@ -66,6 +55,12 @@ const ForgotPassword: FC<ForgotPasswordProps> = ({ setStepIndex }) => {
                         showConfirmButton: false,
                         timer: 1500
                     });
+                    setErrorMsg('');
+                    resetForm();
+                    localStorage.removeItem('email');
+                    navigate('/login');
+                } else if (confirm.meta.requestStatus === 'rejected') {
+                    setErrorMsg(confirm.payload);
                 }
             })
         }

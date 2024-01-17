@@ -4,7 +4,7 @@ import SentOtpEmail from "./SentOtpEmail";
 import ForgotPassword from "./ForgotPassword";
 
 const ForgotPasswordPage = () => {
-    const [stepIndex, setStepIndex] = useState(3);
+    const [stepIndex, setStepIndex] = useState(1);
 
     switch (stepIndex) {
         case 1:
@@ -12,7 +12,7 @@ const ForgotPasswordPage = () => {
         case 2:
             return <OtpConfirmation setStepIndex={setStepIndex} />
         case 3:
-            return <ForgotPassword setStepIndex={setStepIndex} />
+            return <ForgotPassword />
         default:
             break;
     }
