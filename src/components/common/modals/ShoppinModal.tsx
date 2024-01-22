@@ -15,6 +15,7 @@ const ShoppingModal = () => {
             closeModal();
         };
     };
+
     const cartItems = useSelector((state: RootState) => state.cart.getAllCartItems);
     const loading = useSelector((state: RootState) => state.shop.loading);
     const { isDelete, subTotal } = useSelector((state: RootState) => state.cart);
@@ -95,21 +96,25 @@ const ShoppingModal = () => {
                                     })
                                 ))}
                             </div>
-                        ) : (<div className="py-28 flex justify-center items-center flex-col gap-3">
-                            <span className="text-red-600 font-bold text-2xl">Your Cart is empty!</span>
-                            <p className="font-medium text-gray-600">Let's shop now!</p>
-                            <Link to="/shop" onClick={closeModal} className="text-white font-medium text-lg bg-[#B88E2F] rounded-sm shadow-md p-3">Start Shopping</Link>
-                        </div>)}
+                        ) : (
+                            <div className="py-28 flex justify-center items-center flex-col gap-3">
+                                <span className="text-red-700 font-bold text-2xl">Your Cart is empty!</span>
+                                <Link to="/shop" onClick={closeModal} className="text-black underline font-medium text-sm">Start Shopping</Link>
+                            </div>
+                        )}
                     </>}
 
-                    <div className="mt-20 flex justify-between mb-6 lg:px-8 px-3"><span className="text-black text-base leading-6 select-none">Subtotal</span><span className="text-[#B88E2F] font-semibold text-base">${subTotal.toFixed(2).replace(/(\.0+|0+)$/, '')}</span></div>
+                    {cartItems?.length > 0 && (
+                        <>
+                            <div className="mt-20 flex justify-between mb-6 lg:px-8 px-3"><span className="text-black text-base leading-6 select-none">Subtotal</span><span className="text-[#B88E2F] font-semibold text-base">${subTotal.toFixed(2).replace(/(\.0+|0+)$/, '')}</span></div>
 
-                    <hr className="w-full bg-[#D9D9D9] mb-6" />
-                    <div className="bg-[#FFFFFF] flex justify-between items-center lg:gap-[14px] lg:px-8 px-3">
-                        <Link onClick={closeModal} className="py-[8px] rounded-[50px] border w-fit px-[30px] border-black font-normal text-[12px] leading-[18px]" to="/cart">Cart</Link>
-                        <Link onClick={closeModal} className="py-[8px] rounded-[50px] border w-fit px-[30px] border-black font-normal text-[12px] leading-[18px]" to="/checkout">Checkout</Link>
-                        <Link onClick={closeModal} className="py-[8px] rounded-[50px] border w-fit px-[30px] border-black font-normal text-[12px] leading-[18px]" to="/comparison">Comparison</Link>
-                    </div>
+                            <hr className="w-full bg-[#D9D9D9] mb-6" />
+                            <div className="bg-[#FFFFFF] flex justify-between items-center lg:gap-[14px] lg:px-8 px-3">
+                                <Link onClick={closeModal} className="py-[8px] rounded-[50px] border w-fit px-[30px] border-black font-normal text-[12px] leading-[18px]" to="/cart">Cart</Link>
+                                <Link onClick={closeModal} className="py-[8px] rounded-[50px] border w-fit px-[30px] border-black font-normal text-[12px] leading-[18px]" to="/checkout">Checkout</Link>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         )

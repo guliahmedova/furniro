@@ -1,10 +1,9 @@
 import React, { FC, memo, useCallback, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import compare from '../../assets/images/compare.svg';
+import { toast } from 'react-toastify';
 import errorImg from '../../assets/images/errorImage.png';
 import goldheart from '../../assets/images/goldheart.svg';
-import share from '../../assets/images/share.svg';
 import shopIcon from '../../assets/images/shoppingCart.svg';
 import heart from '../../assets/images/whiteheart.svg';
 import { ProductTypes } from '../../models/productTypes';
@@ -14,7 +13,7 @@ import { getProductById } from '../../redux/features/productDetailSlice';
 import { getProductIDByCLick } from '../../redux/features/productSlice';
 import { addToWishlist, removeFromWishlist } from '../../redux/features/wishlistSlice';
 import AddToCartModal from './AddToCartModal';
-import { toast } from 'react-toastify';
+import ShareButton from './ShareButton';
 
 interface ProductCardProps {
   product: ProductTypes;
@@ -48,11 +47,6 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
       dispatch(addToWishlist(product));
     }
   }, [dispatch, isLike, product]);
-
-  const handleBtnsClick = useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.stopPropagation();
-    e.preventDefault();
-  }, []);
 
   const handleAddToCartModalClick = () => {
     if (userId_int) {
@@ -142,13 +136,8 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
                 Add to cart
               </div>
               <div className='w-full flex items-center gap-3 mt-[24px] px-3 justify-center'>
-                <div className='flex items-center font-semibold leading-6 text-white' onClick={handleBtnsClick}>
-                  <img src={share} alt="share-icon" /> <span>Share</span>
-                </div>
-                <div className='flex items-center font-semibold leading-6 text-white' onClick={handleBtnsClick}>
-                  <img src={compare} alt="compare-icon" /> <span>Compare</span>
-                </div>
-                <div className='flex items-center font-semibold leading-6 text-white'
+                <ShareButton productId={productById?.id} />
+                <div className='flex items-center font-semibold gap-1 leading-6 text-white'
                   onClick={(e) => {
                     handleFavBtnClick();
                     e.preventDefault();

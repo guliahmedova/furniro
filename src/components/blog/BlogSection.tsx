@@ -65,7 +65,7 @@ const BlogSection = () => {
                     }
                 </div>
 
-                <div className='lg:sticky sm: lg:top-5 self-start xl:w-4/12'>
+                <div className='lg:sticky lg:top-5 self-start xl:w-4/12'>
                     <form onSubmit={(e) => e.preventDefault()} className='border-2 border-[#9F9F9F] relative rounded-[10px] lg:h-14 mb-11 lg:w-[80%] w-full mx-auto'>
                         <input type="text" value={searchText} name='searchText' onChange={(e) => setSearchText(e.target.value)} className='w-full h-full rounded-[10px] outline-0 border-0 p-3' />
                         <button type='submit' className='absolute lg:top-[17px] top-[10px] right-3 w-5 h-5 z-10 bg-white'>
