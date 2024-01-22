@@ -24,9 +24,6 @@ const ShareButton: FC<ShareButtonProps> = ({ productId }) => {
         textField.remove()
     };
 
-    console.log(productId);
-    
-
     return (
         <>
             <div className='flex items-center font-semibold leading-6 text-white' onClick={(e) => {
@@ -47,16 +44,16 @@ const ShareButton: FC<ShareButtonProps> = ({ productId }) => {
                 </button>
                 <hr className='mt-4' />
                 <div className='mt-5 grid grid-cols-3 justify-between items-center flex-wrap gap-4'>
-                    <WhatsappShareButton onClick={() => setOpenModal(false)} url={`${currentProductUrl}productDetail/${productId}`} className='w-full flex flex-col'>
+                    <WhatsappShareButton onClick={() => setOpenModal(false)} url={`${currentProductUrl}/productDetail/${productId}`} className='w-full flex flex-col'>
                         <WhatsappIcon onClick={() => setOpenModal(false)} className='w-10 rounded-full' /> <span className='text-sm from-neutral-500'>WhatsApp</span>
                     </WhatsappShareButton>
-                    <FacebookShareButton url={`${currentProductUrl}productDetail/${productId}`} className='w-full flex flex-col'>
+                    <FacebookShareButton url={`${currentProductUrl}/productDetail/${productId}`} className='w-full flex flex-col'>
                         <FacebookIcon onClick={() => setOpenModal(false)} className='w-10 rounded-full' /><span className='text-sm from-neutral-500'>Facebook</span>
                     </FacebookShareButton>
-                    <TelegramShareButton url={`${currentProductUrl}productDetail/${productId}`} className='w-full flex flex-col'>
+                    <TelegramShareButton url={`${currentProductUrl}/productDetail/${productId}`} className='w-full flex flex-col'>
                         <TelegramIcon onClick={() => setOpenModal(false)} className='w-10 rounded-full' /><span className='text-sm from-neutral-500'>Telegram</span>
                     </TelegramShareButton>
-                    <MailruShareButton url={`${currentProductUrl}productDetail/${productId}`} className='w-full flex flex-col'>
+                    <MailruShareButton url={`${currentProductUrl}/productDetail/${productId}`} className='w-full flex flex-col'>
                         <EmailIcon onClick={() => setOpenModal(false)} className='w-10 rounded-full' /><span className='text-sm from-neutral-500'>Email</span>
                     </MailruShareButton>
                     <div className='rounded-sm cursor-pointer mt-3 flex flex-col w-full' onClick={(e) => {
