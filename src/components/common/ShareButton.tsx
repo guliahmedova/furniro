@@ -24,6 +24,9 @@ const ShareButton: FC<ShareButtonProps> = ({ productId }) => {
         textField.remove()
     };
 
+    console.log(productId);
+    
+
     return (
         <>
             <div className='flex items-center font-semibold leading-6 text-white' onClick={(e) => {
@@ -59,7 +62,9 @@ const ShareButton: FC<ShareButtonProps> = ({ productId }) => {
                     <div className='rounded-sm cursor-pointer mt-3 flex flex-col w-full' onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        setOpenModal(false);
+                        if (productId) {
+                            setOpenModal(false);
+                        }
                         copyToClipboard(`${currentProductUrl}/productDetail/${productId}`);
                     }}>
                         <img src={linkIcon} className='w-10 h-10 p-1 bg-gray-300 mb-2' alt="" /> <span className='text-sm from-neutral-500 truncate'>Copy Link</span>

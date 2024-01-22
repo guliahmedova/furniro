@@ -136,7 +136,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
                 Add to cart
               </div>
               <div className='w-full flex items-center gap-3 mt-[24px] px-3 justify-center'>
-                <ShareButton productId={productById?.id} />
+                <ShareButton productId={product?.id} />
                 <div className='flex items-center font-semibold gap-1 leading-6 text-white'
                   onClick={(e) => {
                     handleFavBtnClick();
