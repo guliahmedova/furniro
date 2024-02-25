@@ -59,7 +59,7 @@ const BlogSection = () => {
                             ))
                         ) : (
                             <div className="py-28 flex justify-center items-center flex-col gap-3">
-                                <span className="text-red-600 font-bold text-2xl">No blog posts found for this search.</span>
+                                <span className="text-red-700 font-bold text-2xl">There is no blog</span>
                             </div>
                         )
                     }

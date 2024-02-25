@@ -47,6 +47,9 @@ const Login = () => {
     }
   });
 
+  
+
+
   return (
     <section className="bg-primary-hero-image w-full h-screen bg-cover bg-fixed bg-center bg-no-repeat md:bg-top">
       <div className='bg-[#3A3A3A]/75 w-full h-full'>
