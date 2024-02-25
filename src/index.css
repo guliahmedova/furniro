@@ -4,26 +4,26 @@
 @tailwind utilities;
 
 /*Body scroll bar style*/
-body::-webkit-scrollbar {
-    width: 15px;
+::-webkit-scrollbar {
+    width: 7px;
 }
 
-body::-webkit-scrollbar-track {
-    border-radius: 1px;
-    background: #c9cacc;
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: transparent;
 }
 
-body::-webkit-scrollbar-track:hover {
-    background: #fff3e3;
+::-webkit-scrollbar-track:hover {
+    background: whitesmoke;
 }
 
-body::-webkit-scrollbar-thumb {
-    background: #b88e2f;
+::-webkit-scrollbar-thumb {
+    background: whitesmoke;
     border-radius: 10px;
 }
 
-body::-webkit-scrollbar-thumb:hover {
-    background: #b88e2f;
+::-webkit-scrollbar-thumb:hover {
+    background: transparent;
 }
 
 /*categories*/
