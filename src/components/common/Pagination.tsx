@@ -48,7 +48,7 @@ const Pagination: FC<PaginationProps> = ({ page, total }) => {
     }, [dotsCount]);
     
     return (
-        <div className={`justify-center mt-[70px] ${dotsCount > 1 ? 'flex' : 'hidden'}`}>
+        <div className={`justify-center mt-[70px] mb-6 ${dotsCount > 1 ? 'flex' : 'hidden'}`}>
             <nav aria-label="Page navigation example mx-auto block">
                 <ul className={`flex items-center xl:gap-9 gap-1 text-base h-14`}>
                     {currentPage !== 1 && (

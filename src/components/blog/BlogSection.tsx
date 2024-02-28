@@ -188,13 +188,13 @@ const BlogSection = () => {
                                 Recent Posts
                             </h3>
                             {recentBlogs?.map((item) => (
-                                <div className="flex items-center bg-white rounded-lg shadow-xs mb-10">
+                                <div className="flex items-center bg-white rounded-lg shadow-xs mb-10" key={item.id}>
                                     <div
                                         className="flex-none rounded-lg overflow-hidden w-16 h-16"
                                         style={{ minWidth: "64px" }}
                                     >
                                         <img
-                                            src={item.imageUrls[9]}
+                                            src={item.imageUrls[0]}
                                             alt="Notebook"
                                             className="object-cover w-[80px] h-[80px]"
                                         />
