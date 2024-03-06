@@ -17,9 +17,18 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
   const wishlistproducts = useSelector((state: RootState) => state.wishlist.product);
   const cartItems = useSelector((state: RootState) => state.cart.getAllCartItems);
+  const [accountPath, setAccountPath] = useState("");
   const userToken = localStorage.getItem('userToken');
   const userid = localStorage.getItem('userId');
   const { openModal } = useModal();
+
+  useEffect(() => {
+    if (userToken?.length) {
+      setAccountPath("/profile/edit");
+    } else {
+      setAccountPath("/login");
+    }
+  }, [userToken]);
 
   const userid_int = useMemo(() => {
     if (userid) {
@@ -63,7 +72,7 @@ const Navbar = () => {
         </div>
 
         <div className="lg:flex hidden items-center lg:gap-11">
-          <Link to={`${userToken?.length ? '/profile/edit' : '/login'}`}>
+          <Link to={accountPath}>
             <img src={account} alt="account-icon" />
           </Link>
           <Link to="/search">
@@ -95,7 +104,7 @@ const Navbar = () => {
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/search">Search</NavLink>
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/favorites">Favorites</NavLink>
           <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to="/cart">Cart</NavLink>
-          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to={`${userToken?.length ? '/profile/edit' : '/login'}`}>Profile</NavLink>
+          <NavLink className={({ isActive }) => isActive ? "font-bold underline decoration-black" : ""} onClick={() => setIsMenuOpen(!isMenuOpen)} to={accountPath}>Profile</NavLink>
         </div>
 
       </nav>
