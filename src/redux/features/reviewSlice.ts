@@ -87,7 +87,7 @@ export const deletReviewById = createAsyncThunk(
 
 export const getProductRating = createAsyncThunk(
     'review/getProductRating',
-    async (productId: number ) => {
+    async (productId: number) => {
         const response = await instance.get(`Review/ProductRating?ProductId=${productId}`);
         return (await response.data);
     }

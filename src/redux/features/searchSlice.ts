@@ -21,7 +21,7 @@ const initialState: ProductState = {
 export const searchProducts = createAsyncThunk(
     'search/searchProducts',
     async ({ prompt, take }: { prompt: string, take: number }) => {
-        const response = await instance.get(`UserProduct/Products?${prompt.length ? `Prompt=${prompt}&` : ''}ShowMore.TakeProduct=${take}`);
+        const response = await instance.get(`UserProduct/Products?${prompt.length ? `Prompt=${prompt}&` : ''}ShowMore.Take=${take}`);
         return (await response.data);
     }
 );
