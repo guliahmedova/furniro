@@ -54,7 +54,7 @@ const ReviewList: FC<ReviewListProps> = ({ allRewiews, totalReviewCount, setShow
                         <div key={review.id}>
                             <div className="border p-4">
                                 <div className="flex items-center gap-2">
-                                    <span className="text-sm capitalize font-bold">anonymous user{review.appUserId}</span>
+                                    <span className="text-sm capitalize font-bold">{review.userName}</span>
                                 </div>
                                 <div className="flex items-center gap-4 justify-between mt-5">
                                     <span className="text-md w-10/12 font-medium text-black">{review.text}</span>

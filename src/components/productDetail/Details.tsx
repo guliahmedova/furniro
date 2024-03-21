@@ -259,7 +259,7 @@ const Details = () => {
                   <span className='text-sm text-red-600 mb-1.5 font-medium text-left block p-1.5 bg-red-100'>{productCountMsg}</span>
                 )}
                 <div className="flex lg:flex-row flex-col gap-4 mb-[60px]">
-                  <div className="flex items-center justify-between px-3 border-2 border-[#9F9F9F] rounded-lg lg:w-[30%] mx-auto w-[60%] h-16">
+                  <div className="flex items-center justify-between px-3 border-2 border-[#9F9F9F] rounded-lg lg:w-[50%] mx-auto w-[60%] h-16">
                     <button className="font-medium text-xl" onClick={decreaseProductCount}>-</button>
                     <span className="font-medium">{productCount}</span>
                     <button className="font-medium text-xl" onClick={increaseProductCount}>+</button>
@@ -268,8 +268,7 @@ const Details = () => {
                     product.id,
                     product?.colors?.[color].id,
                   )}
-                    className="xl:w-[35%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out capitalize">Add to cart</button>
-                  <button className="xl:w-[35%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out">+ Compare</button>
+                    className="xl:w-[50%] h-16 flex-shrink-0 rounded-2xl border-2 border-black text-black text-xl hover:bg-[#B88E2F] hover:text-white hover:border-[#B88E2F] duration-300 ease-in-out capitalize">Add to cart</button>
                 </div>
 
                 <span className="border-t border-[#D9D9D9] xl:w-[600px] block" ></span>

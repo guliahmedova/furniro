@@ -4,5 +4,6 @@ export type ReviewResponseBodyType = {
     appUserId: number,
     rate: number,
     text: string,
-    createdAt: string
+    createdAt: string,
+    userName: string
 }
