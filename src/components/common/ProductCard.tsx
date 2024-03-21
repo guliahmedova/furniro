@@ -11,7 +11,7 @@ import { RootState, useAppDispatch } from '../../redux/app/store';
 import { addToCart, getAllCartItemsByUserId } from '../../redux/features/cartSlice';
 import { getProductById } from '../../redux/features/productDetailSlice';
 import { getProductIDByCLick } from '../../redux/features/productSlice';
-import { addToWishlist, removeFromWishlist } from '../../redux/features/wishlistSlice';
+import { addToWishlist, createWishlist, deleteWishlist, removeFromWishlist } from '../../redux/features/wishlistSlice';
 import AddToCartModal from './AddToCartModal';
 import ShareButton from './ShareButton';
 
@@ -26,7 +26,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
     if (userId) {
       return parseInt(userId);
     }
-  }, [userId])
+  }, [userId]);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isModalOpan, setIsModalOpen] = useState(false);
@@ -37,14 +37,27 @@ const ProductCard: FC<ProductCardProps> = ({ product, gridClass }) => {
   const [productCountMsg, setProductCountMsg] = useState('');
 
   const isLike = useSelector((state: RootState) => (
-    state.wishlist.product.some((favItem) => favItem?.id === product?.id)
+    state.wishlist?.product.some((favItem) => favItem?.id === product?.id)
   ));
 
   const handleFavBtnClick = useCallback(() => {
     if (isLike) {
       dispatch(removeFromWishlist(product));
+      if (userId_int) {
+        dispatch(deleteWishlist({
+          userId: userId_int,
+          productId: product.id,
+          colorId: product.colors?.[0].id
+        }));
+      }
     } else {
       dispatch(addToWishlist(product));
+      if (userId_int) {
+        dispatch(createWishlist({
+          appUserId: userId_int,
+          productId: product.id
+        }))
+      }
     }
   }, [dispatch, isLike, product]);
 

@@ -15,7 +15,7 @@ import { getAllCartItemsByUserId } from "../../redux/features/cartSlice";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dispatch = useAppDispatch();
-  const wishlistproducts = useSelector((state: RootState) => state.wishlist.product);
+  const wishlistproducts = useSelector((state: RootState) => state.wishlist.favorites);
   const cartItems = useSelector((state: RootState) => state.cart.getAllCartItems);
   const [accountPath, setAccountPath] = useState("");
   const userToken = localStorage.getItem('userToken');
@@ -79,9 +79,9 @@ const Navbar = () => {
             <img src={search} alt="search-icon" />
           </Link>
           <Link to="/favorites" className="relative">
-            {wishlistproducts.length > 0 &&
+            {wishlistproducts?.length > 0 &&
               <div className="absolute -top-1 -right-1 bg-[#B88E2F] text-white text-center rounded-full w-4 h-4 text-[10px] flex items-center justify-center">
-                {wishlistproducts.length > 9 ? <span>9+</span> : <span>{wishlistproducts.length}</span>}
+                {wishlistproducts?.length > 9 ? <span>9+</span> : <span>{wishlistproducts?.length}</span>}
               </div>}
             <img src={heart} alt="heart-icon" />
           </Link>

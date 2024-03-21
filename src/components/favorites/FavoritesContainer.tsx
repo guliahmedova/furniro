@@ -1,25 +1,39 @@
+import { useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import favHeart from '../../assets/images/favorite-heart.svg';
 import { ProductTypes } from "../../models/productTypes";
-import { RootState } from "../../redux/app/store";
+import { RootState, useAppDispatch } from "../../redux/app/store";
 import { Pagination, ProductCard } from '../common/index';
-import { useMemo } from "react";
+import { getWishlist } from "../../redux/features/wishlistSlice";
 
 const FavoritesContainer = () => {
-    const { product } = useSelector((state: RootState) => state.wishlist);
+    const { favorites, product } = useSelector((state: RootState) => state.wishlist);
     const perPage = 8;
+    const dispatch = useAppDispatch();
 
-    // totalCount api-dan gelmelidir
-    const totalCount = useMemo(() => {
-        return product?.length;
+    const userId = localStorage.getItem('userId');
+    const userId_int = useMemo(() => {
+        if (userId) {
+            return parseInt(userId);
+        }
+    }, [userId])
+
+    useEffect(() => {
+        if (userId_int) {
+            dispatch(getWishlist(userId_int));
+        }
     }, [product]);
+
+    const totalCount = useMemo(() => {
+        return favorites?.length;
+    }, [favorites]);
 
     return (
         <section className="bg-white">
-            {product.length > 0 ? (<div className="xl:w-[85%] w-[95%] mx-auto mt-[56px] mb-[69px] lg:px-0 px-3">
+            {favorites?.length > 0 ? (<div className="xl:w-[85%] w-[95%] mx-auto mt-[56px] mb-[69px] lg:px-0 px-3">
                 <div className="grid lg:grid-cols-4 gap-8 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 mt-8 w-full">
-                    {product.map((item: ProductTypes) => (
+                    {favorites?.map((item: ProductTypes) => (
                         <ProductCard
                             key={item.id}
                             product={item}
